@@ -1,5 +1,5 @@
 
-FROM qcdis/miniconda3:v0.2 AS build
+FROM qcdis/miniconda3-pdal:v0.14 AS build
 COPY s4-retrive-retiled-tiles-local-spiros-koulouzis-at-lifewatch-eu-environment.yaml .
 RUN conda config --remove channels defaults || true
 RUN conda env update -n venv -f s4-retrive-retiled-tiles-local-spiros-koulouzis-at-lifewatch-eu-environment.yaml
