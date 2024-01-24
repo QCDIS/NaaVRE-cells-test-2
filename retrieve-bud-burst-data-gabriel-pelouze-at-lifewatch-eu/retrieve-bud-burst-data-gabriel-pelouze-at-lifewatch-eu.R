@@ -57,7 +57,6 @@ library(tidyr)
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--my_input"), action="store", default=NA, type="numeric", help="my description"), 
 make_option(c("--param_dataverse_api_key"), action="store", default=NA, type="character", help="my description")
 
 )
@@ -67,7 +66,6 @@ opt = parse_args(OptionParser(option_list=option_list))
 
 
 id <- gsub('"', '', opt$id)
-my_input = opt$my_input
 
 param_dataverse_api_key = opt$param_dataverse_api_key
 
