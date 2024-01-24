@@ -14,10 +14,12 @@ arg_parser.add_argument('--id', action='store', type=str, required=True, dest='i
 
 arg_parser.add_argument('--laz_files', action='store', type=str, required=True, dest='laz_files')
 
+arg_parser.add_argument('--param_bucket_name', action='store', type=str, required=True, dest='param_bucket_name')
 arg_parser.add_argument('--param_hostname', action='store', type=str, required=True, dest='param_hostname')
 arg_parser.add_argument('--param_max_filesize', action='store', type=str, required=True, dest='param_max_filesize')
 arg_parser.add_argument('--param_minio_server', action='store', type=str, required=True, dest='param_minio_server')
 arg_parser.add_argument('--param_password', action='store', type=str, required=True, dest='param_password')
+arg_parser.add_argument('--param_remote_path_root', action='store', type=str, required=True, dest='param_remote_path_root')
 arg_parser.add_argument('--param_remote_server_type', action='store', type=str, required=True, dest='param_remote_server_type')
 arg_parser.add_argument('--param_username', action='store', type=str, required=True, dest='param_username')
 
@@ -29,10 +31,12 @@ id = args.id
 import json
 laz_files = json.loads(args.laz_files)
 
+param_bucket_name = args.param_bucket_name
 param_hostname = args.param_hostname
 param_max_filesize = args.param_max_filesize
 param_minio_server = args.param_minio_server
 param_password = args.param_password
+param_remote_path_root = args.param_remote_path_root
 param_remote_server_type = args.param_remote_server_type
 param_username = args.param_username
 
@@ -44,17 +48,11 @@ conf_local_path_split = os.path.join( pathlib.Path('/tmp/data').as_posix(), 'spl
 
 conf_local_tmp = pathlib.Path('/tmp/data')
 
-conf_remote_path_root = '/webdav/vl-laserfarm/ahn'
-
-conf_bucket_name = 'naa-vre-public'
-
 
 conf_laz_compression_factor = '7'
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_username, 'webdav_password': param_password}
 conf_local_path_split = os.path.join( pathlib.Path('/tmp/data').as_posix(), 'split')
 conf_local_tmp = pathlib.Path('/tmp/data')
-conf_remote_path_root = '/webdav/vl-laserfarm/ahn'
-conf_bucket_name = 'naa-vre-public'
 
 
 def save_chunk_to_laz_file(in_filename, 
@@ -100,9 +98,9 @@ for file in laz_files:
     print('Splitting: '+file )
     destination_path = os.path.join(conf_local_tmp,file)
     if param_remote_server_type == 'webdav':
-        client.download_sync(remote_path=os.path.join(conf_remote_path_root,file), local_path=destination_path)
+        client.download_sync(remote_path=os.path.join(param_remote_path_root,file), local_path=destination_path)
     elif param_remote_server_type == 'minio':
-        minio_client.fget_object(conf_bucket_name, os.path.join(conf_remote_path_root,file), destination_path)
+        minio_client.fget_object(param_bucket_name, os.path.join(param_remote_path_root,file), destination_path)
         print(f"Downloaded: {file} to {destination_path}")
         
     inps = split_strategy(destination_path, int(param_max_filesize)*1048576)
