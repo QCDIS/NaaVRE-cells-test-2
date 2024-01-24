@@ -16,7 +16,6 @@ arg_parser.add_argument('--laz_files', action='store', type=str, required=True, 
 
 arg_parser.add_argument('--param_hostname', action='store', type=str, required=True, dest='param_hostname')
 arg_parser.add_argument('--param_max_filesize', action='store', type=str, required=True, dest='param_max_filesize')
-arg_parser.add_argument('--param_minio_server', action='store', type=str, required=True, dest='param_minio_server')
 arg_parser.add_argument('--param_password', action='store', type=str, required=True, dest='param_password')
 arg_parser.add_argument('--param_remote_server_type', action='store', type=str, required=True, dest='param_remote_server_type')
 arg_parser.add_argument('--param_username', action='store', type=str, required=True, dest='param_username')
@@ -31,7 +30,6 @@ laz_files = json.loads(args.laz_files)
 
 param_hostname = args.param_hostname
 param_max_filesize = args.param_max_filesize
-param_minio_server = args.param_minio_server
 param_password = args.param_password
 param_remote_server_type = args.param_remote_server_type
 param_username = args.param_username
@@ -39,6 +37,8 @@ param_username = args.param_username
 conf_laz_compression_factor = '7'
 
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_username, 'webdav_password': param_password}
+
+conf_minio_server = parts[0]
 
 conf_local_path_split = os.path.join( pathlib.Path('/tmp/data').as_posix(), 'split')
 
@@ -51,6 +51,7 @@ conf_bucket_name = 'naa-vre-public'
 
 conf_laz_compression_factor = '7'
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_username, 'webdav_password': param_password}
+conf_minio_server = parts[0]
 conf_local_path_split = os.path.join( pathlib.Path('/tmp/data').as_posix(), 'split')
 conf_local_tmp = pathlib.Path('/tmp/data')
 conf_remote_path_root = '/webdav/vl-laserfarm/ahn'
@@ -92,7 +93,7 @@ def split_strategy(filename, max_filesize):
 
 
 client = Client(conf_wd_opts)
-minio_client = Minio(param_minio_server, secure=True)
+minio_client = Minio(conf_minio_server, secure=True)
 
 os.makedirs(conf_local_path_split, exist_ok=True)
 
