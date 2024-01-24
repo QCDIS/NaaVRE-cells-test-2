@@ -148,11 +148,11 @@ avg_annual_budburst_dates <-
   dplyr::mutate(avg_bud_burst_date = avg_bud_burst_DOY + lubridate::make_date(year, 1, 1) - 1)
 
 
-budburst_climwin_input_file = here::here("data", "budburst_climwin_input.csv")
+budburst_climwin_input_file = "/tmp/data/budburst_climwin_input.csv"
 write.csv(avg_annual_budburst_dates, file = budburst_climwin_input_file,
           row.names = FALSE)
 
-temp_climwin_input_file = here::here("data", "temp_climwin_input.csv")
+temp_climwin_input_file = "/tmp/data/temp_climwin_input.csv"
 write.csv(temp, file = temp_climwin_input_file,
           row.names = FALSE)
 
