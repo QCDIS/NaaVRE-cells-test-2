@@ -1,0 +1,6 @@
+FROM ubuntu:24.04
+
+COPY --from=qcdis/conda-lter-life:v0.2 /venv/ /venv/
+RUN mkdir -p /app
+COPY climate-window-analysis-gabriel-pelouze-at-lifewatch-eu.R /app
+
