@@ -9,6 +9,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
+arg_parser.add_argument('--param_dataset', action='store', type=str, required=True, dest='param_dataset')
 arg_parser.add_argument('--param_hostname', action='store', type=str, required=True, dest='param_hostname')
 arg_parser.add_argument('--param_password', action='store', type=str, required=True, dest='param_password')
 arg_parser.add_argument('--param_remote_server_type', action='store', type=str, required=True, dest='param_remote_server_type')
@@ -20,13 +21,12 @@ print(args)
 id = args.id
 
 
+param_dataset = args.param_dataset
 param_hostname = args.param_hostname
 param_password = args.param_password
 param_remote_server_type = args.param_remote_server_type
 param_username = args.param_username
 
-conf_minio_server = parts[0]
-
 conf_bucket_name = 'naa-vre-public'
 
 conf_remote_path_root = '/webdav/vl-laserfarm/ahn'
@@ -34,10 +34,15 @@ conf_remote_path_root = '/webdav/vl-laserfarm/ahn'
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_username, 'webdav_password': param_password}
 
 
-conf_minio_server = parts[0]
 conf_bucket_name = 'naa-vre-public'
 conf_remote_path_root = '/webdav/vl-laserfarm/ahn'
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_username, 'webdav_password': param_password}
+
+
+
+parts = param_dataset.split('://')
+parts = parts[1].split('/')
+conf_minio_server = parts[0]
 
 
 laz_files = []
