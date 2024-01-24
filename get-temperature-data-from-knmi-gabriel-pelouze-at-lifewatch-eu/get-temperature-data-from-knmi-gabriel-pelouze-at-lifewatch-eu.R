@@ -73,7 +73,7 @@ param_knmi_edr_api_key = opt$param_knmi_edr_api_key
 
 
 
-dir.create(here::here("data"))
+dir.create("/tmp/data")
 
 
 
@@ -188,7 +188,7 @@ temp <- purrr::map(.x = 1988:2023,
   purrr::list_c()
 
 
-temperature_file = here::here("data", "Tg1_seasonalTemperature_Dec1987_to_June2023.csv")
+temperature_file = "/tmp/data/Tg1_seasonalTemperature_Dec1987_to_June2023.csv"
 write.csv(temp, temperature_file, row.names = FALSE)
 
 
