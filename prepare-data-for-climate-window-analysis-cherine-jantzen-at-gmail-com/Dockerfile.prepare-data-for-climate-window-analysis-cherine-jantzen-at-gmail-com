@@ -1,0 +1,6 @@
+FROM ubuntu:24.04
+
+COPY --from=qcdis/conda-lter-life:v0.2 /venv/ /venv/
+RUN mkdir -p /app
+COPY prepare-data-for-climate-window-analysis-cherine-jantzen-at-gmail-com.R /app
+
