@@ -12,10 +12,6 @@ if (!requireNamespace("ggpubr", quietly = TRUE)) {
 	install.packages("ggpubr", repos="http://cran.us.r-project.org")
 }
 library(ggpubr)
-if (!requireNamespace("here", quietly = TRUE)) {
-	install.packages("here", repos="http://cran.us.r-project.org")
-}
-library(here)
 if (!requireNamespace("lubridate", quietly = TRUE)) {
 	install.packages("lubridate", repos="http://cran.us.r-project.org")
 }
@@ -425,14 +421,14 @@ validation_all_zScores <- purrr::map(.x = c("1pt5degC", "1pt5degC_OS", "2pt0degC
                                                                   scenario = .x,
                                                                   scenario_data = scenario_data_all,
                                                                   use_zScores = "yes",
-                                                                  number_simulations = 20)
+                                                                  number_simulations = 1000)
 
                                        return(output)
 
                                      },
                                      .progress = TRUE)
 
-validation_all_zScores_file <- here::here("tmp", "data", "validation_all_zScores.Rda")
+validation_all_zScores_file <- "/tmp/data/validation_all_zScores.Rda"
 save(validation_all_zScores, file = validation_all_zScores_file)
  
 validation_plot_all <- ggpubr::ggarrange(plotlist = purrr::map(.x = validation_all_zScores, "plot_validation"),
