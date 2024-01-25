@@ -57,7 +57,7 @@ temp_climwin_input_file <- gsub('"', '', opt$temp_climwin_input_file)
 
 temp <- read.csv(temp_climwin_input_file)
 avg_annual_budburst_dates <- read.csv(budburst_climwin_input_file)
-climwin_QRobur <- load(first_window_Qrobur_file)
+climwin_QRobur <- load(firstWindow_file)
 scenario_data_all <- read.csv(scenario_data_all_file)
 
 scenario_data_all <- scenario_data_all %>%
