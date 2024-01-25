@@ -8,10 +8,6 @@ if (!requireNamespace("dplyr", quietly = TRUE)) {
 	install.packages("dplyr", repos="http://cran.us.r-project.org")
 }
 library(dplyr)
-if (!requireNamespace("here", quietly = TRUE)) {
-	install.packages("here", repos="http://cran.us.r-project.org")
-}
-library(here)
 if (!requireNamespace("httr", quietly = TRUE)) {
 	install.packages("httr", repos="http://cran.us.r-project.org")
 }
@@ -61,7 +57,7 @@ param_dataverse_api_key = opt$param_dataverse_api_key
 
 
 
-dir.create(here::here("tmp", "data"))
+dir.create("/tmp/data")
 
 
 retrieve_dataverse_data <- function(dataset,
@@ -268,7 +264,7 @@ event <-
   # Rename "Hoge Veluwe" back to original name
   dplyr::mutate(verbatimLocality = stringr::str_replace(string = verbatimLocality, pattern = "_", replacement = " "))
 
-event_file <- here::here("tmp", "data", "event.csv")
+event_file <- "/tmp/data/event.csv"
 write.csv(event, file = event_file, row.names = FALSE)
 
 
@@ -337,7 +333,7 @@ occurrence <-
                 "occurrenceRemarks", "organismID", "scientificName", "kingdom", "phylum", "class", "order",
                 "family", "genus", "specificEpithet")
 
-occurrence_file <- here::here("tmp", "data", "occurrence.csv")
+occurrence_file <- "/tmp/data/occurrence.csv"
 write.csv(occurrence, file = occurrence_file, row.names = FALSE)
 
 
@@ -372,7 +368,7 @@ measurement_or_fact <-
   dplyr::select("measurementID", "eventID", "measurementType", "measurementValue",
                 "measurementUnit", "measurementMethod", "measurementRemarks")
 
-extendedmeasurementorfact_file <- here::here("tmp", "data", "extendedmeasurementorfact.csv")
+extendedmeasurementorfact_file <- "/tmp/data/extendedmeasurementorfact.csv"
 write.csv(measurement_or_fact, file = extendedmeasurementorfact_file, row.names = FALSE)
 
 
