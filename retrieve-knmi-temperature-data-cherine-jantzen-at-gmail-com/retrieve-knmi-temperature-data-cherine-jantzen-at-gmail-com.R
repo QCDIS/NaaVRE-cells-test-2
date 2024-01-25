@@ -8,10 +8,6 @@ if (!requireNamespace("dplyr", quietly = TRUE)) {
 	install.packages("dplyr", repos="http://cran.us.r-project.org")
 }
 library(dplyr)
-if (!requireNamespace("here", quietly = TRUE)) {
-	install.packages("here", repos="http://cran.us.r-project.org")
-}
-library(here)
 if (!requireNamespace("httr", quietly = TRUE)) {
 	install.packages("httr", repos="http://cran.us.r-project.org")
 }
@@ -61,7 +57,7 @@ param_knmi_edr_api_key = opt$param_knmi_edr_api_key
 
 
 
-dir.create(here::here("tmp", "data"))
+dir.create("/tmp/data")
 
 
 
@@ -176,7 +172,7 @@ temp <- purrr::map(.x = 1988:2023,
   purrr::list_c()
 
 
-temperature_file <- here::here("tmp", "data", "Tg1_seasonalTemperature_Dec1987_to_June2023.csv")
+temperature_file <- "/tmp/data/Tg1_seasonalTemperature_Dec1987_to_June2023.csv"
 write.csv(temp, temperature_file, row.names = FALSE)
 
 
