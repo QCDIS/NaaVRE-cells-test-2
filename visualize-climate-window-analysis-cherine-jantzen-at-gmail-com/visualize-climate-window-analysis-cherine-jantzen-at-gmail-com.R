@@ -16,10 +16,6 @@ if (!requireNamespace("ggpubr", quietly = TRUE)) {
 	install.packages("ggpubr", repos="http://cran.us.r-project.org")
 }
 library(ggpubr)
-if (!requireNamespace("here", quietly = TRUE)) {
-	install.packages("here", repos="http://cran.us.r-project.org")
-}
-library(here)
 if (!requireNamespace("lubridate", quietly = TRUE)) {
 	install.packages("lubridate", repos="http://cran.us.r-project.org")
 }
