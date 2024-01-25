@@ -8,10 +8,6 @@ if (!requireNamespace("dplyr", quietly = TRUE)) {
 	install.packages("dplyr", repos="http://cran.us.r-project.org")
 }
 library(dplyr)
-if (!requireNamespace("here", quietly = TRUE)) {
-	install.packages("here", repos="http://cran.us.r-project.org")
-}
-library(here)
 if (!requireNamespace("lubridate", quietly = TRUE)) {
 	install.packages("lubridate", repos="http://cran.us.r-project.org")
 }
@@ -120,7 +116,7 @@ bud_burst_dates <- dplyr::bind_rows(match_criterion %>%
                    by = c("year", "organismID")) %>%
   dplyr::arrange(year, organismID)
 
-budburst_file = here::here("tmp", "data", "annual_budburst_per_tree.csv")
+budburst_file <- "/tmp/data/annual_budburst_per_tree.csv"
 write.csv(bud_burst_dates, budburst_file, row.names = FALSE)
 
 
