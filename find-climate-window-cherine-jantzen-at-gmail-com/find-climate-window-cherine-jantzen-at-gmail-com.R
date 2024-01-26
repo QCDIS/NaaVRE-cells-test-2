@@ -156,6 +156,8 @@ first_window_Qrobur <- find_climate_window(biological_data = avg_annual_budburst
                                            window_number = "first",
                                            reference_day = c(31, 5),
                                            range = c(181, 0))
+first_window_Qrobur$start_date
+first_window_Qrobur$end_date
 
 firstWindow_file <- "/tmp/data/climwin_outputs_Qrobur.rda"
 save(first_window_Qrobur, file = firstWindow_file)
