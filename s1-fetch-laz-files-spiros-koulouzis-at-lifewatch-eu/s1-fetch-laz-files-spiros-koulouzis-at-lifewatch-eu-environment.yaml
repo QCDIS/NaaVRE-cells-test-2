@@ -4,6 +4,7 @@ channels:
 dependencies:
   - pip
   - python>=3.8
+  - minio
   - pip:
     - git+https://github.com/QCDIS/Laserfarm.git
   - papermill
