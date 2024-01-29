@@ -79,6 +79,7 @@ jobs:
         echo "Run Identifier: ${{ github.event.inputs.id }}"
         echo "hash: ${{ steps.commit.outputs.short }}"
         echo "hash: ${{github.sha}}"
+        echo "image_version: ${{ github.event.inputs.image_version }}"
       
     - name: Build docker
       uses: docker/build-push-action@v5
