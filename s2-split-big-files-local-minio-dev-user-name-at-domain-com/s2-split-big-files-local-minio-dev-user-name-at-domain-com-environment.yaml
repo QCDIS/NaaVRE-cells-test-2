@@ -5,8 +5,8 @@ dependencies:
   - pip
   - python>=3.8
   - laspy
-  - minio
   - numpy
   - webdavclient3
+  - minio
   - papermill
   - ipykernel
