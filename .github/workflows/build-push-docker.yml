@@ -20,6 +20,10 @@ on:
         description : "Image Tag"
         required    : true
         default     : ''
+      image_version:
+        description : "Image Version"
+        required    : false
+        default     : ''
       id:
         description: 'run identifier'
         required: false
@@ -75,13 +79,13 @@ jobs:
         echo "Run Identifier: ${{ github.event.inputs.id }}"
         echo "hash: ${{ steps.commit.outputs.short }}"
         echo "hash: ${{github.sha}}"
-
+      
     - name: Build docker
       uses: docker/build-push-action@v5
       with:
         context: ${{ github.event.inputs.build_dir }}
         file: ${{ github.event.inputs.build_dir }}/${{ github.event.inputs.dockerfile }}
-        tags: ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:${{ steps.commit.outputs.short }},${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest
+        tags: ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:${{ github.event.inputs.image_version }},${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest
         cache-from: type=gha
         cache-to: type=gha,mode=min
         push: true
