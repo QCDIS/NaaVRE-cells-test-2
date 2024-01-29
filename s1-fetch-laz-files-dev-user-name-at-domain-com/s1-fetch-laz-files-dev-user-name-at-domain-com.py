@@ -37,6 +37,7 @@ conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_userna
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_username, 'webdav_password': param_password}
 
 
+
 laz_files = []
 if param_remote_server_type == 'minio':
     minio_client = Minio(param_minio_server, secure=True)
@@ -50,6 +51,7 @@ elif param_remote_server_type == 'webdav':
     laz_files = [f for f in list_remote(get_wdclient(conf_wd_opts), pathlib.Path(webdva_path).as_posix())
                  if f.lower().endswith('.laz')]
 print(laz_files)
+print(param_remote_server_type)
 
 import json
 filename = "/tmp/laz_files_" + id + ".json"
