@@ -4,9 +4,9 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - minio
-  - laspy
-  - numpy
   - webdavclient3
+  - minio
+  - numpy
+  - laspy
   - papermill
   - ipykernel
