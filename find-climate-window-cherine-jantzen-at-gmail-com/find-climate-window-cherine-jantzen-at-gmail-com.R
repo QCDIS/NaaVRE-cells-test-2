@@ -77,6 +77,7 @@ avg_annual_budburst_dates <- avg_annual_budburst_dates %>%
 
 
 find_climate_window <- function(biological_data = NULL,
+                                climate_data,
                                 range,
                                 reference_day,
                                 window_number = c("first", "second"),
@@ -118,12 +119,12 @@ find_climate_window <- function(biological_data = NULL,
 
   # climwin analysis: Find best window
   best_window <- climwin::slidingwin(baseline = baseline,
-                                     xvar = list(Temp = temp$temperature),
-                                     cdate = temp$factor_date,
+                                     xvar = list(Temp = climate_data$temperature),
+                                     cdate = climate_data$factor_date,
                                      bdate = biological_data$date,
                                      type = "absolute",
                                      refday = reference_day,
-                                     spatial = list(biological_data$locID, temp$locID),
+                                     spatial = list(biological_data$locID, climate_data$locID),
                                      range = range,
                                      func = "lin",
                                      stat = "mean")
@@ -132,9 +133,9 @@ find_climate_window <- function(biological_data = NULL,
 
   # Create a reference year for calculation of start and end date
   # Note: can be any year that is not a leap year, as dates should be calculated on the basis of regular years
-  reference_year <- dplyr::if_else(condition = lubridate::leap_year(max(temp$year)),
-                                   true = max(temp$year) - 1,
-                                   false = max(temp$year))
+  reference_year <- dplyr::if_else(condition = lubridate::leap_year(max(climate_data$year)),
+                                   true = max(climate_data$year) - 1,
+                                   false = max(climate_data$year))
 
   # Calculate calender date when window opens
   start_date <- lubridate::make_date(year = reference_year,
@@ -146,16 +147,18 @@ find_climate_window <- function(biological_data = NULL,
                                    month = reference_day[2],
                                    day = reference_day[1]) - best_window$combos[1,]$WindowClose
 
-  return(tibble::lst(best_window, biological_data, baseline, range, reference_day, start_date, end_date))
+  return(tibble::lst(best_window, biological_data, baseline, range, reference_day, climate_data, start_date, end_date))
 
 }
 
 
 first_window_Qrobur <- find_climate_window(biological_data = avg_annual_budburst_dates %>%
-                                             dplyr::filter(stringr::str_detect(scientificName, "Quercus robur")) ,
+                                             dplyr::filter(stringr::str_detect(scientificName, "Quercus robur")),
+                                           climate_data = temp,
                                            window_number = "first",
                                            reference_day = c(31, 5),
                                            range = c(181, 0))
+
 first_window_Qrobur$start_date
 first_window_Qrobur$end_date
 
