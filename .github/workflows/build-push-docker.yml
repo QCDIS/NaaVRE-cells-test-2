@@ -86,7 +86,7 @@ jobs:
       with:
         context: ${{ github.event.inputs.build_dir }}
         file: ${{ github.event.inputs.build_dir }}/${{ github.event.inputs.dockerfile }}
-        tags: ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:${{ github.event.inputs.image_version }},${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest
+        tags: ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:${{ github.event.inputs.image_version || steps.commit.outputs.short }},${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest
         cache-from: type=gha
         cache-to: type=gha,mode=min
         push: true
