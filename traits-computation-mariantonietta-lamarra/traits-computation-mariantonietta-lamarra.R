@@ -4,6 +4,22 @@ setwd('/app')
 
 library(optparse)
 library(jsonlite)
+if (!requireNamespace("RCurl", quietly = TRUE)) {
+	install.packages("RCurl", repos="http://cran.us.r-project.org")
+}
+library(RCurl)
+if (!requireNamespace("dplyr", quietly = TRUE)) {
+	install.packages("dplyr", repos="http://cran.us.r-project.org")
+}
+library(dplyr)
+if (!requireNamespace("httr", quietly = TRUE)) {
+	install.packages("httr", repos="http://cran.us.r-project.org")
+}
+library(httr)
+if (!requireNamespace("reshape", quietly = TRUE)) {
+	install.packages("reshape", repos="http://cran.us.r-project.org")
+}
+library(reshape)
 
 
 option_list = list(
@@ -32,23 +48,34 @@ param_login = opt$param_login
 param_password = opt$param_password
 
 
-conf_datain1 = 'Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv'
+
+
+
+
+
+
+
+
+
+conf_datain1 = "Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv"
 conf_datain2 = '2_FILEinformativo_OPERATORE.csv'
+
 conf_output = '/tmp/data/'
-
-
-conf_datain1 = 'Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv'
-conf_datain2 = '2_FILEinformativo_OPERATORE.csv'
-conf_output = '/tmp/data/'
-
-
-
-
-
-
 
 CompTraits <- as.list(scan(text = param_CompTraits, what = "", sep = ","))
 
+formulaforsurfacesimplified = ''
+formulaforbiovolumesimplified = ''
+volumeofsedimentationchamber = ''
+formulaformissingdimensionsimplified = ''
+formulaforweight2 = ''
+cellcarboncontent = ''
+formulaforweight1 = ''
+formulaforsurface = ''
+formulaforbiovolume = ''
+formulaformissingdimension = ''
+surfacearea = ''
+biovolume = ''
 
 install.packages("RCurl",repos = "http://cran.us.r-project.org")
 library("RCurl")
