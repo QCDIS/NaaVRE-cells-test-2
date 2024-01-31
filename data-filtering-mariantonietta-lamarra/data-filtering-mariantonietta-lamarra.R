@@ -4,16 +4,28 @@ setwd('/app')
 
 library(optparse)
 library(jsonlite)
+if (!requireNamespace("RCurl", quietly = TRUE)) {
+	install.packages("RCurl", repos="http://cran.us.r-project.org")
+}
+library(RCurl)
+if (!requireNamespace("dplyr", quietly = TRUE)) {
+	install.packages("dplyr", repos="http://cran.us.r-project.org")
+}
+library(dplyr)
+if (!requireNamespace("httr", quietly = TRUE)) {
+	install.packages("httr", repos="http://cran.us.r-project.org")
+}
+library(httr)
+if (!requireNamespace("reshape", quietly = TRUE)) {
+	install.packages("reshape", repos="http://cran.us.r-project.org")
+}
+library(reshape)
 
 
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--output_traitscomp"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_cluster"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_taxlev"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_threshold"), action="store", default=NA, type="numeric", help="my description"), 
-make_option(c("--param_traits"), action="store", default=NA, type="character", help="my description")
+make_option(c("--output_traitscomp"), action="store", default=NA, type="character", help="my description")
 
 )
 
@@ -24,15 +36,12 @@ opt = parse_args(OptionParser(option_list=option_list))
 id <- gsub('"', '', opt$id)
 output_traitscomp <- gsub('"', '', opt$output_traitscomp)
 
-param_cluster = opt$param_cluster
-param_taxlev = opt$param_taxlev
-param_threshold = opt$param_threshold
-param_traits = opt$param_traits
 
 
+conf_output = '/tmp/data/'
 
 
-
+conf_output = '/tmp/data/'
 
 
 
@@ -41,6 +50,22 @@ param_traits = opt$param_traits
 
 dataset=read.csv(output_traitscomp,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
+conf_cluster_whole = 0
+conf_cluster_country = 1
+conf_cluster_locality = 1
+conf_cluster_year = 1
+conf_cluster_month = 1
+conf_cluster_day = 1
+conf_cluster_parenteventid = 1
+conf_cluster_eventid = 1
+
+conf_taxlev = 'scientificname'
+
+conf_totalbiovolume = 1
+conf_totalcarboncontent = 0
+conf_density = 1
+
+conf_threshold = 0.75
 
 
 if(!'density'%in%names(dataset)) dataset[,'density']=1
@@ -50,24 +75,39 @@ if(!'totalbiovolume'%in%names(dataset)) dataset[,'totalbiovolume']=dataset[,'bio
 if(!'totalcarboncontent'%in%names(dataset)) dataset[,'totalcarboncontent']=dataset[,'cellcarboncontent']*dataset[,'density']
 
 
+ID = ''
+IDLIST = ''
+IDZ = ''
+dataset.d = ''
+ddd = ''
+k = ''
+j = ''
+matz = ''
+matzx = ''
+totz = ''
+trs = ''
+x = ''
 
 
-cluster = as.list(scan(text = param_cluster, what = "", sep = ","))
+cluster = c()
+if (conf_cluster_whole==1) cluster="whole"
+if (conf_cluster_country==1) cluster=append(cluster,"country")
+if (conf_cluster_locality==1) cluster=append(cluster,"locality")
+if (conf_cluster_year==1) cluster=append(cluster,"year")
+if (conf_cluster_month==1) cluster=append(cluster,"month")
+if (conf_cluster_day==1) cluster=append(cluster,"day")
+if (conf_cluster_parenteventid==1) cluster=append(cluster,"parenteventid")
+if (conf_cluster_eventid==1) cluster=append(cluster,"eventid")
 
-if(cluster!='WHOLE') {
+if(conf_cluster_whole==0) {
   if(length(cluster)>1) ID=apply(dataset[,cluster],1,function(x)paste(x,collapse='.'))
   if(length(cluster)==1) ID=dataset[,cluster]
-} else {
+} else if(conf_cluster_whole==1) {
   ID=rep('all',dim(dataset)[1]) }
 
-                                 
-traits = as.list(scan(text = param_traits, what = "", sep = ","))      
-                                 
-taxlev = param_taxlev
-                                 
-threshold = as.numeric(param_threshold)
+        
     
-if ('density'%in%traits) {
+if (conf_density==1) {
   
   IDZ=unique(ID)  
   IDLIST=list()
@@ -78,20 +118,20 @@ if ('density'%in%traits) {
   for(j in 1:length(IDZ)){
     ddd=dataset[ID==IDZ[j],]
     totz=sum(ddd[,'density'],na.rm=TRUE)
-    matz=tapply(ddd[,'density'],ddd[,taxlev],function(x)sum(x,na.rm=TRUE)/totz)
+    matz=tapply(ddd[,'density'],ddd[,conf_taxlev],function(x)sum(x,na.rm=TRUE)/totz)
     matz=sort(matz,decreasing=TRUE) 
     
     # cumulative contribution to the overall density
     k=2
     trs=max(matz)
-    while (trs<threshold) {
+    while (trs<conf_threshold) {
       matz[k]=matz[k-1]+matz[k]
       trs=matz[k]
       k=k+1 }
     
     matzx=matz[1:k-1]
     
-    IDLIST[[j]] = ddd[ddd[,taxlev]%in%names(matzx),]
+    IDLIST[[j]] = ddd[ddd[,conf_taxlev]%in%names(matzx),]
   }
   
   # filtered dataset for density
@@ -100,7 +140,7 @@ if ('density'%in%traits) {
 } else dataset.d = dataset[FALSE,]
 
                 
-if ('totalbiovolume'%in%traits) {
+if (conf_totalbiovolume==1) {
   
   IDZ=unique(ID)  
   IDLIST=list()
@@ -111,20 +151,20 @@ if ('totalbiovolume'%in%traits) {
   for(j in 1:length(IDZ)){
     ddd=dataset[ID==IDZ[j],]
     totz=sum(ddd[,'totalbiovolume'],na.rm=TRUE)
-    matz=tapply(ddd[,'totalbiovolume'],ddd[,taxlev],function(x)sum(x,na.rm=TRUE)/totz)
+    matz=tapply(ddd[,'totalbiovolume'],ddd[,conf_taxlev],function(x)sum(x,na.rm=TRUE)/totz)
     matz=sort(matz,decreasing=TRUE) 
     
     # cumulative contribution to the overall total biovolume
     k=2
     trs=max(matz)
-    while (trs<threshold) {
+    while (trs<conf_threshold) {
       matz[k]=matz[k-1]+matz[k]
       trs=matz[k]
       k=k+1 }
     
     matzx=matz[1:k-1]
     
-    IDLIST[[j]] = ddd[ddd[,taxlev]%in%names(matzx),]
+    IDLIST[[j]] = ddd[ddd[,conf_taxlev]%in%names(matzx),]
   }
   
   # filtered dataset for total biovolume
@@ -134,7 +174,7 @@ if ('totalbiovolume'%in%traits) {
                  
                  
 
-if ('totalcarboncontent'%in%traits) {
+if (conf_totalcarboncontent==1) {
   
   IDZ=unique(ID)  
   IDLIST=list()
@@ -145,20 +185,20 @@ if ('totalcarboncontent'%in%traits) {
   for(j in 1:length(IDZ)){
     ddd=dataset[ID==IDZ[j],]
     totz=sum(ddd[,'totalcarboncontent'],na.rm=TRUE)
-    matz=tapply(ddd[,'totalcarboncontent'],ddd[,taxlev],function(x)sum(x,na.rm=TRUE)/totz)
+    matz=tapply(ddd[,'totalcarboncontent'],ddd[,conf_taxlev],function(x)sum(x,na.rm=TRUE)/totz)
     matz=sort(matz,decreasing=TRUE) 
     
     # cumulative contribution to the overall total cell carbon content
     k=2
     trs=max(matz)
-    while (trs<threshold) {
+    while (trs<conf_threshold) {
       matz[k]=matz[k-1]+matz[k]
       trs=matz[k]
       k=k+1 }
     
     matzx=matz[1:k-1]
     
-    IDLIST[[j]] = ddd[ddd[,taxlev]%in%names(matzx),]
+    IDLIST[[j]] = ddd[ddd[,conf_taxlev]%in%names(matzx),]
   }
   
   # filtered dataset for total cell carbon content
