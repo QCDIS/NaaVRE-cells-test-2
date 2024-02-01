@@ -70,7 +70,19 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Print inputs
+    - name: Set Docker Image Tag
+      id: set-docker-tag
+      run: |
+        if [[ -n "${{ github.event.inputs.image_version }}" ]]; then
+          DOCKER_TAG="${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:${{ github.event.inputs.image_version }}"
+        else
+          DOCKER_TAG="${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}"
+        fi
+        echo "Setting Docker Image Tag to: $DOCKER_TAG"
+        echo "docker_tag=$DOCKER_TAG" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Print variabls
       run: |
         echo "context: ${{ github.event.inputs.build_dir }}"
         echo "Dockerfile Name: ${{ github.event.inputs.dockerfile }}"
@@ -79,7 +91,7 @@ jobs:
         echo "Run Identifier: ${{ github.event.inputs.id }}"
         echo "hash: ${{ steps.commit.outputs.short }}"
         echo "hash: ${{github.sha}}"
-        echo "image_version: ${{ github.event.inputs.image_version }}"
+        echo "hash: ${{steps.commit.set-docker-tag.docker_tag}}"
       
     - name: Build docker
       uses: docker/build-push-action@v5
