@@ -102,3 +102,4 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=min
         push: true
+        registry: ${{ vars.REGISTRY_NAME || 'ghcr.io' }}
