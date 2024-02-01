@@ -79,7 +79,7 @@ jobs:
           DOCKER_TAG="${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}"
         fi
         echo "Setting Docker Image Tag to: $DOCKER_TAG"
-        echo "docker_tag=$DOCKER_TAG" >> $GITHUB_ENV
+        echo "docker_tag=$DOCKER_TAG" >> "$GITHUB_OUTPUT"
       shell: bash
 
     - name: Print variabls
@@ -91,14 +91,14 @@ jobs:
         echo "Run Identifier: ${{ github.event.inputs.id }}"
         echo "hash: ${{ steps.commit.outputs.short }}"
         echo "hash: ${{github.sha}}"
-        echo "hash: ${{steps.commit.set-docker-tag.docker_tag}}"
+        echo "docker_tag: ${{steps.set-docker-tag.outputs.docker_tag}}"
       
     - name: Build docker
       uses: docker/build-push-action@v5
       with:
         context: ${{ github.event.inputs.build_dir }}
         file: ${{ github.event.inputs.build_dir }}/${{ github.event.inputs.dockerfile }}
-        tags: ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:${{ github.event.inputs.image_version || steps.commit.outputs.short }},${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest
+        tags: ${{steps.set-docker-tag.outputs.docker_tag}},${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest
         cache-from: type=gha
         cache-to: type=gha,mode=min
         push: true
