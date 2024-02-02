@@ -4,11 +4,22 @@ setwd('/app')
 
 library(optparse)
 library(jsonlite)
+if (!requireNamespace("Rcurl", quietly = TRUE)) {
+	install.packages("Rcurl", repos="http://cran.us.r-project.org")
+}
+library(Rcurl)
+if (!requireNamespace("httr", quietly = TRUE)) {
+	install.packages("httr", repos="http://cran.us.r-project.org")
+}
+library(httr)
+if (!requireNamespace("yaml", quietly = TRUE)) {
+	install.packages("yaml", repos="http://cran.us.r-project.org")
+}
+library(yaml)
 
 
 option_list = list(
 
-make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_CalcType"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_CompTraits"), action="store", default=NA, type="character", help="my description"), 
@@ -23,7 +34,6 @@ make_option(c("--param_password"), action="store", default=NA, type="character",
 opt = parse_args(OptionParser(option_list=option_list))
 
 
-id <- gsub('"', '', opt$id)
 id <- gsub('"', '', opt$id)
 
 param_CalcType = opt$param_CalcType
@@ -52,10 +62,6 @@ conf_output = '/tmp/data/'
 CompTraits <- as.list(scan(text = param_CompTraits, what = "", sep = ","))
 
 
-install.packages("RCurl",repos = "http://cran.us.r-project.org")
-library("RCurl")
-install.packages("httr",repos = "http://cran.us.r-project.org")
-library("httr")
 
 auth = basicTextGatherer()
 cred = paste(param_login, param_password, sep = ":")
