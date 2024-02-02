@@ -9,6 +9,7 @@ library(jsonlite)
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_CalcType"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_CompTraits"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_CountingStrategy"), action="store", default=NA, type="character", help="my description"), 
@@ -22,6 +23,7 @@ make_option(c("--param_password"), action="store", default=NA, type="character",
 opt = parse_args(OptionParser(option_list=option_list))
 
 
+id <- gsub('"', '', opt$id)
 id <- gsub('"', '', opt$id)
 
 param_CalcType = opt$param_CalcType
