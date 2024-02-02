@@ -12,6 +12,10 @@ if (!requireNamespace("httr", quietly = TRUE)) {
 	install.packages("httr", repos="http://cran.us.r-project.org")
 }
 library(httr)
+if (!requireNamespace("yaml", quietly = TRUE)) {
+	install.packages("yaml", repos="http://cran.us.r-project.org")
+}
+library(yaml)
 
 
 option_list = list(
