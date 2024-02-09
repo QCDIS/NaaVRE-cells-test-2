@@ -50,7 +50,9 @@ def rewrite_list_nested(in_list,concurrency):
         out_list.append(in_list[:worker_chunk_size+leftover])
         in_list = in_list[worker_chunk_size+leftover:]
     return out_list
-if eval(init_complete) == "Yes":
+init_complete = init_complete.replace("'","")
+init_complete = init_complete.replace('"','')
+if init_complete == "Yes":
     print("Workflow configuration succesfull")
 else:
     print("Workflow configuration was not complete, exitting")
