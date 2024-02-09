@@ -184,10 +184,13 @@ for knmi_pvol_path in knmi_pvol_paths:
     else:
         check_list.append(knmi_pvol_path)
 knmi_pvol_paths = check_list   
+print(f"{knmi_pvol_paths=}")
 odim_pvol_paths = []
 radar_db = load_radar_db(conf_local_radar_db)
 for knmi_path in knmi_pvol_paths:
     out_path_pvol_odim = pathlib.Path(knmi_path.replace('knmi','odim'))
+    print(f"{knmi_path=}")
+    print(f"{out_path_pvol_odim=}")
     if not out_path_pvol_odim.parent.exists():
         out_path_pvol_odim.parent.mkdir(parents=True,exist_ok=False)
     converter_results = knmi_to_odim(in_fpath = str(knmi_path),out_fpath = str(out_path_pvol_odim))
