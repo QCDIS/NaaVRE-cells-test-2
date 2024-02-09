@@ -191,6 +191,7 @@ for knmi_path in knmi_pvol_paths:
     if not out_path_pvol_odim.parent.exists():
         out_path_pvol_odim.parent.mkdir(parents=True,exist_ok=False)
     converter_results = knmi_to_odim(in_fpath = str(knmi_path),out_fpath = str(out_path_pvol_odim))
+    print(f"{converter_results=}")
     if conf_clean_knmi_input:
         pathlib.Path(knmi_path).unlink()
         if not any(pathlib.Path(knmi_path).parent.iterdir()):
