@@ -96,3 +96,8 @@ print(dataset_files)
 dataset_files = rewrite_list_nested(dataset_files,param_concurrency)
 
 
+import json
+filename = "/tmp/dataset_files_" + id + ".json"
+file_dataset_files = open(filename, "w")
+file_dataset_files.write(json.dumps(dataset_files))
+file_dataset_files.close()
