@@ -74,3 +74,8 @@ if not pathlib.Path(conf_local_radar_db).exists():
 init_complete = "Yes" # Cant sent bool
 print("Finished initialization")
 
+import json
+filename = "/tmp/init_complete_" + id + ".json"
+file_init_complete = open(filename, "w")
+file_init_complete.write(json.dumps(init_complete))
+file_init_complete.close()
