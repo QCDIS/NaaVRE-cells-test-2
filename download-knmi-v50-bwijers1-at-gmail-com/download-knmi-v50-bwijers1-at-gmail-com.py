@@ -84,3 +84,8 @@ knmi_pvol_paths = rewrite_list_nested(knmi_pvol_paths,param_concurrency)
 print(knmi_pvol_paths)
 print("Finished downloading files")
 
+import json
+filename = "/tmp/knmi_pvol_paths_" + id + ".json"
+file_knmi_pvol_paths = open(filename, "w")
+file_knmi_pvol_paths.write(json.dumps(knmi_pvol_paths))
+file_knmi_pvol_paths.close()
