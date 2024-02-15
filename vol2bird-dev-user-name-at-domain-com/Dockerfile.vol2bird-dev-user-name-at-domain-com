@@ -14,4 +14,3 @@ RUN apt update -y && apt upgrade -y && apt install jq -y
 COPY --from=build /venv /venv
 COPY vol2bird-dev-user-name-at-domain-com.py .
 
-
