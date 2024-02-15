@@ -1,9 +1,14 @@
-FROM jupyter/r-notebook:70178b8e48d7
 
-USER root
+FROM jupyter/r-notebook:70178b8e48d7 AS build
+COPY input-lists-r-dev-user-name-at-domain-com-environment.yaml .
+RUN micromamba update -y -n venv -f input-lists-r-dev-user-name-at-domain-com-environment.yaml
+RUN conda-pack -p /opt/conda/envs/venv -o /tmp/env.tar && \
+    mkdir /venv && \
+    cd /venv && \
+    tar xf /tmp/env.tar && \
+    rm /tmp/env.tar
+RUN /venv/bin/conda-unpack
 
-RUN R -e "install.packages('optparse', repos='http://cran.rstudio.com')"
-
-RUN mkdir -p /app
-COPY input-lists-r-dev-user-name-at-domain-com.R /app
-
+FROM ubuntu:24.04 AS runtime
+COPY --from=build /venv /venv
+COPY ./ /app/
