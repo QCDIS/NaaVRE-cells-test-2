@@ -1,14 +1,6 @@
+FROM ubuntu:24.04
 
-FROM qcdis/conda-lter-life:v0.1 AS build
-COPY consume-climwin-dev-user-name-at-domain-com-environment.yaml .
-RUN micromamba update -y -n venv -f consume-climwin-dev-user-name-at-domain-com-environment.yaml
-RUN conda-pack -p /opt/conda/envs/venv -o /tmp/env.tar && \
-    mkdir /venv && \
-    cd /venv && \
-    tar xf /tmp/env.tar && \
-    rm /tmp/env.tar
-RUN /venv/bin/conda-unpack
+COPY --from=qcdis/conda-lter-life:v0.1 /venv/ /venv/
+RUN mkdir -p /app
+COPY consume-climwin-dev-user-name-at-domain-com.R /app
 
-FROM ubuntu:24.04 AS runtime
-COPY --from=build /venv /venv
-COPY ./ /app/
