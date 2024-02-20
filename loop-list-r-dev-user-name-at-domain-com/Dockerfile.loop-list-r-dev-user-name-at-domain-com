@@ -1,14 +1,9 @@
-FROM ghcr.io/qcdis/naavre/naavre-cell-build-r:latest AS build
-COPY loop-list-r-dev-user-name-at-domain-com-environment.yaml .
-RUN micromamba install -y -n venv -f environment.yaml
-ARG MAMBA_DOCKERFILE_ACTIVATE=1
-USER root
-RUN conda-pack -p /opt/conda/envs/venv -o /tmp/env.tar && \
-    mkdir /venv && cd /venv && tar xf /tmp/env.tar && \
-    rm /tmp/env.tar
-RUN /venv/bin/conda-unpack
+FROM jupyter/r-notebook:70178b8e48d7
 
-FROM ghcr.io/qcdis/naavre/naavre-cell-runtime-r:latest AS runtime
-COPY --from=build /venv /venv
-WORKDIR /app
-COPY . .
+USER root
+
+RUN R -e "install.packages('optparse', repos='http://cran.rstudio.com')"
+
+RUN mkdir -p /app
+COPY loop-list-r-dev-user-name-at-domain-com.R /app
+
