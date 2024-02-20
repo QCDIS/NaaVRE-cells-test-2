@@ -1,4 +1,4 @@
-import os.path as path
+import requests as req
 
 import argparse
 arg_parser = argparse.ArgumentParser()
@@ -16,10 +16,11 @@ id = args.id
 
 
 
-subpath = path.join('.', 'subpath') 
+url = "https://www.example.com"
+response = req.get(url)
 
 import json
-filename = "/tmp/subpath_" + id + ".json"
-file_subpath = open(filename, "w")
-file_subpath.write(json.dumps(subpath))
-file_subpath.close()
+filename = "/tmp/response_" + id + ".json"
+file_response = open(filename, "w")
+file_response.write(json.dumps(response))
+file_response.close()
