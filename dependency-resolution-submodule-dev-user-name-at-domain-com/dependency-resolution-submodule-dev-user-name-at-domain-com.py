@@ -1,4 +1,5 @@
-import matplotlib.pyplot as plt
+import torch
+import torch.nn as nn
 
 import argparse
 arg_parser = argparse.ArgumentParser()
@@ -16,21 +17,14 @@ id = args.id
 
 
 
-x_values = [1, 2, 3, 4, 5]
-y_values = [2, 4, 6, 8, 10]
+linear_layer = nn.Linear(in_features=3, out_features=1)
 
-plt.plot(x_values, y_values, label='Linear Function')
+input_data = torch.tensor([[1.0, 2.0, 3.0]])
 
-plt.xlabel('X-axis')
-plt.ylabel('Y-axis')
-plt.title('Simple Linear Plot')
-
-plt.legend()
-
-plt.show()
+output = str(linear_layer(input_data))
 
 import json
-filename = "/tmp/y_values_" + id + ".json"
-file_y_values = open(filename, "w")
-file_y_values.write(json.dumps(y_values))
-file_y_values.close()
+filename = "/tmp/output_" + id + ".json"
+file_output = open(filename, "w")
+file_output.write(json.dumps(output))
+file_output.close()
