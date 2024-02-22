@@ -16,7 +16,6 @@ make_option(c("--param_a"), action="store", default=NA, type="character", help="
 # set input parameters accordingly
 opt = parse_args(OptionParser(option_list=option_list))
 
-
 id <- gsub('"', '', opt$id)
 
 param_a = opt$param_a
