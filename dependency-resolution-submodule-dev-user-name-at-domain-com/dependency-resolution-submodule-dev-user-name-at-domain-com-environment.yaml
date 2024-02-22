@@ -4,6 +4,6 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - matplotlib.pyplot
+  - matplotlib
   - papermill
   - ipykernel
