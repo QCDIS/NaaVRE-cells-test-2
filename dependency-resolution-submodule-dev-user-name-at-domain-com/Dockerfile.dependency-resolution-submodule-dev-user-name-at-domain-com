@@ -1,5 +1,5 @@
 
-FROM qcdis/miniconda3:v0.2 AS build
+FROM qcdis/miniconda3:v0.1 AS build
 COPY dependency-resolution-submodule-dev-user-name-at-domain-com-environment.yaml .
 RUN conda config --remove channels defaults || true
 RUN conda env update -n venv -f dependency-resolution-submodule-dev-user-name-at-domain-com-environment.yaml
