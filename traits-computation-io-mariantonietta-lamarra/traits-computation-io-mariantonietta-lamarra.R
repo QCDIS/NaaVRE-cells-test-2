@@ -4,18 +4,6 @@ setwd('/app')
 
 library(optparse)
 library(jsonlite)
-if (!requireNamespace("Rcurl", quietly = TRUE)) {
-	install.packages("Rcurl", repos="http://cran.us.r-project.org")
-}
-library(Rcurl)
-if (!requireNamespace("httr", quietly = TRUE)) {
-	install.packages("httr", repos="http://cran.us.r-project.org")
-}
-library(httr)
-if (!requireNamespace("yaml", quietly = TRUE)) {
-	install.packages("yaml", repos="http://cran.us.r-project.org")
-}
-library(yaml)
 
 
 option_list = list(
@@ -62,6 +50,10 @@ conf_output = '/tmp/data/'
 CompTraits <- as.list(scan(text = param_CompTraits, what = "", sep = ","))
 
 
+install.packages("RCurl",repos = "http://cran.us.r-project.org")
+library("RCurl")
+install.packages("httr",repos = "http://cran.us.r-project.org")
+library("httr")
 
 auth = basicTextGatherer()
 cred = paste(param_login, param_password, sep = ":")
