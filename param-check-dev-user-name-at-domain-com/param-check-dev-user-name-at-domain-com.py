@@ -5,6 +5,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
+arg_parser.add_argument('--param_density', action='store', type=int, required=True, dest='param_density')
 
 args = arg_parser.parse_args()
 print(args)
@@ -12,11 +13,12 @@ print(args)
 id = args.id
 
 
+param_density = args.param_density
 
 
 
 
-param_density = 1
+
 
 if param_density == 1: 
     param_CountingStrategy = 'density0'
