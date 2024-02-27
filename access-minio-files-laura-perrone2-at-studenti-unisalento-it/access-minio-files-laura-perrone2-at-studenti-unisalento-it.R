@@ -64,9 +64,17 @@ Sys.setenv(
     "AWS_SECRET_ACCESS_KEY" = param_s3_secret_access_key,
     "AWS_S3_ENDPOINT" = param_s3_endpoint
     )
+datain1 = "/tmp/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv"
+datain2 = '/tmp/2_FILEinformativo_OPERATORE.csv'
+save_object(region="", bucket="naa-vre-user-data", file=datain1, object=paste0(param_s3_prefix, "/myfile/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv"))
+save_object(region="", bucket="naa-vre-user-data", file=datain2, object=paste0(param_s3_prefix, "/myfile/2_FILEinformativo_OPERATORE.csv"))
 
-save_object(region="", bucket="naa-vre-user-data", file="Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv", object=paste0(param_s3_prefix, "/myfile/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv"))
-save_object(region="", bucket="naa-vre-user-data", file="2_FILEinformativo_OPERATORE.csv", object=paste0(param_s3_prefix, "/myfile/2_FILEinformativo_OPERATORE.csv"))
 
 
-
+# capturing outputs
+file <- file(paste0('/tmp/datain1_', id, '.json'))
+writeLines(toJSON(datain1, auto_unbox=TRUE), file)
+close(file)
+file <- file(paste0('/tmp/datain2_', id, '.json'))
+writeLines(toJSON(datain2, auto_unbox=TRUE), file)
+close(file)
