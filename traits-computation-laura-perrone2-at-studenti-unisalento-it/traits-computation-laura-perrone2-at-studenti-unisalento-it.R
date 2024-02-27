@@ -38,7 +38,10 @@ make_option(c("--id"), action="store", default=NA, type="character", help="my de
 make_option(c("--param_CalcType"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_CompTraits"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_CountingStrategy"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_s3_prefix"), action="store", default=NA, type="character", help="my description")
+make_option(c("--param_s3_access_key_id"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_prefix"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_secret_access_key"), action="store", default=NA, type="character", help="my description")
 
 )
 
@@ -53,7 +56,10 @@ id <- gsub('"', '', opt$id)
 param_CalcType = opt$param_CalcType
 param_CompTraits = opt$param_CompTraits
 param_CountingStrategy = opt$param_CountingStrategy
+param_s3_access_key_id = opt$param_s3_access_key_id
+param_s3_endpoint = opt$param_s3_endpoint
 param_s3_prefix = opt$param_s3_prefix
+param_s3_secret_access_key = opt$param_s3_secret_access_key
 
 
 conf_output = '/tmp/data/'
@@ -301,6 +307,12 @@ if('surfacevolumeratio'%in%CompTraits) {
 if('totalcarboncontent'%in%CompTraits) {
     df.datain[,'totalcarboncontent'] = df.merged[,'totalcarboncontent']
     }
+    
+Sys.setenv(
+    "AWS_ACCESS_KEY_ID" = param_s3_access_key_id,
+    "AWS_SECRET_ACCESS_KEY" = param_s3_secret_access_key,
+    "AWS_S3_ENDPOINT" = param_s3_endpoint
+    )
     
 output_traitscomp = paste(conf_output, "df_traitscomp.csv",sep = "")
 write.table(df.datain,output_traitscomp,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
