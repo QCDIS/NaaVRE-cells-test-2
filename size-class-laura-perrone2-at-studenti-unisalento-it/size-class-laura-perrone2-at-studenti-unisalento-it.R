@@ -209,7 +209,6 @@ if (conf_cluster_whole==1) {      # if no temporal/spatial selection, no cluster
 
 }
 
-
 output_SizeClass = paste(conf_output, "df_sizeclass.csv",sep = "")
 write.table(final,output_SizeClass,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
 put_object(region="", bucket="naa-vre-user-data", file=output_SizeClass, object=paste0(param_s3_prefix, "/myfile/df_sizeclass.csv"))
