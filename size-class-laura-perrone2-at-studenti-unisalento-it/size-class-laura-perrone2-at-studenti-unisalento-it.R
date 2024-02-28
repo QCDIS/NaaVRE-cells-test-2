@@ -28,10 +28,6 @@ if (!requireNamespace("stringr", quietly = TRUE)) {
 	install.packages("stringr", repos="http://cran.us.r-project.org")
 }
 library(stringr)
-if (!requireNamespace("vegan", quietly = TRUE)) {
-	install.packages("vegan", repos="http://cran.us.r-project.org")
-}
-library(vegan)
 
 
 option_list = list(
