@@ -217,6 +217,3 @@ put_object(region="", bucket="naa-vre-user-data", file=file_graph, object=paste0
 file <- file(paste0('/tmp/output_SizeClass_', id, '.json'))
 writeLines(toJSON(output_SizeClass, auto_unbox=TRUE), file)
 close(file)
-file <- file(paste0('/tmp/file_graph_', id, '.json'))
-writeLines(toJSON(file_graph, auto_unbox=TRUE), file)
-close(file)
