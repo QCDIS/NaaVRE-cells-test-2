@@ -24,6 +24,10 @@ if (!requireNamespace("reshape", quietly = TRUE)) {
 	install.packages("reshape", repos="http://cran.us.r-project.org")
 }
 library(reshape)
+if (!requireNamespace("stringi", quietly = TRUE)) {
+	install.packages("stringi", repos="http://cran.us.r-project.org")
+}
+library(stringi)
 if (!requireNamespace("stringr", quietly = TRUE)) {
 	install.packages("stringr", repos="http://cran.us.r-project.org")
 }
@@ -67,6 +71,7 @@ conf_output = '/tmp/data/'
 
 install.packages("stringr",repos = "http://cran.us.r-project.org")
 library(stringr)
+library(stringi)
 
 install.packages("dplyr",repos = "http://cran.us.r-project.org")
 library(dplyr)
