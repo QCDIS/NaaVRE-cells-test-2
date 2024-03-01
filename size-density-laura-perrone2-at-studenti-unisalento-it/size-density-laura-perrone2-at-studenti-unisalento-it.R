@@ -62,12 +62,6 @@ conf_output = '/tmp/data/'
 
 
 
-install.packages("reshape",repos = "http://cran.us.r-project.org")
-library("reshape")
-
-install.packages("dplyr",repos = "http://cran.us.r-project.org")
-library("dplyr")
-
 Sys.setenv(
     "AWS_ACCESS_KEY_ID" = param_s3_access_key_id,
     "AWS_SECRET_ACCESS_KEY" = param_s3_secret_access_key,
@@ -303,20 +297,21 @@ if(!(conf_taxlev=='community' & conf_cluster_whole==1)) {      # either taxlev o
   dev.off()
 
 }
-                                  
-  put_object(region="", bucket="naa-vre-user-data", file='sizedensity_DATA.csv', object=paste0(param_s3_prefix, "/myfile/sizedensity_DATA.csv"))
+  data_Sizedensity= 'sizedensity_DATA.csv' 
+  model_Sizedensity= 'sizedensity_MODEL_LM.csv'                  
+  put_object(region="", bucket="naa-vre-user-data", file=data_Sizedensity, object=paste0(param_s3_prefix, "/myfile/sizedensity_DATA.csv"))
   put_object(region="", bucket="naa-vre-user-data", file=file_graph, object=paste0(param_s3_prefix, "/myfile/sizedensityOutput.pdf"))
-  put_object(region="", bucket="naa-vre-user-data", file='sizedensity_MODEL_LM.csv', object=paste0(param_s3_prefix, "/myfile/sizedensity_MODEL_LM.csv"))
+  put_object(region="", bucket="naa-vre-user-data", file=model_Sizedensity, object=paste0(param_s3_prefix, "/myfile/sizedensity_MODEL_LM.csv"))
 
 
 
 # capturing outputs
-file <- file(paste0('/tmp/sizedensity_DATA_', id, '.json'))
-writeLines(toJSON(sizedensity_DATA, auto_unbox=TRUE), file)
+file <- file(paste0('/tmp/data_Sizedensity_', id, '.json'))
+writeLines(toJSON(data_Sizedensity, auto_unbox=TRUE), file)
 close(file)
 file <- file(paste0('/tmp/file_graph_', id, '.json'))
 writeLines(toJSON(file_graph, auto_unbox=TRUE), file)
 close(file)
-file <- file(paste0('/tmp/sizedensity_MODEL_LM_', id, '.json'))
-writeLines(toJSON(sizedensity_MODEL_LM, auto_unbox=TRUE), file)
+file <- file(paste0('/tmp/model_Sizedensity_', id, '.json'))
+writeLines(toJSON(model_Sizedensity, auto_unbox=TRUE), file)
 close(file)
