@@ -130,6 +130,7 @@ index_fun<-list(
   Hulburt=function(x)((max(x,na.rm=T)+max(x[-which.max(x)],na.rm=T))/sum(x,na.rm=T))*100
 )
 
+outputs = c()
 
 cluster= c()
 if (conf_cluster_whole==1) cluster="whole"
