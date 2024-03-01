@@ -97,6 +97,8 @@ ID = ''
 x = ''
 mm = ''
 
+outputs = c()
+
 cluster = c()
 if (conf_cluster_whole==1) cluster="whole"
 if (conf_cluster_country==1) cluster=append(cluster,"country")
