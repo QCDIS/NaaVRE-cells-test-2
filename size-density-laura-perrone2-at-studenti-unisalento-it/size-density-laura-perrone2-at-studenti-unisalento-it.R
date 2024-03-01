@@ -28,10 +28,6 @@ if (!requireNamespace("stringr", quietly = TRUE)) {
 	install.packages("stringr", repos="http://cran.us.r-project.org")
 }
 library(stringr)
-if (!requireNamespace("vegan", quietly = TRUE)) {
-	install.packages("vegan", repos="http://cran.us.r-project.org")
-}
-library(vegan)
 
 
 option_list = list(
@@ -315,12 +311,12 @@ if(!(conf_taxlev=='community' & conf_cluster_whole==1)) {      # either taxlev o
 
 
 # capturing outputs
-file <- file(paste0('/tmp/sizedensity_MODEL_LM.csv_', id, '.json'))
-writeLines(toJSON(sizedensity_MODEL_LM.csv, auto_unbox=TRUE), file)
+file <- file(paste0('/tmp/sizedensity_DATA_', id, '.json'))
+writeLines(toJSON(sizedensity_DATA, auto_unbox=TRUE), file)
 close(file)
 file <- file(paste0('/tmp/file_graph_', id, '.json'))
 writeLines(toJSON(file_graph, auto_unbox=TRUE), file)
 close(file)
-file <- file(paste0('/tmp/sizedensity_DATA.csv_', id, '.json'))
-writeLines(toJSON(sizedensity_DATA.csv, auto_unbox=TRUE), file)
+file <- file(paste0('/tmp/sizedensity_MODEL_LM_', id, '.json'))
+writeLines(toJSON(sizedensity_MODEL_LM, auto_unbox=TRUE), file)
 close(file)
