@@ -74,7 +74,6 @@ Sys.setenv(
     )
 
 if(param_dofiltering==1) {
-save_object(region="", bucket="naa-vre-user-data", file=output_traitscomp, object=paste0(param_s3_prefix, "/myfile/df_traitscomp.csv"))
 dataset=read.csv(output_traitscomp,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
 conf_cluster_whole = 0
@@ -243,7 +242,6 @@ put_object(region="", bucket="naa-vre-user-data", file=output_filtering, object=
 if(param_dofiltering==0) {
 output_filtering = paste(conf_output, "df_traitscomp.csv",sep = "")
 write.table(df.datain,output_filtering,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
-put_object(region="", bucket="naa-vre-user-data", file=output_filtering, object=paste0(param_s3_prefix, "/myfile/df_filtering.csv"))
 }
 
 
