@@ -69,6 +69,11 @@ conf_output = '/tmp/data/'
 
 
 
+install.packages("stringr",repos = "http://cran.us.r-project.org")
+library(stringr)
+
+install.packages("dplyr",repos = "http://cran.us.r-project.org")
+library(dplyr)
 
 Sys.setenv(
     "AWS_ACCESS_KEY_ID" = param_s3_access_key_id,
@@ -76,7 +81,6 @@ Sys.setenv(
     "AWS_S3_ENDPOINT" = param_s3_endpoint
     )
 
-save_object(region="", bucket="naa-vre-user-data", file=output_filtering, object=paste0(param_s3_prefix, "/myfile/df_filtering.csv"))
 dataset=read.csv(output_filtering,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
 
