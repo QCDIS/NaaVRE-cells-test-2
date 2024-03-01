@@ -12,10 +12,22 @@ if (!requireNamespace("dendextend", quietly = TRUE)) {
 	install.packages("dendextend", repos="http://cran.us.r-project.org")
 }
 library(dendextend)
+if (!requireNamespace("dplyr", quietly = TRUE)) {
+	install.packages("dplyr", repos="http://cran.us.r-project.org")
+}
+library(dplyr)
 if (!requireNamespace("fields", quietly = TRUE)) {
 	install.packages("fields", repos="http://cran.us.r-project.org")
 }
 library(fields)
+if (!requireNamespace("reshape", quietly = TRUE)) {
+	install.packages("reshape", repos="http://cran.us.r-project.org")
+}
+library(reshape)
+if (!requireNamespace("stringr", quietly = TRUE)) {
+	install.packages("stringr", repos="http://cran.us.r-project.org")
+}
+library(stringr)
 if (!requireNamespace("vegan", quietly = TRUE)) {
 	install.packages("vegan", repos="http://cran.us.r-project.org")
 }
