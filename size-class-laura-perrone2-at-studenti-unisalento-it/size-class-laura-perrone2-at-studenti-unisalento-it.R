@@ -69,12 +69,6 @@ conf_output = '/tmp/data/'
 
 
 
-install.packages("stringr",repos = "http://cran.us.r-project.org")
-library(stringr)
-library(stringi)
-
-install.packages("dplyr",repos = "http://cran.us.r-project.org")
-library(dplyr)
 
 Sys.setenv(
     "AWS_ACCESS_KEY_ID" = param_s3_access_key_id,
@@ -189,7 +183,6 @@ if (conf_cluster_whole==1) {      # if no temporal/spatial selection, no cluster
   
   # export the graphs as pf
   file_graph=paste(conf_output,'SizeClassOutput.pdf',sep='')
-  #file_graph= 'SizeClassOutput.pdf'
   pdf(file_graph)
   
   # create a list containing the distribution information
