@@ -4,10 +4,10 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - r-dplyr
+  - r-geosphere
   - r-lubridate
   - r-tidyr
-  - r-geosphere
   - r-stringr
+  - r-dplyr
   - papermill
   - ipykernel
