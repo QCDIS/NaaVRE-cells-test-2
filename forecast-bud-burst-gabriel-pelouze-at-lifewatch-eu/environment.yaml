@@ -4,10 +4,10 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - r-dplyr
-  - r-tidyr
-  - r-here
   - r-purrr
+  - r-tidyr
   - r-stringr
+  - r-dplyr
+  - r-here
   - papermill
   - ipykernel
