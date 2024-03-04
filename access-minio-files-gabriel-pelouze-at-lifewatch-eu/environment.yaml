@@ -1,0 +1,15 @@
+name: venv
+channels:
+  - conda-forge
+dependencies:
+  - pip
+  - python>=3.8
+  - r-dendextend
+  - r-aws.s3
+  - r-fields
+  - r-dplyr
+  - r-vegan
+  - r-stringr
+  - r-reshape
+  - papermill
+  - ipykernel
