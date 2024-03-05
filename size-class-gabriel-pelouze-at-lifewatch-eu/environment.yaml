@@ -5,12 +5,12 @@ dependencies:
   - pip
   - python>=3.8
   - r-vegan
-  - r-stringr
-  - r-fields
-  - r-stringi
-  - r-reshape
   - r-dplyr
-  - r-aws.s3
+  - r-reshape
+  - r-stringi
+  - r-stringr
   - r-dendextend
+  - r-fields
+  - r-aws.s3
   - papermill
   - ipykernel
