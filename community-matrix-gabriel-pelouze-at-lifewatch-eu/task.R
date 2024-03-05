@@ -47,9 +47,11 @@ param_s3_secret_access_key = opt$param_s3_secret_access_key
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 
@@ -141,13 +143,15 @@ if(conf_analysis=='cluster'){
   if(conf_display=='species') mm=vegdist(t(dataset),method=conf_method)
   plot(hclust(mm),cex=conf_cex,xlab='', sub='')
   dev.off()
+   if(!require('dendextend')) {
     library('dendextend')
-
+  }
   hc=hclust(mm)
   dend= as.dendrogram(hc)
   hb=get_branches_heights(dend,sort=FALSE)
-  output_matrix = paste(conf_output, "Matrix_Output_hb.csv",sep = "")
-  write.table(hb,output_matrix ,row.names=TRUE,sep = ";",dec = ".",quote=FALSE)
+  output_matrix_hb = paste(conf_output, "Matrix_Output_hb.csv",sep = "")
+  write.table(hb,output_matrix_hb ,row.names=TRUE,sep = ";",dec = ".",quote=FALSE)
+  put_object(region="", bucket="naa-vre-user-data", file=output_matrix_hb, object=paste(param_s3_prefix,conf_s3_folder, "Matrix_Output_hb.csv", sep='/'))
 }
 
 if(conf_analysis=='betadiversity'){
@@ -166,11 +170,9 @@ if(conf_analysis=='distance'){
   axis(2,at=(1:dim(mm)[1]-1)/(dim(mm)[1]-1),labels=rownames(mm),las=2,cex.axis=0.4)
   dev.off()
 }
-output_matrix_hb= "Matrix_Output_hb.csv"
                                                          
-put_object(region="", bucket="naa-vre-user-data", file=output_matrix, object=paste0(param_s3_prefix, "/myfile/Matrix_Output.csv"))
-put_object(region="", bucket="naa-vre-user-data", file=file_graph, object=paste0(param_s3_prefix, "/myfile/CommunityAnalysis.pdf"))
-put_object(region="", bucket="naa-vre-user-data", file=output_matrix_hb, object=paste0(param_s3_prefix, "/myfile/Matrix_Output_hb.csv"))
+put_object(region="", bucket="naa-vre-user-data", file=output_matrix, object=paste(param_s3_prefix,conf_s3_folder, "Matrix_Output.csv", sep='/'))
+put_object(region="", bucket="naa-vre-user-data", file=file_graph, object=paste(param_s3_prefix,conf_s3_folder, "CommunityAnalysis.pdf", sep='/'))
 
 
 
