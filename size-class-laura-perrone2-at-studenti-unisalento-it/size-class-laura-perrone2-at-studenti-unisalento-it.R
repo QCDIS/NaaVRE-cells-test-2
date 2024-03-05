@@ -63,9 +63,11 @@ param_s3_secret_access_key = opt$param_s3_secret_access_key
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 
@@ -148,8 +150,7 @@ if (conf_cluster_whole==1) {      # if no temporal/spatial selection, no cluster
   ttz=table(logvar)                   # frequency table
     
  # plot and export the graph as pdf
-    #file_graph=paste(conf_output,'SizeClassOutput.pdf',sep='')
-  file_graph='SizeClassOutput.pdf'
+  file_graph=paste(conf_output,'SizeClassOutput.pdf',sep='')
   pdf(file_graph)
   par(mar=c(5.1,5.1,4.1,2.1))
   barplot(ttz,xlab=xlabz,ylab='N of cells',main="Whole dataset",ylim=range(pretty(c(0, ttz))))
@@ -213,8 +214,8 @@ if (conf_cluster_whole==1) {      # if no temporal/spatial selection, no cluster
 
 output_SizeClass = paste(conf_output, "df_sizeclass.csv",sep = "")
 write.table(final,output_SizeClass,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
-put_object(region="", bucket="naa-vre-user-data", file=output_SizeClass, object=paste0(param_s3_prefix, "/myfile/df_sizeclass.csv"))
-put_object(region="", bucket="naa-vre-user-data", file=file_graph, object=paste0(param_s3_prefix, "/myfile/SizeClassOutput.pdf"))
+put_object(region="", bucket="naa-vre-user-data", file=output_SizeClass, object=paste(param_s3_prefix, conf_s3_folder, "df_sizeclass.csv", sep='/'))
+put_object(region="", bucket="naa-vre-user-data", file=file_graph, object=paste(param_s3_prefix,conf_s3_folder, "SizeClassOutput.pdf", sep='/'))
 
 
 
