@@ -69,10 +69,7 @@ conf_output = '/tmp/data/'
 
 
 
-install.packages("stringr",repos = "http://cran.us.r-project.org")
 library(stringr)
-
-install.packages("dplyr",repos = "http://cran.us.r-project.org")
 library(dplyr)
 
 Sys.setenv(
