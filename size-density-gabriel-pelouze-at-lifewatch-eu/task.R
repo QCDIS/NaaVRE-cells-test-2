@@ -62,10 +62,7 @@ conf_output = '/tmp/data/'
 
 
 
-install.packages("reshape",repos = "http://cran.us.r-project.org")
 library(reshape)
-
-install.packages("dplyr",repos = "http://cran.us.r-project.org")
 library(dplyr)
 
 
