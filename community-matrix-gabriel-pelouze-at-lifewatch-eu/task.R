@@ -54,10 +54,7 @@ conf_output = '/tmp/data/'
 
 
 
-install.packages("vegan",repos = "http://cran.us.r-project.org")
 library(vegan)
-
-install.packages("fields",repos = "http://cran.us.r-project.org")
 library(fields)
 
 Sys.setenv(
@@ -144,10 +141,8 @@ if(conf_analysis=='cluster'){
   if(conf_display=='species') mm=vegdist(t(dataset),method=conf_method)
   plot(hclust(mm),cex=conf_cex,xlab='', sub='')
   dev.off()
-   if(!require('dendextend')) {
-    install.packages('dendextend')
     library('dendextend')
-  }
+
   hc=hclust(mm)
   dend= as.dendrogram(hc)
   hb=get_branches_heights(dend,sort=FALSE)
