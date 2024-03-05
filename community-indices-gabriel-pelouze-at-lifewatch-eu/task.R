@@ -59,9 +59,11 @@ param_s3_secret_access_key = opt$param_s3_secret_access_key
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 
@@ -213,12 +215,12 @@ if (max(nchar(ID))>10) {
 output_Index = paste(conf_output, "Index_Output.csv",sep = "")
 write.table(final, output_Index,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
 
-Index_Output="Index_Output.pdf"
-Index_Cluster_Legend= "Index_Cluster_Legend.csv"
+Index_Output=paste(conf_output,'Index_Output.pdf',sep='')
+Index_Cluster_Legend= paste(conf_output, "Index_Cluster_Legend.csv", sep='')
                         
-put_object(region="", bucket="naa-vre-user-data", file=output_Index, object=paste0(param_s3_prefix, "/myfile/Index_Output.csv"))
-put_object(region="", bucket="naa-vre-user-data", file=Index_Output, object=paste0(param_s3_prefix, "/myfile/Index_Output.pdf"))
-put_object(region="", bucket="naa-vre-user-data", file=Index_Cluster_Legend, object=paste0(param_s3_prefix, "/myfile/Index_Cluster_Legend.csv"))
+put_object(region="", bucket="naa-vre-user-data", file=output_Index, object=paste(param_s3_prefix,conf_s3_folder, "Index_Output.csv", sep='/'))
+put_object(region="", bucket="naa-vre-user-data", file=Index_Output, object=paste(param_s3_prefix, conf_s3_folder,"Index_Output.pdf", sep='/'))
+put_object(region="", bucket="naa-vre-user-data", file=Index_Cluster_Legend, object=paste(param_s3_prefix, conf_s3_folder,"Index_Cluster_Legend.csv", sep='/'))
 
 
 
