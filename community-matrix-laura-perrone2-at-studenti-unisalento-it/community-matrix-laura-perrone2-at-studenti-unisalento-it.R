@@ -47,9 +47,11 @@ param_s3_secret_access_key = opt$param_s3_secret_access_key
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 
@@ -175,9 +177,9 @@ if(conf_analysis=='distance'){
 }
 output_matrix_hb= "Matrix_Output_hb.csv"
                                                          
-put_object(region="", bucket="naa-vre-user-data", file=output_matrix, object=paste0(param_s3_prefix, "/myfile/Matrix_Output.csv"))
-put_object(region="", bucket="naa-vre-user-data", file=file_graph, object=paste0(param_s3_prefix, "/myfile/CommunityAnalysis.pdf"))
-put_object(region="", bucket="naa-vre-user-data", file=output_matrix_hb, object=paste0(param_s3_prefix, "/myfile/Matrix_Output_hb.csv"))
+put_object(region="", bucket="naa-vre-user-data", file=output_matrix, object=paste(param_s3_prefix,conf_s3_folder, "Matrix_Output.csv", sep='/'))
+put_object(region="", bucket="naa-vre-user-data", file=file_graph, object=paste(param_s3_prefix,conf_s3_folder, "CommunityAnalysis.pdf", sep='/'))
+put_object(region="", bucket="naa-vre-user-data", file=output_matrix_hb, object=paste(param_s3_prefix,conf_s3_folder, "Matrix_Output_hb.csv", sep='/'))
 
 
 
