@@ -66,7 +66,6 @@ conf_output = '/tmp/data/'
 
 
 
-install.packages("vegan",repos = "http://cran.us.r-project.org")
 library(vegan)
 
 Sys.setenv(
