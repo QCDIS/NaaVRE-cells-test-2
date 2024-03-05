@@ -55,9 +55,11 @@ param_s3_secret_access_key = opt$param_s3_secret_access_key
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 
@@ -305,9 +307,9 @@ if(!(conf_taxlev=='community' & conf_cluster_whole==1)) {      # either taxlev o
 }
   data_Sizedensity= 'sizedensity_DATA.csv' 
   model_Sizedensity= 'sizedensity_MODEL_LM.csv'                  
-  put_object(region="", bucket="naa-vre-user-data", file=data_Sizedensity, object=paste0(param_s3_prefix, "/myfile/sizedensity_DATA.csv"))
-  put_object(region="", bucket="naa-vre-user-data", file=file_graph, object=paste0(param_s3_prefix, "/myfile/sizedensityOutput.pdf"))
-  put_object(region="", bucket="naa-vre-user-data", file=model_Sizedensity, object=paste0(param_s3_prefix, "/myfile/sizedensity_MODEL_LM.csv"))
+  put_object(region="", bucket="naa-vre-user-data", file=data_Sizedensity, object=paste(param_s3_prefix,conf_s3_folder, "sizedensity_DATA.csv", sep='/'))
+  put_object(region="", bucket="naa-vre-user-data", file=file_graph, object=paste(param_s3_prefix,conf_s3_folder, "sizedensityOutput.pdf", sep='/'))
+  put_object(region="", bucket="naa-vre-user-data", file=model_Sizedensity, object=paste(param_s3_prefix,conf_s3_folder, "sizedensity_MODEL_LM.csv", sep='/'))
 
 
 
