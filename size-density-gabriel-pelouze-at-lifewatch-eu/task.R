@@ -55,9 +55,11 @@ param_s3_secret_access_key = opt$param_s3_secret_access_key
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 
@@ -84,6 +86,10 @@ conf_cluster_parenteventid = 1
 conf_cluster_eventid = 1
 conf_taxlev = 'scientificname'
 conf_SizeUnit = 'biovolume'
+
+data_Sizedensity= paste(conf_output,'sizedensity_DATA.csv',sep='')
+model_Sizedensity= paste(conf_output,'sizedensity_MODEL_LM.csv',sep='')
+file_graph=paste(conf_output,'sizedensityOutput.pdf',sep='')
 
 if(!'density'%in%names(dataset))dataset[,'density']=1
 if(!'biovolume'%in%names(dataset))dataset[,'biovolume']=NA
@@ -159,8 +165,8 @@ if(!(conf_taxlev=='community' & conf_cluster_whole==1)) {      # either taxlev o
       mat = cbind(rownames(mat), data.frame(mat, row.names=NULL))
       colnames(mat)=c('density','average biovolume','average cell carbon content')
       final=cbind(info,mat)
-      write.table(final,paste(conf_output,'sizedensity_DATA.csv',sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
-      outputs = append(outputs,paste(conf_output,'sizedensity_DATA.csv',sep=''))
+      write.table(final,data_Sizedensity,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
+      outputs = append(outputs,data_Sizedensity)
     }
   } else if (conf_taxlev!='community' & conf_cluster_whole==1) {     
     den=tapply(dataset[,'density'],list(dataset[,conf_taxlev]),function(x)sum(x,na.rm=TRUE))   # sum of the densities
@@ -181,7 +187,6 @@ if(!(conf_taxlev=='community' & conf_cluster_whole==1)) {      # either taxlev o
     
     
     
-    file_graph=paste(conf_output,'sizedensityOutput.pdf',sep='')
     outputs=append(outputs,file_graph)
     pdf(file_graph)
     
@@ -234,23 +239,23 @@ if(!(conf_taxlev=='community' & conf_cluster_whole==1)) {      # either taxlev o
         final=mat}
       final = final[rowSums(is.na(final)) != 3,]
       final = final %>% mutate_if(function(x)is.numeric(x), function(x)round(x,2))
-      write.table(final,paste(conf_output,'sizedensity_DATA.csv',sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE)  
-      outputs=append(outputs,paste(conf_output,'sizedensity_DATA.csv',sep=''))
+      write.table(final,data_Sizedensity,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)  
+      outputs=append(outputs,data_Sizedensity)
     } else if (conf_taxlev=='community' & conf_cluster_whole==0){
       mat = cbind(rownames(mat), data.frame(mat, row.names=NULL))
       colnames(mat)=c('cluster','density','average biovolume','average cell carbon content')
       final=cbind(info[mat$cluster,],mat[,-1])
       if (length(cluster)==1) colnames(final)[1]=cluster
-      write.table(final,paste(conf_output,'sizedensity_DATA.csv',sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE) 
-      outputs=append(outputs,paste(conf_output,'sizedensity_DATA.csv',sep=''))  
+      write.table(final,data_Sizedensity,row.names=FALSE,sep = ";",dec = ".",quote=FALSE) 
+      outputs=append(outputs,data_Sizedensity)  
     } else if (conf_taxlev!='community' & conf_cluster_whole==1) {
       mat = cbind(rownames(mat), data.frame(round(mat,2), row.names=NULL))
       colnames(mat)=c(conf_taxlev,'density','average biovolume','average cell carbon content')
-      write.table(mat,paste(conf_output,'sizedensity_DATA.csv',sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE) 
-      outputs=append(outputs,paste(conf_output,'sizedensity_DATA.csv',sep=''))
+      write.table(mat,data_Sizedensity,row.names=FALSE,sep = ";",dec = ".",quote=FALSE) 
+      outputs=append(outputs,data_Sizedensity,sep='')
     }
-    write.table(rr,paste(conf_output,'sizedensity_MODEL_LM.csv',sep=''),row.names=TRUE,col.names=NA,sep = ";",dec = ".",quote=FALSE)
-    outputs=append(outputs,paste(conf_output,'sizedensity_MODEL_LM.csv',sep=''))
+    write.table(rr,model_Sizedensity,row.names=TRUE,col.names=NA,sep = ";",dec = ".",quote=FALSE)
+    outputs=append(outputs,model_Sizedensity)
                                   
     dev.off()
   }
@@ -266,7 +271,6 @@ if(!(conf_taxlev=='community' & conf_cluster_whole==1)) {      # either taxlev o
   
   
   
-  file_graph=paste(conf_output,'sizedensityOutput.pdf',sep='')
   outputs=append(outputs,file_graph)
   pdf(file_graph)
     
@@ -277,17 +281,16 @@ if(!(conf_taxlev=='community' & conf_cluster_whole==1)) {      # either taxlev o
   
   
   names(mat)=c('density','average biovolume','average cell carbon content')
-  write.table(mat,paste(conf_output,'sizedensity_DATA.csv',sep=''),row.names=TRUE,col.names=FALSE,sep = ";",dec = ".",quote=FALSE)
-  outputs=append(outputs,paste(conf_output,'sizedensity_DATA.csv',sep=''))
+  write.table(mat,data_Sizedensity,row.names=TRUE,col.names=FALSE,sep = ";",dec = ".",quote=FALSE)
+  outputs=append(outputs,data_Sizedensity)
   
   dev.off()
 
 }
-  data_Sizedensity= 'sizedensity_DATA.csv' 
-  model_Sizedensity= 'sizedensity_MODEL_LM.csv'                  
-  put_object(region="", bucket="naa-vre-user-data", file=data_Sizedensity, object=paste0(param_s3_prefix, "/myfile/sizedensity_DATA.csv"))
-  put_object(region="", bucket="naa-vre-user-data", file=file_graph, object=paste0(param_s3_prefix, "/myfile/sizedensityOutput.pdf"))
-  put_object(region="", bucket="naa-vre-user-data", file=model_Sizedensity, object=paste0(param_s3_prefix, "/myfile/sizedensity_MODEL_LM.csv"))
+
+put_object(region="", bucket="naa-vre-user-data", file=data_Sizedensity, object=paste(param_s3_prefix,conf_s3_folder, "sizedensity_DATA.csv", sep='/'))
+put_object(region="", bucket="naa-vre-user-data", file=file_graph, object=paste(param_s3_prefix,conf_s3_folder, "sizedensityOutput.pdf", sep='/'))
+put_object(region="", bucket="naa-vre-user-data", file=model_Sizedensity, object=paste(param_s3_prefix,conf_s3_folder, "sizedensity_MODEL_LM.csv", sep='/'))
 
 
 
