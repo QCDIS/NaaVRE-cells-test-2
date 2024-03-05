@@ -57,9 +57,11 @@ param_s3_secret_access_key = opt$param_s3_secret_access_key
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 
@@ -236,7 +238,7 @@ final = dtc[no_dupl,]
                 
 output_filtering = paste(conf_output, "df_filtering.csv",sep = "")
 write.table(final,output_filtering,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
-put_object(region="", bucket="naa-vre-user-data", file=output_filtering, object=paste0(param_s3_prefix, "/myfile/df_filtering.csv"))
+put_object(region="", bucket="naa-vre-user-data", file=output_filtering, object=paste(param_s3_prefix,conf_s3_folder, "df_filtering.csv", sep='/'))
 }
                 
 if(param_dofiltering==0) {
