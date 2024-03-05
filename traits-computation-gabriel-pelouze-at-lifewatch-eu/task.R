@@ -32,8 +32,8 @@ library(stringr)
 
 option_list = list(
 
-make_option(c("--datain1"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--datain2"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--analysis_conf_file"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--data_file"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_CalcType"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_CompTraits"), action="store", default=NA, type="character", help="my description"), 
@@ -49,8 +49,8 @@ make_option(c("--param_s3_secret_access_key"), action="store", default=NA, type=
 opt = parse_args(OptionParser(option_list=option_list))
 
 
-datain1 <- gsub('"', '', opt$datain1)
-datain2 <- gsub('"', '', opt$datain2)
+analysis_conf_file <- gsub('"', '', opt$analysis_conf_file)
+data_file <- gsub('"', '', opt$data_file)
 id <- gsub('"', '', opt$id)
 
 param_CalcType = opt$param_CalcType
@@ -63,9 +63,11 @@ param_s3_secret_access_key = opt$param_s3_secret_access_key
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
 
@@ -88,11 +90,11 @@ formulaformissingdimension = ''
 surfacearea = ''
 biovolume = ''
 
-df.datain=read.csv(datain1,stringsAsFactors=FALSE,sep = ";", dec = ".")
+df.datain=read.csv(data_file,stringsAsFactors=FALSE,sep = ";", dec = ".")
 df.datain[,'measurementremarks'] = tolower(df.datain[,'measurementremarks']) # eliminate capital letters
 df.datain[,'index'] = c(1:nrow(df.datain)) # needed to restore rows order later
 
-df.operator=read.csv(datain2,stringsAsFactors=FALSE,sep = ",", dec = ".") # load internal database 
+df.operator=read.csv(analysis_conf_file,stringsAsFactors=FALSE,sep = ",", dec = ".") # load internal database 
 df.operator[df.operator==('no')]<-NA
 df.operator[df.operator==('see note')]<-NA
 
@@ -312,7 +314,7 @@ Sys.setenv(
     
 output_traitscomp = paste(conf_output, "df_traitscomp.csv",sep = "")
 write.table(df.datain,output_traitscomp,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
-put_object(region="", bucket="naa-vre-user-data", file=output_traitscomp, object=paste0(param_s3_prefix, "/myfile/df_traitscomp.csv"))
+put_object(region="", bucket="naa-vre-user-data", file=output_traitscomp, object=paste(param_s3_prefix, conf_s3_folder, "df_traitscomp.csv", sep='/'))
 
 
 
