@@ -27,7 +27,6 @@ option_list = list(
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--output_filtering"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_analysis_cm"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_cex_cm"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_cluster_country_cm"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_cluster_day_cm"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_cluster_eventid_cm"), action="store", default=NA, type="character", help="my description"), 
@@ -56,7 +55,6 @@ id <- gsub('"', '', opt$id)
 output_filtering <- gsub('"', '', opt$output_filtering)
 
 param_analysis_cm = opt$param_analysis_cm
-param_cex_cm = opt$param_cex_cm
 param_cluster_country_cm = opt$param_cluster_country_cm
 param_cluster_day_cm = opt$param_cluster_day_cm
 param_cluster_eventid_cm = opt$param_cluster_eventid_cm
@@ -108,10 +106,10 @@ conf_cluster_eventid = param_cluster_eventid_cm
 conf_taxlev = param_taxlev_cm
 conf_matrix = param_matrix_cm
 conf_analysis = param_analysis_cm
-conf_cex = param_cex_cm
 conf_display = param_display_cm
 conf_type = param_type_cm
 conf_method = param_method_cm
+conf_cex = 1
 
 if(!'density'%in%names(dataset))dataset[,'density']=1
 if(!'biovolume'%in%names(dataset))dataset[,'biovolume']=NA
