@@ -38,10 +38,23 @@ option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--output_filtering"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_country_ci"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_day_ci"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_eventid_ci"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_locality_ci"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_month_ci"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_parenteventid_ci"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_whole_ci"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_year_ci"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_Margalef_D_ci"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_Menhinick_D_ci"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_R_ci"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_access_key_id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_prefix"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_s3_secret_access_key"), action="store", default=NA, type="character", help="my description")
+make_option(c("--param_s3_secret_access_key"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_Shannon_H_ci"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_Simpson_D_ci"), action="store", default=NA, type="character", help="my description")
 
 )
 
@@ -52,10 +65,23 @@ opt = parse_args(OptionParser(option_list=option_list))
 id <- gsub('"', '', opt$id)
 output_filtering <- gsub('"', '', opt$output_filtering)
 
+param_cluster_country_ci = opt$param_cluster_country_ci
+param_cluster_day_ci = opt$param_cluster_day_ci
+param_cluster_eventid_ci = opt$param_cluster_eventid_ci
+param_cluster_locality_ci = opt$param_cluster_locality_ci
+param_cluster_month_ci = opt$param_cluster_month_ci
+param_cluster_parenteventid_ci = opt$param_cluster_parenteventid_ci
+param_cluster_whole_ci = opt$param_cluster_whole_ci
+param_cluster_year_ci = opt$param_cluster_year_ci
+param_Margalef_D_ci = opt$param_Margalef_D_ci
+param_Menhinick_D_ci = opt$param_Menhinick_D_ci
+param_R_ci = opt$param_R_ci
 param_s3_access_key_id = opt$param_s3_access_key_id
 param_s3_endpoint = opt$param_s3_endpoint
 param_s3_prefix = opt$param_s3_prefix
 param_s3_secret_access_key = opt$param_s3_secret_access_key
+param_Shannon_H_ci = opt$param_Shannon_H_ci
+param_Simpson_D_ci = opt$param_Simpson_D_ci
 
 
 conf_output = '/tmp/data/'
