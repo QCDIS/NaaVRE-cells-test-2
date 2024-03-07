@@ -67,24 +67,21 @@ Sys.setenv(
 
 dataset=read.csv(output_filtering,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
-
-conf_cluster_whole = 0
-conf_cluster_country = 1
-conf_cluster_locality = 1
-conf_cluster_year = 1
-conf_cluster_month = 1
-conf_cluster_day = 1
-conf_cluster_parenteventid = 1
-conf_cluster_eventid = 1
-
-conf_taxlev = 'scientificname'
-
-conf_matrix = 'density'
-conf_analysis = 'distance'
-conf_cex = 1
-conf_display = 'site'
-conf_type = 'p'
-conf_method = 'bray'
+conf_cluster_whole = param_cluster_whole_cm
+conf_cluster_country = param_cluster_country_cm
+conf_cluster_locality = param_cluster_locality_cm
+conf_cluster_year = param_cluster_year_cm
+conf_cluster_month = param_cluster_month_cm
+conf_cluster_day = param_cluster_day_cm
+conf_cluster_parenteventid = param_cluster_parenteventid_cm
+conf_cluster_eventid = param_cluster_eventid_cm
+conf_taxlev = param_taxlev_cm
+conf_matrix = param_matrix_cm
+conf_analysis = param_analysis_cm
+conf_cex = param_cex_cm
+conf_display = param_display_cm
+conf_type = param_type_cm
+conf_method = param_method_cm
 
 if(!'density'%in%names(dataset))dataset[,'density']=1
 if(!'biovolume'%in%names(dataset))dataset[,'biovolume']=NA
