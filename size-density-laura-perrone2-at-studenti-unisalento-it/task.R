@@ -67,7 +67,6 @@ conf_s3_folder = 'vl-phytoplankton'
 library(reshape)
 library(dplyr)
 
-
 Sys.setenv(
     "AWS_ACCESS_KEY_ID" = param_s3_access_key_id,
     "AWS_SECRET_ACCESS_KEY" = param_s3_secret_access_key,
@@ -76,16 +75,16 @@ Sys.setenv(
 
 dataset=read.csv(output_filtering,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
-conf_cluster_whole = 0
-conf_cluster_country = 1
-conf_cluster_locality = 1
-conf_cluster_year = 1
-conf_cluster_month = 1
-conf_cluster_day = 1
-conf_cluster_parenteventid = 1
-conf_cluster_eventid = 1
-conf_taxlev = 'scientificname'
-conf_SizeUnit = 'biovolume'
+conf_cluster_whole = param_cluster_whole_sz
+conf_cluster_country = param_cluster_country_sz
+conf_cluster_locality = param_cluster_locality_sz
+conf_cluster_year = param_cluster_year_sz
+conf_cluster_month = param_cluster_month_sz
+conf_cluster_day = param_cluster_day_sz
+conf_cluster_parenteventid = param_cluster_parenteventid_sz
+conf_cluster_eventid = param_cluster_eventid_sz
+conf_taxlev = param_taxlev_sz
+conf_SizeUnit = param_SizeUnit_sz
 
 data_Sizedensity= paste(conf_output,'sizedensity_DATA.csv',sep='')
 model_Sizedensity= paste(conf_output,'sizedensity_MODEL_LM.csv',sep='')
