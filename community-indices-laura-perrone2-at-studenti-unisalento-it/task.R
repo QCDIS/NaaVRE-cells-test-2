@@ -78,19 +78,19 @@ Sys.setenv(
 
 dataset=read.csv(output_filtering,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
-conf_cluster_whole = 0
-conf_cluster_country = 1
-conf_cluster_locality = 1
-conf_cluster_year = 1
-conf_cluster_month = 1
-conf_cluster_day = 1
-conf_cluster_parenteventid = 1
-conf_cluster_eventid = 1
-conf_R = 1
-conf_Shannon_H = 1
-conf_Simpson_D = 1
-conf_Menhinick_D = 1
-conf_Margalef_D = 1
+conf_cluster_whole = param_cluster_whole_ci
+conf_cluster_country = param_cluster_country_ci
+conf_cluster_locality = param_cluster_locality_ci
+conf_cluster_year = param_cluster_year_ci
+conf_cluster_month = param_cluster_month_ci
+conf_cluster_day = param_cluster_day_ci
+conf_cluster_parenteventid = param_cluster_parenteventid_ci
+conf_cluster_eventid = param_cluster_eventid_ci
+conf_R = param_R_ci
+conf_Shannon_H = param_Shannon_H_ci
+conf_Simpson_D = param_Simpson_D_ci
+conf_Menhinick_D = param_Menhinick_D_ci
+conf_Margalef_D = param_Margalef_D_ci
 
 if(!'density'%in%names(dataset))dataset[,'density']=1
 if(!'biovolume'%in%names(dataset))dataset[,'biovolume']=NA
