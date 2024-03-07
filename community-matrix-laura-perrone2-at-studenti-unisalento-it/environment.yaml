@@ -4,9 +4,9 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - r-stringr
   - r-aws.s3
   - r-dendextend
   - r-fields
+  - r-stringr
   - papermill
   - ipykernel
