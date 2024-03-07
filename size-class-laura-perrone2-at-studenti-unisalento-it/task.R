@@ -42,10 +42,20 @@ option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--output_filtering"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_base_sc"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_country_sc"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_day_sc"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_eventid_sc"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_locality_sc"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_month_sc"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_parenteventid_sc"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_whole_sc"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_year_sc"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_access_key_id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_prefix"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_s3_secret_access_key"), action="store", default=NA, type="character", help="my description")
+make_option(c("--param_s3_secret_access_key"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_SizeUnit_sc"), action="store", default=NA, type="character", help="my description")
 
 )
 
@@ -56,10 +66,20 @@ opt = parse_args(OptionParser(option_list=option_list))
 id <- gsub('"', '', opt$id)
 output_filtering <- gsub('"', '', opt$output_filtering)
 
+param_base_sc = opt$param_base_sc
+param_cluster_country_sc = opt$param_cluster_country_sc
+param_cluster_day_sc = opt$param_cluster_day_sc
+param_cluster_eventid_sc = opt$param_cluster_eventid_sc
+param_cluster_locality_sc = opt$param_cluster_locality_sc
+param_cluster_month_sc = opt$param_cluster_month_sc
+param_cluster_parenteventid_sc = opt$param_cluster_parenteventid_sc
+param_cluster_whole_sc = opt$param_cluster_whole_sc
+param_cluster_year_sc = opt$param_cluster_year_sc
 param_s3_access_key_id = opt$param_s3_access_key_id
 param_s3_endpoint = opt$param_s3_endpoint
 param_s3_prefix = opt$param_s3_prefix
 param_s3_secret_access_key = opt$param_s3_secret_access_key
+param_SizeUnit_sc = opt$param_SizeUnit_sc
 
 
 conf_output = '/tmp/data/'
