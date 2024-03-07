@@ -26,10 +26,25 @@ option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--output_filtering"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_analysis_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cex_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_country_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_day_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_eventid_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_locality_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_month_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_parenteventid_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_whole_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_year_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_display_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_matrix_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_method_cm"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_access_key_id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_prefix"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_s3_secret_access_key"), action="store", default=NA, type="character", help="my description")
+make_option(c("--param_s3_secret_access_key"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_taxlev_cm"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_type_cm"), action="store", default=NA, type="character", help="my description")
 
 )
 
@@ -40,10 +55,25 @@ opt = parse_args(OptionParser(option_list=option_list))
 id <- gsub('"', '', opt$id)
 output_filtering <- gsub('"', '', opt$output_filtering)
 
+param_analysis_cm = opt$param_analysis_cm
+param_cex_cm = opt$param_cex_cm
+param_cluster_country_cm = opt$param_cluster_country_cm
+param_cluster_day_cm = opt$param_cluster_day_cm
+param_cluster_eventid_cm = opt$param_cluster_eventid_cm
+param_cluster_locality_cm = opt$param_cluster_locality_cm
+param_cluster_month_cm = opt$param_cluster_month_cm
+param_cluster_parenteventid_cm = opt$param_cluster_parenteventid_cm
+param_cluster_whole_cm = opt$param_cluster_whole_cm
+param_cluster_year_cm = opt$param_cluster_year_cm
+param_display_cm = opt$param_display_cm
+param_matrix_cm = opt$param_matrix_cm
+param_method_cm = opt$param_method_cm
 param_s3_access_key_id = opt$param_s3_access_key_id
 param_s3_endpoint = opt$param_s3_endpoint
 param_s3_prefix = opt$param_s3_prefix
 param_s3_secret_access_key = opt$param_s3_secret_access_key
+param_taxlev_cm = opt$param_taxlev_cm
+param_type_cm = opt$param_type_cm
 
 
 conf_output = '/tmp/data/'
