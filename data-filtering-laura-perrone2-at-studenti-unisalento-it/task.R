@@ -78,19 +78,19 @@ Sys.setenv(
 if(param_dofiltering==1) {
 dataset=read.csv(output_traitscomp,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
-conf_cluster_whole = 0
-conf_cluster_country = 1
-conf_cluster_locality = 1
-conf_cluster_year = 1
-conf_cluster_month = 1
-conf_cluster_day = 1
-conf_cluster_parenteventid = 1
-conf_cluster_eventid = 1
-conf_taxlev = 'scientificname'
-conf_totalbiovolume = 1
-conf_totalcarboncontent = 0
-conf_density = 1
-conf_threshold = 0.75
+conf_cluster_whole = param_cluster_whole_f
+conf_cluster_country = param_cluster_country_f
+conf_cluster_locality = param_cluster_locality_f
+conf_cluster_year = param_cluster_year_f
+conf_cluster_month = param_cluster_month_f
+conf_cluster_day = param_cluster_day_f
+conf_cluster_parenteventid = param_cluster_parenteventid_f
+conf_cluster_eventid = param_cluster_eventid_f
+conf_taxlev = param_taxlev_f
+conf_totalbiovolume = param_totalbiovolume_f
+conf_totalcarboncontent = param_totalcarboncontent_f
+conf_density = param_density_f
+conf_threshold = param_threshold_f
 
 
 if(!'density'%in%names(dataset)) dataset[,'density']=1
