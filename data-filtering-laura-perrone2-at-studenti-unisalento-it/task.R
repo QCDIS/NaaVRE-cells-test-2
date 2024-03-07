@@ -34,11 +34,24 @@ option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--output_traitscomp"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_country_f"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_day_f"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_eventid_f"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_locality_f"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_month_f"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_parenteventid_f"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_whole_f"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_cluster_year_f"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_density_f"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_dofiltering"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_access_key_id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_prefix"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_s3_secret_access_key"), action="store", default=NA, type="character", help="my description")
+make_option(c("--param_s3_secret_access_key"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_taxlev_f"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_threshold_f"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_totalbiovolume_f"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_totalcarboncontent_f"), action="store", default=NA, type="character", help="my description")
 
 )
 
@@ -49,11 +62,24 @@ opt = parse_args(OptionParser(option_list=option_list))
 id <- gsub('"', '', opt$id)
 output_traitscomp <- gsub('"', '', opt$output_traitscomp)
 
+param_cluster_country_f = opt$param_cluster_country_f
+param_cluster_day_f = opt$param_cluster_day_f
+param_cluster_eventid_f = opt$param_cluster_eventid_f
+param_cluster_locality_f = opt$param_cluster_locality_f
+param_cluster_month_f = opt$param_cluster_month_f
+param_cluster_parenteventid_f = opt$param_cluster_parenteventid_f
+param_cluster_whole_f = opt$param_cluster_whole_f
+param_cluster_year_f = opt$param_cluster_year_f
+param_density_f = opt$param_density_f
 param_dofiltering = opt$param_dofiltering
 param_s3_access_key_id = opt$param_s3_access_key_id
 param_s3_endpoint = opt$param_s3_endpoint
 param_s3_prefix = opt$param_s3_prefix
 param_s3_secret_access_key = opt$param_s3_secret_access_key
+param_taxlev_f = opt$param_taxlev_f
+param_threshold_f = opt$param_threshold_f
+param_totalbiovolume_f = opt$param_totalbiovolume_f
+param_totalcarboncontent_f = opt$param_totalcarboncontent_f
 
 
 conf_output = '/tmp/data/'
