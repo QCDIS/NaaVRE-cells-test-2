@@ -42,7 +42,7 @@ option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--output_filtering"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_base_sc"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_base_sc"), action="store", default=NA, type="integer", help="my description"), 
 make_option(c("--param_cluster_country_sc"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_cluster_day_sc"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_cluster_eventid_sc"), action="store", default=NA, type="character", help="my description"), 
