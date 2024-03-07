@@ -82,17 +82,16 @@ Sys.setenv(
 
 dataset=read.csv(output_filtering,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
-
-conf_SizeUnit = 'biovolume'
-conf_cluster_whole = 0
-conf_cluster_country = 1
-conf_cluster_locality = 1
-conf_cluster_year = 1
-conf_cluster_month = 1
-conf_cluster_day = 1
-conf_cluster_parenteventid = 1
-conf_cluster_eventid = 1
-conf_base = 2
+conf_SizeUnit = param_SizeUnit_sc
+conf_cluster_whole = param_cluster_whole_sc
+conf_cluster_country = param_cluster_country_sc
+conf_cluster_locality = param_cluster_locality_sc
+conf_cluster_year = param_cluster_year_sc
+conf_cluster_month = param_cluster_month_sc
+conf_cluster_day = param_cluster_day_sc
+conf_cluster_parenteventid = param_cluster_parenteventid_sc
+conf_cluster_eventid = param_cluster_eventid_sc
+conf_base = param_base_sc
 
 if(!'biovolume'%in%names(dataset)) dataset[,'biovolume']=NA
 if(!'cellcarboncontent'%in%names(dataset)) dataset[,'cellcarboncontent']=NA
