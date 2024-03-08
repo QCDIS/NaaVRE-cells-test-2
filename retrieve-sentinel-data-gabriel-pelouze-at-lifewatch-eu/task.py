@@ -1,4 +1,5 @@
 from minio import Minio
+import glob
 import os
 
 import argparse
@@ -35,10 +36,15 @@ for item in minio_client.list_objects(param_s3_public_bucket, prefix=f"{param_s3
         print("Downloading", item.object_name)
         minio_client.fget_object(param_s3_public_bucket, item.object_name, target_file)
 
-input_dirs = os.listdir(f"{conf_data_dir}/input/")
+input_dirs = sorted(glob.glob(f"{conf_data_dir}/input/*.SAFE"))
+settings_file = f"{conf_data_dir}/input/settings.txt"
 
 import json
 filename = "/tmp/input_dirs_" + id + ".json"
 file_input_dirs = open(filename, "w")
 file_input_dirs.write(json.dumps(input_dirs))
 file_input_dirs.close()
+filename = "/tmp/settings_file_" + id + ".json"
+file_settings_file = open(filename, "w")
+file_settings_file.write(json.dumps(settings_file))
+file_settings_file.close()
