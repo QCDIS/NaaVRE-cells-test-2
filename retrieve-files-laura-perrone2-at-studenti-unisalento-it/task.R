@@ -58,12 +58,12 @@ param_s3_prefix = opt$param_s3_prefix
 param_s3_secret_access_key = opt$param_s3_secret_access_key
 
 
-conf_s3_folder = 'vl-phytoplankton'
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 
-conf_s3_folder = 'vl-phytoplankton'
 conf_output = '/tmp/data/'
+conf_s3_folder = 'vl-phytoplankton'
 
 Sys.setenv(
     "AWS_ACCESS_KEY_ID" = param_s3_access_key_id,
