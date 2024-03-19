@@ -8,30 +8,10 @@ if (!requireNamespace("aws.s3", quietly = TRUE)) {
 	install.packages("aws.s3", repos="http://cran.us.r-project.org")
 }
 library(aws.s3)
-if (!requireNamespace("dendextend", quietly = TRUE)) {
-	install.packages("dendextend", repos="http://cran.us.r-project.org")
-}
-library(dendextend)
-if (!requireNamespace("dplyr", quietly = TRUE)) {
-	install.packages("dplyr", repos="http://cran.us.r-project.org")
-}
-library(dplyr)
-if (!requireNamespace("fields", quietly = TRUE)) {
-	install.packages("fields", repos="http://cran.us.r-project.org")
-}
-library(fields)
-if (!requireNamespace("reshape", quietly = TRUE)) {
-	install.packages("reshape", repos="http://cran.us.r-project.org")
-}
-library(reshape)
 if (!requireNamespace("stringr", quietly = TRUE)) {
 	install.packages("stringr", repos="http://cran.us.r-project.org")
 }
 library(stringr)
-if (!requireNamespace("vegan", quietly = TRUE)) {
-	install.packages("vegan", repos="http://cran.us.r-project.org")
-}
-library(vegan)
 
 
 option_list = list(
@@ -71,18 +51,24 @@ Sys.setenv(
     "AWS_S3_ENDPOINT" = param_s3_endpoint
     )
 
-data_file = paste0(conf_output,"input_data.csv")
 analysis_conf_file = paste0(conf_output,"analysis_conf_file.csv")
 
-if (grepl("^https?://", param_data_in)) {
-    download.file(param_data_in, dest=data_file)
-} else if (grepl("^minio::", param_data_in)) {
-    minio_path = gsub("^minio::","",param_data_in)
-    save_object(region="", bucket="naa-vre-user-data", file=data_file, object=paste0(param_s3_prefix, minio_path))
-} else {
-    print('invalid param_data_in')
+data_file=list()
+for ( myfile in param_data_in) {
+    
+  if (grepl("^https?://", myfile)) {
+      datafile_item=gsub('/', '_', myfile)
+      download.file(myfile, dest=datafile_item)
+  } else if (grepl("^minio::", myfile)) {
+      datafile_item=str_split(myfile, '/')[[1]]
+      datafile_item=datafile_item[length(datafile_item)]
+      minio_path = gsub("^minio::","",myfile)
+      save_object(region="", bucket="naa-vre-user-data", file=datafile_item, object=paste0(param_s3_prefix, minio_path))
+  } else {
+     stop('invalid value in param_data_in')
+ }
+    data_file[[length(data_file)+1]] <- datafile_item
 }
-
 save_object(region="", bucket="naa-vre-user-data", file=analysis_conf_file, object=paste(param_s3_prefix, conf_s3_folder, "2_FILEinformativo_OPERATORE.csv", sep='/'))
 
 
@@ -90,7 +76,4 @@ save_object(region="", bucket="naa-vre-user-data", file=analysis_conf_file, obje
 # capturing outputs
 file <- file(paste0('/tmp/data_file_', id, '.json'))
 writeLines(toJSON(data_file, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/analysis_conf_file_', id, '.json'))
-writeLines(toJSON(analysis_conf_file, auto_unbox=TRUE), file)
 close(file)
