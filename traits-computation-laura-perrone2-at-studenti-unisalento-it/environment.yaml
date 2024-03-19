@@ -4,11 +4,11 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - r-fields
   - r-reshape
   - r-stringr
-  - r-dendextend
+  - r-fields
   - r-dplyr
+  - r-dendextend
   - r-aws.s3
   - papermill
   - ipykernel
