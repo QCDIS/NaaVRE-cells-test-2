@@ -77,3 +77,6 @@ save_object(region="", bucket="naa-vre-user-data", file=analysis_conf_file, obje
 file <- file(paste0('/tmp/data_file_', id, '.json'))
 writeLines(toJSON(data_file, auto_unbox=TRUE), file)
 close(file)
+file <- file(paste0('/tmp/analysis_conf_file_', id, '.json'))
+writeLines(toJSON(analysis_conf_file, auto_unbox=TRUE), file)
+close(file)
