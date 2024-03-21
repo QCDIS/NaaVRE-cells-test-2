@@ -23,7 +23,6 @@ count = args.count
 some_list = range(count, a+1)
 
 msg = '1'
-a = 0.7974990473972722
 
 import json
 filename = "/tmp/msg_" + id + ".json"
