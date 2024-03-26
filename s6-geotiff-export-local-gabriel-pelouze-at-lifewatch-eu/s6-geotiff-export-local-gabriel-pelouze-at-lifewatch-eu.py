@@ -29,7 +29,7 @@ conf_local_path_targets = os.path.join( pathlib.Path('/tmp/data').as_posix(), 't
 
 conf_local_path_geotiff = os.path.join( pathlib.Path('/tmp/data').as_posix(), 'geotiff')
 
-conf_remote_path_geotiffs = pathlib.Path('/webdav/vl-laserfarm/' +  '' + '/geotiffs')
+conf_remote_path_geotiffs = pathlib.Path('/webdav/vl-laserfarm/' +  'gabriel.pelouze@lifewatch.eu' + '/geotiffs')
 
 conf_feature_name = 'perc_95_normalized_height'
 
@@ -38,7 +38,7 @@ conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_userna
 
 conf_local_path_targets = os.path.join( pathlib.Path('/tmp/data').as_posix(), 'targets')
 conf_local_path_geotiff = os.path.join( pathlib.Path('/tmp/data').as_posix(), 'geotiff')
-conf_remote_path_geotiffs = pathlib.Path('/webdav/vl-laserfarm/' +  '' + '/geotiffs')
+conf_remote_path_geotiffs = pathlib.Path('/webdav/vl-laserfarm/' +  'gabriel.pelouze@lifewatch.eu' + '/geotiffs')
 conf_feature_name = 'perc_95_normalized_height'
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_username, 'webdav_password': param_password}
 
