@@ -23,7 +23,7 @@ param_hostname = args.param_hostname
 param_password = args.param_password
 param_username = args.param_username
 
-conf_remote_path_geotiffs = pathlib.Path('/webdav/vl-laserfarm/' +  '' + '/geotiffs')
+conf_remote_path_geotiffs = pathlib.Path('/webdav/vl-laserfarm/' +  'gabriel.pelouze@lifewatch.eu' + '/geotiffs')
 
 conf_num_files = 1
 
@@ -32,7 +32,7 @@ conf_visualization_mode = 'webdav'
 conf_local_tmp = pathlib.Path('/tmp/data')
 
 
-conf_remote_path_geotiffs = pathlib.Path('/webdav/vl-laserfarm/' +  '' + '/geotiffs')
+conf_remote_path_geotiffs = pathlib.Path('/webdav/vl-laserfarm/' +  'gabriel.pelouze@lifewatch.eu' + '/geotiffs')
 conf_num_files = 1
 conf_visualization_mode = 'webdav'
 conf_local_tmp = pathlib.Path('/tmp/data')
