@@ -50,7 +50,7 @@ opt = parse_args(OptionParser(option_list=option_list))
 
 
 analysis_conf_file <- gsub('"', '', opt$analysis_conf_file)
-data_file = fromJSON(opt$data_file)
+data_file <- gsub('"', '', opt$data_file)
 id <- gsub('"', '', opt$id)
 
 param_CalcType = opt$param_CalcType
@@ -74,8 +74,7 @@ conf_s3_folder = 'vl-phytoplankton'
 
 
 
-output_traitscomp = list()
-for (datafile_item in data_file) {
+
 CompTraits <- as.list(scan(text = param_CompTraits, what = "", sep = ","))
 
 formulaforsurfacesimplified = ''
@@ -91,7 +90,7 @@ formulaformissingdimension = ''
 surfacearea = ''
 biovolume = ''
 
-df.datain=read.csv(datafile_item,stringsAsFactors=FALSE,sep = ";", dec = ".")
+df.datain=read.csv(data_file,stringsAsFactors=FALSE,sep = ";", dec = ".")
 df.datain[,'measurementremarks'] = tolower(df.datain[,'measurementremarks']) # eliminate capital letters
 df.datain[,'index'] = c(1:nrow(df.datain)) # needed to restore rows order later
 
@@ -313,12 +312,9 @@ Sys.setenv(
     "AWS_S3_ENDPOINT" = param_s3_endpoint
     )
     
-output_traitscomp_item = paste(conf_output, "df_traitscomp.csv",sep = "")
-write.table(df.datain,output_traitscomp_item,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
-put_object(region="", bucket="naa-vre-user-data", file=output_traitscomp_item, object=paste(param_s3_prefix, conf_s3_folder, "df_traitscomp.csv", sep='/'))
-output_traitscomp[[length(output_traitscomp)+1]] <- output_traitscomp_item
-    
-}
+output_traitscomp = paste(conf_output, "df_traitscomp.csv",sep = "")
+write.table(df.datain,output_traitscomp,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
+put_object(region="", bucket="naa-vre-user-data", file=output_traitscomp, object=paste(param_s3_prefix, conf_s3_folder, "df_traitscomp.csv", sep='/'))
 
 
 
