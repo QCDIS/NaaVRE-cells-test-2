@@ -15,6 +15,7 @@ id = args.id
 
 
 names = ["Alice", "Bob"]
+useless = 1
 
 import json
 filename = "/tmp/names_" + id + ".json"
