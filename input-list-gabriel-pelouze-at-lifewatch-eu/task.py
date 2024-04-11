@@ -14,7 +14,6 @@ id = args.id
 
 
 
-
 names = ["Alice", "Bob"]
 
 import json
