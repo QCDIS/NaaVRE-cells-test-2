@@ -46,8 +46,3 @@ for dobj_pid in dobj_list:
 
 plot_files
 
-import json
-filename = "/tmp/plot_files_" + id + ".json"
-file_plot_files = open(filename, "w")
-file_plot_files.write(json.dumps(plot_files))
-file_plot_files.close()
