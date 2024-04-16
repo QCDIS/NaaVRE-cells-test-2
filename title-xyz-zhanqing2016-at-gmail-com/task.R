@@ -9,8 +9,7 @@ library(jsonlite)
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--x_output"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--y"), action="store", default=NA, type="integer", help="my description")
+make_option(c("--x_output"), action="store", default=NA, type="character", help="my description")
 
 )
 
@@ -20,7 +19,6 @@ opt = parse_args(OptionParser(option_list=option_list))
 
 id <- gsub('"', '', opt$id)
 x_output = fromJSON(opt$x_output)
-y = opt$y
 
 
 
@@ -32,3 +30,7 @@ plot(x_output,y)
 
 
 
+# capturing outputs
+file <- file(paste0('/tmp/y_', id, '.json'))
+writeLines(toJSON(y, auto_unbox=TRUE), file)
+close(file)
