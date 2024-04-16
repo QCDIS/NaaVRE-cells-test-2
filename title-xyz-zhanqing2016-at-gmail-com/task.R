@@ -26,7 +26,8 @@ x_output = fromJSON(opt$x_output)
 
 
 y=seq(21,30,length.out=10)
-print(x_output<y)
+print(x_output)
+print(y)
 
 
 
