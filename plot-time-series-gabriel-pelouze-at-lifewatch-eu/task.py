@@ -39,10 +39,15 @@ for dobj_pid in dobj_list:
     title = f"{name} \n {uri}"
     plot = dobj.data.plot(x='TIMESTAMP', y=param_variable, grid=True, title=title)
     plot.set(ylabel=unit)
-    plt.show()
     filename = f'/tmp/data/{slugify.slugify(dobj_pid)}.pdf'
     plt.savefig(filename)
     plot_files.append(filename)
+    plt.show()
 
 plot_files
 
+import json
+filename = "/tmp/plot_files_" + id + ".json"
+file_plot_files = open(filename, "w")
+file_plot_files.write(json.dumps(plot_files))
+file_plot_files.close()
