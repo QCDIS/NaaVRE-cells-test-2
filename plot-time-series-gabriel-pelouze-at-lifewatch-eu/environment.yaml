@@ -4,8 +4,8 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - matplotlib
   - awesome-slugify
+  - matplotlib
   - pip:
     - icoscp
   - papermill
