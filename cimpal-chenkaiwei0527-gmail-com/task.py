@@ -1,4 +1,3 @@
-from minio import Minio
 from pathlib import Path
 from shapely.geometry import Point
 import csv
@@ -20,39 +19,45 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
+arg_parser.add_argument('--occ_taxa', action='store', type=str, required=True, dest='occ_taxa')
+
+arg_parser.add_argument('--pathway_file', action='store', type=str, required=True, dest='pathway_file')
+
 arg_parser.add_argument('--sh_transform', action='store', type=str, required=True, dest='sh_transform')
+
+arg_parser.add_argument('--shp', action='store', type=str, required=True, dest='shp')
 
 arg_parser.add_argument('--sys', action='store', type=str, required=True, dest='sys')
 
+arg_parser.add_argument('--weight_file', action='store', type=str, required=True, dest='weight_file')
+
 arg_parser.add_argument('--param_grid_size_para', action='store', type=int, required=True, dest='param_grid_size_para')
-arg_parser.add_argument('--param_s3_access_key', action='store', type=str, required=True, dest='param_s3_access_key')
-arg_parser.add_argument('--param_s3_secret_key', action='store', type=str, required=True, dest='param_s3_secret_key')
-arg_parser.add_argument('--param_s3_server', action='store', type=str, required=True, dest='param_s3_server')
-arg_parser.add_argument('--param_s3_user_bucket', action='store', type=str, required=True, dest='param_s3_user_bucket')
-arg_parser.add_argument('--param_s3_user_prefix', action='store', type=str, required=True, dest='param_s3_user_prefix')
 
 args = arg_parser.parse_args()
 print(args)
 
 id = args.id
 
+occ_taxa = args.occ_taxa.replace('"','')
+pathway_file = args.pathway_file.replace('"','')
 import json
 sh_transform = json.loads(args.sh_transform)
+shp = args.shp.replace('"','')
 import json
 sys = json.loads(args.sys)
+weight_file = args.weight_file.replace('"','')
 
 param_grid_size_para = args.param_grid_size_para
-param_s3_access_key = args.param_s3_access_key
-param_s3_secret_key = args.param_s3_secret_key
-param_s3_server = args.param_s3_server
-param_s3_user_bucket = args.param_s3_user_bucket
-param_s3_user_prefix = args.param_s3_user_prefix
 
 conf_data_dir = '/tmp/data'
 
 
 conf_data_dir = '/tmp/data'
 
+occ_and_taxa_path = occ_taxa
+biotope_shp_path = shp
+weights_path = weight_file
+pathways_path = pathway_file
 
 def create_directory_if_not_exists(path):
     if not os.path.exists(path):
@@ -63,21 +68,6 @@ def create_directory_if_not_exists(path):
             print("Error creating directory:", e)
     else:
         print("Directory already exists at:", path)
-
-
-minio_client = Minio(param_s3_server, access_key=param_s3_access_key, secret_key=param_s3_secret_key, secure=True)
-
-for item in minio_client.list_objects(param_s3_user_bucket, prefix=f"{param_s3_user_prefix}", recursive=True):
-    target_file = f"{conf_data_dir}/input/{item.object_name.removeprefix(param_s3_user_prefix)}"
-    if not os.path.exists(target_file):
-        print("Downloading", item.object_name)
-        minio_client.fget_object(param_s3_user_bucket, item.object_name, target_file)
-
-occ_and_taxa_path = f"{conf_data_dir}/input/Cimpal_resources"
-biotope_shp_path = f"{conf_data_dir}/input/Cimpal_resources"
-weights_path = f"{conf_data_dir}/input/Cimpal_resources/weight_wp.csv"
-pathways_path = f"{conf_data_dir}/input/Cimpal_resources/CIMPAL_paths.csv"
-
 
 out_path = create_directory_if_not_exists(f"{conf_data_dir}/output/Cimpal_out")
 
