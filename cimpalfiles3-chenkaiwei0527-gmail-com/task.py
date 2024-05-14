@@ -41,7 +41,7 @@ for item in minio_client.list_objects(param_s3_user_bucket, prefix=f"{param_s3_u
         minio_client.fget_object(param_s3_user_bucket, item.object_name, target_file)
 
 occ_taxa = f"{conf_data_dir}/input/Cimpal_resources"
-shp_file = f"{conf_data_dir}/input/Cimpal_resources"
+biotope_shp_path_file = f"{conf_data_dir}/input/Cimpal_resources"
 weight_file = f"{conf_data_dir}/input/Cimpal_resources/weight_wp.csv"
 pathway_file = f"{conf_data_dir}/input/Cimpal_resources/CIMPAL_paths.csv"
 zones_file = f"{conf_data_dir}/input/zones"
@@ -53,10 +53,10 @@ filename = "/tmp/occ_taxa_" + id + ".json"
 file_occ_taxa = open(filename, "w")
 file_occ_taxa.write(json.dumps(occ_taxa))
 file_occ_taxa.close()
-filename = "/tmp/shp_file_" + id + ".json"
-file_shp_file = open(filename, "w")
-file_shp_file.write(json.dumps(shp_file))
-file_shp_file.close()
+filename = "/tmp/biotope_shp_path_file_" + id + ".json"
+file_biotope_shp_path_file = open(filename, "w")
+file_biotope_shp_path_file.write(json.dumps(biotope_shp_path_file))
+file_biotope_shp_path_file.close()
 filename = "/tmp/weight_file_" + id + ".json"
 file_weight_file = open(filename, "w")
 file_weight_file.write(json.dumps(weight_file))
