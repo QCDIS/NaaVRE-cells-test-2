@@ -175,7 +175,7 @@ for knmi_path in knmi_pvol_paths:
     shutil.move(src=out_path_pvol_odim,dst=out_path_pvol_odim_tce)
     odim_pvol_paths.append(out_path_pvol_odim_tce)
    
-print(odim_pvol_paths)
+print(f"{odim_pvol_paths=}")
 if conf_upload_results:
     minioClient = Minio(endpoint = param_minio_endpoint,
                     access_key = param_minio_access_key,
@@ -190,7 +190,7 @@ if conf_upload_results:
         exists = False
         try:
             _ = minioClient.stat_object(bucket = conf_minio_user_bucket_name,
-                                    prefix = remote_odim_pvol_path)
+                                    prefix = remote_odim_pvol_path.as_posix())
             exists = True
         except:
             pass
@@ -200,7 +200,7 @@ if conf_upload_results:
                         file_stat = os.stat(odim_pvol_path)
                         minioClient.put_object(
                             bucket_name=conf_minio_user_bucket_name,
-                            object_name=remote_odim_pvol_path,
+                            object_name=remote_odim_pvol_path.as_posix(),
                             data=file_data,
                             length=file_stat.st_size,
                         )
