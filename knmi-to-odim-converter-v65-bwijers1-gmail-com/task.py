@@ -1,4 +1,5 @@
 from minio import Minio
+from pathlib import Path
 import h5py
 import json
 import os
@@ -185,7 +186,7 @@ if conf_upload_results:
         odim_pvol_path = pathlib.Path(odim_pvol_path)
         local_pvol_storage = pathlib.Path(conf_local_odim)
         relative_path = odim_pvol_path.relative_to(local_pvol_storage)
-        remote_odim_pvol_path = conf_minio_user_pvol_output_prefix.joinpath(relative_path)
+        remote_odim_pvol_path = Path(conf_minio_user_pvol_output_prefix).joinpath(relative_path)
         exists = False
         try:
             _ = minioClient.stat_object(bucket = conf_minio_user_bucket_name,
