@@ -49,8 +49,9 @@ def create_directory_if_not_exists(path):
 
 
 
+create_directory_if_not_exists(f"{conf_data_dir}/output/Zonal_out")
+out_path2 = f"{conf_data_dir}/output/Zonal_out"
 
-out_path2 = create_directory_if_not_exists(f"{conf_data_dir}/output/Zonal_out")
 
 species_para = True
 
