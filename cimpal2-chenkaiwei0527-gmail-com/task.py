@@ -29,10 +29,6 @@ arg_parser.add_argument('--shp_file', action='store', type=str, required=True, d
 
 arg_parser.add_argument('--sys', action='store', type=str, required=True, dest='sys')
 
-arg_parser.add_argument('--sys_not_use', action='store', type=str, required=True, dest='sys_not_use')
-
-arg_parser.add_argument('--transform_not_use', action='store', type=str, required=True, dest='transform_not_use')
-
 arg_parser.add_argument('--weight_file', action='store', type=str, required=True, dest='weight_file')
 
 arg_parser.add_argument('--param_grid_size_para', action='store', type=int, required=True, dest='param_grid_size_para')
@@ -47,8 +43,6 @@ pathway_file = args.pathway_file.replace('"','')
 sh_transform = args.sh_transform.replace('"','')
 shp_file = args.shp_file.replace('"','')
 sys = args.sys.replace('"','')
-sys_not_use = args.sys_not_use.replace('"','')
-transform_not_use = args.transform_not_use.replace('"','')
 weight_file = args.weight_file.replace('"','')
 
 param_grid_size_para = args.param_grid_size_para
@@ -57,8 +51,7 @@ conf_data_dir = '/tmp/data'
 
 
 conf_data_dir = '/tmp/data'
-sys_not_use
-transform_not_use
+
 
 occ_and_taxa_path = occ_taxa
 biotope_shp_path = shp_file
