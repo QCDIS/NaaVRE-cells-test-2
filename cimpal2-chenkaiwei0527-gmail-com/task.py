@@ -19,13 +19,13 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
+arg_parser.add_argument('--biotope_shp_path_file', action='store', type=str, required=True, dest='biotope_shp_path_file')
+
 arg_parser.add_argument('--occ_taxa', action='store', type=str, required=True, dest='occ_taxa')
 
 arg_parser.add_argument('--pathway_file', action='store', type=str, required=True, dest='pathway_file')
 
 arg_parser.add_argument('--sh_transform', action='store', type=str, required=True, dest='sh_transform')
-
-arg_parser.add_argument('--shp_file', action='store', type=str, required=True, dest='shp_file')
 
 arg_parser.add_argument('--sys', action='store', type=str, required=True, dest='sys')
 
@@ -38,10 +38,10 @@ print(args)
 
 id = args.id
 
+biotope_shp_path_file = args.biotope_shp_path_file.replace('"','')
 occ_taxa = args.occ_taxa.replace('"','')
 pathway_file = args.pathway_file.replace('"','')
 sh_transform = args.sh_transform.replace('"','')
-shp_file = args.shp_file.replace('"','')
 sys = args.sys.replace('"','')
 weight_file = args.weight_file.replace('"','')
 
@@ -54,7 +54,7 @@ conf_data_dir = '/tmp/data'
 
 
 occ_and_taxa_path = occ_taxa
-biotope_shp_path = shp_file
+biotope_shp_path = biotope_shp_path_file
 weights_path = weight_file
 pathways_path = pathway_file
 
