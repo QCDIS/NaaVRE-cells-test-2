@@ -59,17 +59,9 @@ biotope_shp_path = shp
 weights_path = weight_file
 pathways_path = pathway_file
 
-def create_directory_if_not_exists(path):
-    if not os.path.exists(path):
-        try:
-            os.makedirs(path)
-            print("Directory created successfully at:", path)
-        except OSError as e:
-            print("Error creating directory:", e)
-    else:
-        print("Directory already exists at:", path)
 
-out_path = create_directory_if_not_exists(f"{conf_data_dir}/output/Cimpal_out")
+out_path =  os.makedirs(f"{conf_data_dir}/output/Cimpal_out")
+print("Directory created successfully at:", out_path)
 
 
 try:
@@ -81,6 +73,7 @@ except:
 
 
 
+print("start")
 gbif_dir = Path(occ_and_taxa_path)
 shp_dir = biotope_shp_path
 shp_files = os.listdir(shp_dir)
