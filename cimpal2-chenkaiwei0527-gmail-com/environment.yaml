@@ -4,9 +4,9 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - osgeo
-  - pandas
   - shapely
+  - gdal
   - pyproj
+  - pandas
   - papermill
   - ipykernel
