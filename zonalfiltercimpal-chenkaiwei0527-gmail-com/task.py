@@ -149,3 +149,8 @@ for file in tif_files:
 
     subprocess.call([str(zonal), raster_z, file, tabular_out])
 
+import json
+filename = "/tmp/out_path2_" + id + ".json"
+file_out_path2 = open(filename, "w")
+file_out_path2.write(json.dumps(out_path2))
+file_out_path2.close()
