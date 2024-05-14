@@ -29,6 +29,10 @@ arg_parser.add_argument('--shp', action='store', type=str, required=True, dest='
 
 arg_parser.add_argument('--sys', action='store', type=str, required=True, dest='sys')
 
+arg_parser.add_argument('--sys_not_use', action='store', type=str, required=True, dest='sys_not_use')
+
+arg_parser.add_argument('--transform_not_use', action='store', type=str, required=True, dest='transform_not_use')
+
 arg_parser.add_argument('--weight_file', action='store', type=str, required=True, dest='weight_file')
 
 arg_parser.add_argument('--param_grid_size_para', action='store', type=int, required=True, dest='param_grid_size_para')
@@ -40,11 +44,11 @@ id = args.id
 
 occ_taxa = args.occ_taxa.replace('"','')
 pathway_file = args.pathway_file.replace('"','')
-import json
-sh_transform = json.loads(args.sh_transform)
+sh_transform = args.sh_transform.replace('"','')
 shp = args.shp.replace('"','')
-import json
-sys = json.loads(args.sys)
+sys = args.sys.replace('"','')
+sys_not_use = args.sys_not_use.replace('"','')
+transform_not_use = args.transform_not_use.replace('"','')
 weight_file = args.weight_file.replace('"','')
 
 param_grid_size_para = args.param_grid_size_para
@@ -53,7 +57,8 @@ conf_data_dir = '/tmp/data'
 
 
 conf_data_dir = '/tmp/data'
-
+sys_not_use
+transform_not_use
 
 occ_and_taxa_path = occ_taxa
 biotope_shp_path = shp
@@ -61,6 +66,8 @@ weights_path = weight_file
 pathways_path = pathway_file
 
 out_path =  os.mkdirs(f"{conf_data_dir}/output/Cimpal")
+
+
 
 
 
