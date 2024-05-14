@@ -41,7 +41,7 @@ for item in minio_client.list_objects(param_s3_user_bucket, prefix=f"{param_s3_u
         minio_client.fget_object(param_s3_user_bucket, item.object_name, target_file)
 
 occ_taxa = f"{conf_data_dir}/input/Cimpal_resources"
-shp = f"{conf_data_dir}/input/Cimpal_resources"
+shp_file = f"{conf_data_dir}/input/Cimpal_resources"
 weight_file = f"{conf_data_dir}/input/Cimpal_resources/weight_wp.csv"
 pathway_file = f"{conf_data_dir}/input/Cimpal_resources/CIMPAL_paths.csv"
 zones_file = f"{conf_data_dir}/input/zones"
@@ -53,10 +53,10 @@ filename = "/tmp/occ_taxa_" + id + ".json"
 file_occ_taxa = open(filename, "w")
 file_occ_taxa.write(json.dumps(occ_taxa))
 file_occ_taxa.close()
-filename = "/tmp/shp_" + id + ".json"
-file_shp = open(filename, "w")
-file_shp.write(json.dumps(shp))
-file_shp.close()
+filename = "/tmp/shp_file_" + id + ".json"
+file_shp_file = open(filename, "w")
+file_shp_file.write(json.dumps(shp_file))
+file_shp_file.close()
 filename = "/tmp/weight_file_" + id + ".json"
 file_weight_file = open(filename, "w")
 file_weight_file.write(json.dumps(weight_file))
