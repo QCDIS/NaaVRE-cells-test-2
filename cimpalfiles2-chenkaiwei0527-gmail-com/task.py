@@ -44,6 +44,7 @@ occ_taxa = f"{conf_data_dir}/input/Cimpal_resources"
 shp = f"{conf_data_dir}/input/Cimpal_resources"
 weight_file = f"{conf_data_dir}/input/Cimpal_resources/weight_wp.csv"
 pathway_file = f"{conf_data_dir}/input/Cimpal_resources/CIMPAL_paths.csv"
+zones_file = f"{conf_data_dir}/input/zones"
 
 import json
 filename = "/tmp/occ_taxa_" + id + ".json"
@@ -62,3 +63,7 @@ filename = "/tmp/pathway_file_" + id + ".json"
 file_pathway_file = open(filename, "w")
 file_pathway_file.write(json.dumps(pathway_file))
 file_pathway_file.close()
+filename = "/tmp/zones_file_" + id + ".json"
+file_zones_file = open(filename, "w")
+file_zones_file.write(json.dumps(zones_file))
+file_zones_file.close()
