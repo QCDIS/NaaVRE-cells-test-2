@@ -45,8 +45,8 @@ shp_file = f"{conf_data_dir}/input/Cimpal_resources"
 weight_file = f"{conf_data_dir}/input/Cimpal_resources/weight_wp.csv"
 pathway_file = f"{conf_data_dir}/input/Cimpal_resources/CIMPAL_paths.csv"
 zones_file = f"{conf_data_dir}/input/zones"
-sys_not_use = f"{conf_data_dir}/input/Cimpal_resources"
-transform_not_use = f"{conf_data_dir}/input/Cimpal_resources"
+sys = f"{conf_data_dir}/input/Cimpal_resources"
+sh_transform = f"{conf_data_dir}/input/Cimpal_resources"
 
 import json
 filename = "/tmp/occ_taxa_" + id + ".json"
@@ -69,11 +69,11 @@ filename = "/tmp/zones_file_" + id + ".json"
 file_zones_file = open(filename, "w")
 file_zones_file.write(json.dumps(zones_file))
 file_zones_file.close()
-filename = "/tmp/sys_not_use_" + id + ".json"
-file_sys_not_use = open(filename, "w")
-file_sys_not_use.write(json.dumps(sys_not_use))
-file_sys_not_use.close()
-filename = "/tmp/transform_not_use_" + id + ".json"
-file_transform_not_use = open(filename, "w")
-file_transform_not_use.write(json.dumps(transform_not_use))
-file_transform_not_use.close()
+filename = "/tmp/sys_" + id + ".json"
+file_sys = open(filename, "w")
+file_sys.write(json.dumps(sys))
+file_sys.close()
+filename = "/tmp/sh_transform_" + id + ".json"
+file_sh_transform = open(filename, "w")
+file_sh_transform.write(json.dumps(sh_transform))
+file_sh_transform.close()
