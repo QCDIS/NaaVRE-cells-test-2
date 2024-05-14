@@ -31,7 +31,7 @@ arg_parser.add_argument('--sys', action='store', type=str, required=True, dest='
 
 arg_parser.add_argument('--weight_file', action='store', type=str, required=True, dest='weight_file')
 
-arg_parser.add_argument('--param_zone_field_para', action='store', type=str, required=True, dest='param_zone_field_para')
+arg_parser.add_argument('--param_grid_size_para', action='store', type=int, required=True, dest='param_grid_size_para')
 
 args = arg_parser.parse_args()
 print(args)
@@ -47,7 +47,7 @@ import json
 sys = json.loads(args.sys)
 weight_file = args.weight_file.replace('"','')
 
-param_zone_field_para = args.param_zone_field_para
+param_grid_size_para = args.param_grid_size_para
 
 conf_data_dir = '/tmp/data'
 
@@ -76,7 +76,7 @@ gbif_dir = Path(occ_and_taxa_path)
 shp_dir = biotope_shp_path
 shp_files = os.listdir(shp_dir)
 impact_matrix = weights_path
-grid_size = param_zone_field_para
+grid_size = param_grid_size_para
 nis_pathways_matrix_path_dir = pathways_path
 
 
@@ -116,7 +116,7 @@ zone_field = 'id_habitat'
 field_name_oc = "scientificName"
 useEEA = True
 LAEA=True
-grid_size = int(param_zone_field_para)
+grid_size = int(param_grid_size_para)
 field_name_radius = "dispersionRadius"
 radius_default = 100
 field_name = "Habitat"
