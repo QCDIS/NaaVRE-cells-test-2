@@ -57,8 +57,7 @@ species_para = True
 
 
 
-try:
-except:
+
     
 
 
