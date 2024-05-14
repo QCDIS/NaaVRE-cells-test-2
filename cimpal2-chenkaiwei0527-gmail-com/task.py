@@ -58,7 +58,8 @@ biotope_shp_path = biotope_shp_path_file
 weights_path = weight_file
 pathways_path = pathway_file
 
-out_path =  os.makedirs(f"{conf_data_dir}/output/Cimpal")
+os.makedirs(f"{conf_data_dir}/output/Cimpal")
+out_path = f"{conf_data_dir}/output/Cimpal"
 
 
 
