@@ -45,8 +45,8 @@ shp = f"{conf_data_dir}/input/Cimpal_resources"
 weight_file = f"{conf_data_dir}/input/Cimpal_resources/weight_wp.csv"
 pathway_file = f"{conf_data_dir}/input/Cimpal_resources/CIMPAL_paths.csv"
 zones_file = f"{conf_data_dir}/input/zones"
-sys_not_use = "empty"
-transform_not_use = "2"
+sys_not_use = f"{conf_data_dir}/input/Cimpal_resources"
+transform_not_use = f"{conf_data_dir}/input/Cimpal_resources"
 
 import json
 filename = "/tmp/occ_taxa_" + id + ".json"
