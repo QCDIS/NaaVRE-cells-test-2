@@ -63,10 +63,7 @@ pathways_path = pathway_file
 out_path =  os.mkdirs(f"{conf_data_dir}/output/Cimpal")
 
 
-try:
-except:
-try:
-except:
+
 
 
 
