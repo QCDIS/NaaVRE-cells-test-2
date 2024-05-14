@@ -31,7 +31,7 @@ arg_parser.add_argument('--sys', action='store', type=str, required=True, dest='
 
 arg_parser.add_argument('--weight_file', action='store', type=str, required=True, dest='weight_file')
 
-arg_parser.add_argument('--param_grid_size_para', action='store', type=int, required=True, dest='param_grid_size_para')
+arg_parser.add_argument('--param_zone_field_para', action='store', type=str, required=True, dest='param_zone_field_para')
 
 args = arg_parser.parse_args()
 print(args)
@@ -47,21 +47,20 @@ import json
 sys = json.loads(args.sys)
 weight_file = args.weight_file.replace('"','')
 
-param_grid_size_para = args.param_grid_size_para
+param_zone_field_para = args.param_zone_field_para
 
 conf_data_dir = '/tmp/data'
 
 
 conf_data_dir = '/tmp/data'
+
 
 occ_and_taxa_path = occ_taxa
 biotope_shp_path = shp
 weights_path = weight_file
 pathways_path = pathway_file
 
-
-out_path =  os.makedirs(f"{conf_data_dir}/output/Cimpal_out")
-print("Directory created successfully at:", out_path)
+out_path =  os.mkdirs(f"{conf_data_dir}/output/Cimpal")
 
 
 try:
@@ -73,12 +72,11 @@ except:
 
 
 
-print("start")
 gbif_dir = Path(occ_and_taxa_path)
 shp_dir = biotope_shp_path
 shp_files = os.listdir(shp_dir)
 impact_matrix = weights_path
-grid_size = param_grid_size_para
+grid_size = param_zone_field_para
 nis_pathways_matrix_path_dir = pathways_path
 
 
@@ -118,7 +116,7 @@ zone_field = 'id_habitat'
 field_name_oc = "scientificName"
 useEEA = True
 LAEA=True
-grid_size = int(param_grid_size_para)
+grid_size = int(25)
 field_name_radius = "dispersionRadius"
 radius_default = 100
 field_name = "Habitat"
