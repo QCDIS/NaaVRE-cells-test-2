@@ -4,9 +4,9 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - shapely
-  - gdal
   - pyproj
+  - gdal
   - pandas
+  - shapely
   - papermill
   - ipykernel
