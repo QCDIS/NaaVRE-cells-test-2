@@ -36,7 +36,8 @@ minio_client = Minio(param_s3_server, access_key=param_s3_access_key, secret_key
 for filename in os.listdir(out_path2):
     file_path = f"{out_path2}/{filename}"
     dir_basename = os.path.basename(out_path2)
-    object_name = f"{param_s3_user_prefix}/{dir_basename}/{filename}"
+    user_prefix = param_s3_user_prefix[:-1]
+    object_name = f"{user_prefix}/{dir_basename}/{filename}"
     print("Uploading", file_path)
     minio_client.fput_object(param_s3_user_bucket, object_name=object_name, file_path=file_path)
 
