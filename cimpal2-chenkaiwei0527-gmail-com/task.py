@@ -25,10 +25,6 @@ arg_parser.add_argument('--occ_taxa', action='store', type=str, required=True, d
 
 arg_parser.add_argument('--pathway_file', action='store', type=str, required=True, dest='pathway_file')
 
-arg_parser.add_argument('--sh_transform', action='store', type=str, required=True, dest='sh_transform')
-
-arg_parser.add_argument('--sys', action='store', type=str, required=True, dest='sys')
-
 arg_parser.add_argument('--weight_file', action='store', type=str, required=True, dest='weight_file')
 
 arg_parser.add_argument('--param_grid_size_para', action='store', type=int, required=True, dest='param_grid_size_para')
@@ -41,8 +37,6 @@ id = args.id
 biotope_shp_path_file = args.biotope_shp_path_file.replace('"','')
 occ_taxa = args.occ_taxa.replace('"','')
 pathway_file = args.pathway_file.replace('"','')
-sh_transform = args.sh_transform.replace('"','')
-sys = args.sys.replace('"','')
 weight_file = args.weight_file.replace('"','')
 
 param_grid_size_para = args.param_grid_size_para
