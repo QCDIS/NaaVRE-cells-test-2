@@ -12,10 +12,10 @@ if (!requireNamespace("here", quietly = TRUE)) {
 	install.packages("here", repos="http://cran.us.r-project.org")
 }
 library(here)
-if (!requireNamespace("knir", quietly = TRUE)) {
-	install.packages("knir", repos="http://cran.us.r-project.org")
+if (!requireNamespace("knitr", quietly = TRUE)) {
+	install.packages("knitr", repos="http://cran.us.r-project.org")
 }
-library(knir)
+library(knitr)
 if (!requireNamespace("lubridate", quietly = TRUE)) {
 	install.packages("lubridate", repos="http://cran.us.r-project.org")
 }
