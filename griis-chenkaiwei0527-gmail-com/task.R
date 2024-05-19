@@ -67,7 +67,7 @@ library(zip)
 
 file_to_zip <- paste0(param_dataset_key, ".tsv")
 
-if (length(tsv_files) > 0) {
+if (length(file_to_zip) > 0) {
   zip(zipfile = "griis.zip", files = file_to_zip)
   
   cat("File", param_dataset_key, "zipped into griis.zip successfully.\n")
