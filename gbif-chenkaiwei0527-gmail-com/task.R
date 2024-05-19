@@ -77,7 +77,7 @@ sapply(lbs, require, character.only=TRUE)
 	
 
 
-setwd(param_work_dir)
+setwd(conf_work_dir)
 
 
 countries <- param_country_code
