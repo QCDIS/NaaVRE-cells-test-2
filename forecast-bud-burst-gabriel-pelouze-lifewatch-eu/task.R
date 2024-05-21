@@ -184,6 +184,11 @@ forecasting_all <- purrr::map(.x = future_budburst_zScores,
                               "forecasted_budburst_smoothend") |>
   dplyr::bind_rows()
 
+
+forecasting_all_file = '/tmp/data/forecasting_all.csv'
+write.csv(forecasting_all, forecasting_all_file)
+
+
 forecasting_plot <- forecasting_all %>%
   dplyr::group_by(year, scenario_name) %>%
   dplyr::summarise(mean = mean(mean_pred_bb_window, na.rm = TRUE),
@@ -215,3 +220,7 @@ forecasting_plot
 
 
 
+# capturing outputs
+file <- file(paste0('/tmp/forecasting_all_file_', id, '.json'))
+writeLines(toJSON(forecasting_all_file, auto_unbox=TRUE), file)
+close(file)
