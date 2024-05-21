@@ -215,7 +215,3 @@ forecasting_plot
 
 
 
-# capturing outputs
-file <- file(paste0('/tmp/forecasting_plot_', id, '.json'))
-writeLines(toJSON(forecasting_plot, auto_unbox=TRUE), file)
-close(file)
