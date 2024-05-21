@@ -4,9 +4,10 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - pandas
+  - nbconvert
   - scipy
   - matplotlib
   - numpy
+  - pandas
   - papermill
   - ipykernel
