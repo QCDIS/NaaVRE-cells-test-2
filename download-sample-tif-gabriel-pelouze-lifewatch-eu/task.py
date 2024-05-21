@@ -1,6 +1,7 @@
 import requests
 
 import argparse
+import json
 arg_parser = argparse.ArgumentParser()
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
@@ -35,12 +36,9 @@ else:
 
 download_done = 'True'
 
-import json
-filename = "/tmp/filename_" + id + ".json"
-file_filename = open(filename, "w")
+file_filename = open("/tmp/filename_" + id + ".json", "w")
 file_filename.write(json.dumps(filename))
 file_filename.close()
-filename = "/tmp/download_done_" + id + ".json"
-file_download_done = open(filename, "w")
+file_download_done = open("/tmp/download_done_" + id + ".json", "w")
 file_download_done.write(json.dumps(download_done))
 file_download_done.close()
