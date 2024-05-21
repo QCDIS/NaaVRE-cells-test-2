@@ -389,3 +389,6 @@ validation_plot_all
 file <- file(paste0('/tmp/validation_all_zScores_file_', id, '.json'))
 writeLines(toJSON(validation_all_zScores_file, auto_unbox=TRUE), file)
 close(file)
+file <- file(paste0('/tmp/validation_plot_all_', id, '.json'))
+writeLines(toJSON(validation_plot_all, auto_unbox=TRUE), file)
+close(file)
