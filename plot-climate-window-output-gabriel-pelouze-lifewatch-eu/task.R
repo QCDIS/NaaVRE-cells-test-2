@@ -109,7 +109,3 @@ Fig_Qrobur
 
 
 
-# capturing outputs
-file <- file(paste0('/tmp/Fig_Qrobur_', id, '.json'))
-writeLines(toJSON(Fig_Qrobur, auto_unbox=TRUE), file)
-close(file)
