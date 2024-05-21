@@ -26,8 +26,8 @@ parameters['forecasting_all_file'] = forecasting_all_file
 
 
 pm.execute_notebook(
-    'visualize-veluwe-output-gabriel-pelouze-lifewatch-eu.ipynb',
-    'visualize-veluwe-output-gabriel-pelouze-lifewatch-eu-output.ipynb',
+    'task.ipynb',
+    'task-output.ipynb',
     prepare_only=True,
     parameters=dict(parameters)
 )
