@@ -30,8 +30,8 @@ parameters['filename'] = filename
 
 
 pm.execute_notebook(
-    'visualize-rasterio-sample-tif-no-output-gabriel-pelouze-lifewatch-eu.ipynb',
-    'visualize-rasterio-sample-tif-no-output-gabriel-pelouze-lifewatch-eu-output.ipynb',
+    'task.ipynb',
+    'task-output.ipynb',
     prepare_only=True,
     parameters=dict(parameters)
 )
