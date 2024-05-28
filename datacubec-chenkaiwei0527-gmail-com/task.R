@@ -4,14 +4,14 @@ setwd('/app')
 
 library(optparse)
 library(jsonlite)
-if (!requireNamespace("RSQL", quietly = TRUE)) {
-	install.packages("RSQL", repos="http://cran.us.r-project.org")
-}
-library(RSQL)
 if (!requireNamespace("RSQLite", quietly = TRUE)) {
 	install.packages("RSQLite", repos="http://cran.us.r-project.org")
 }
 library(RSQLite)
+if (!requireNamespace("data.table", quietly = TRUE)) {
+	install.packages("data.table", repos="http://cran.us.r-project.org")
+}
+library(data.table)
 if (!requireNamespace("glue", quietly = TRUE)) {
 	install.packages("glue", repos="http://cran.us.r-project.org")
 }
