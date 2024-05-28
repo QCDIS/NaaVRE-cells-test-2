@@ -63,7 +63,7 @@ local_df_be_classes_path = Path(be_classes_path)
 local_tif_incidence_path = Path(temp_file_path)
 
 if "zip" in Path(local_tif_incidence_path).suffix:
-    work_dir = Path(out_DA, "grid")
+    work_dir = Path(out_DA_maps, "grid")
     os.mkdir(work_dir)
 
     shutil.unpack_archive(filename=local_tif_incidence_path,format="zip",extract_dir=work_dir)
@@ -165,13 +165,13 @@ if not outIAS.is_file():
 if not outIncidence.is_file():
     raise FileNotFoundError(f"{outIncidence} is missing")
 
-outzip = os.path.join(out_DA, "map_tifs.zip")
+outzip = os.path.join(out_DA_maps, "map_tifs.zip")
 
 with zipfile.ZipFile(outzip, "w") as zipObj:
     zipObj.write(filename=str(outIAS), arcname=outIAS.name)
     zipObj.write(filename=str(outIncidence), arcname=outIncidence.name)
     
-subprocess.call(['unzip', outzip, '-d', out_DA])
+subprocess.call(['unzip', outzip, '-d', out_DA_maps])
 
 import json
 filename = "/tmp/out_DA_maps_" + id + ".json"
