@@ -4,13 +4,13 @@ channels:
 dependencies:
   - pip
   - python>=3.8
+  - r-optparse
   - r-glue
+  - r-RSQLite
+  - r-sp
   - r-here
   - r-tidyverse
   - r-knitr
-  - r-RSQLite
   - r-sf
-  - r-sp
-  - r-optparse
   - papermill
   - ipykernel
