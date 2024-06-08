@@ -5,9 +5,9 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - pyproj
+  - gdal
   - shapely
   - pandas
-  - gdal
+  - pyproj
   - papermill
   - ipykernel
