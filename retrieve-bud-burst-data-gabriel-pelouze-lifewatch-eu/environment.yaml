@@ -4,13 +4,14 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - r-stringr
-  - r-purrr
-  - r-httr
-  - r-lubridate
+  - nbconvert
   - r-jsonlite
-  - r-tidyr
-  - r-taxize
+  - r-lubridate
   - r-dplyr
+  - r-tidyr
+  - r-purrr
+  - r-taxize
+  - r-httr
+  - r-stringr
   - papermill
   - ipykernel
