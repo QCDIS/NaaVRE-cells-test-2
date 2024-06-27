@@ -74,6 +74,10 @@ load(file = "../input_data/BAlpha_Ems.rda")
 load(file = "../input_data/BEopt_Ems.rda")
 load(file = "../input_data/BPs_Ems.rda")
 
+Silt <- Sediment_Ems$silt
+Depth <- Bat_xyv$depth
+Kd <- Sediment_Ems$Kd
+
 Batxyv <- Bat_xyv
 WKd <- WKd_Ems
 Irrad <- Irrad_Ems
@@ -87,7 +91,20 @@ BEopt <- BEopt_Ems
 BPs <- BPs_Ems
 
 
+
 # capturing outputs
+print('Serialization of Silt')
+file <- file(paste0('/tmp/Silt_', id, '.json'))
+writeLines(toJSON(Silt, auto_unbox=TRUE), file)
+close(file)
+print('Serialization of Depth')
+file <- file(paste0('/tmp/Depth_', id, '.json'))
+writeLines(toJSON(Depth, auto_unbox=TRUE), file)
+close(file)
+print('Serialization of Kd')
+file <- file(paste0('/tmp/Kd_', id, '.json'))
+writeLines(toJSON(Kd, auto_unbox=TRUE), file)
+close(file)
 print('Serialization of Batxyv')
 file <- file(paste0('/tmp/Batxyv_', id, '.json'))
 writeLines(toJSON(Batxyv, auto_unbox=TRUE), file)
