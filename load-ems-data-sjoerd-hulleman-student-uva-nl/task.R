@@ -74,7 +74,7 @@ load(file = "../input_data/BAlpha_Ems.rda")
 load(file = "../input_data/BEopt_Ems.rda")
 load(file = "../input_data/BPs_Ems.rda")
 
-depth <- Bat_xyv$depth
+Batxyv <- Bat_xyv
 WKd <- WKd_Ems
 Irrad <- Irrad_Ems
 WAlpha <- WAlpha_Ems
@@ -88,9 +88,9 @@ BPs <- BPs_Ems
 
 
 # capturing outputs
-print('Serialization of depth')
-file <- file(paste0('/tmp/depth_', id, '.json'))
-writeLines(toJSON(depth, auto_unbox=TRUE), file)
+print('Serialization of Batxyv')
+file <- file(paste0('/tmp/Batxyv_', id, '.json'))
+writeLines(toJSON(Batxyv, auto_unbox=TRUE), file)
 close(file)
 print('Serialization of WKd')
 file <- file(paste0('/tmp/WKd_', id, '.json'))
