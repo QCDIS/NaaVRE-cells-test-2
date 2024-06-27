@@ -21,6 +21,7 @@ make_option(c("--BEopt_Ems"), action="store", default=NA, type="character", help
 make_option(c("--BPs_Ems"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--depth"), action="store", default=NA, type="numeric", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--Irrad_Ems"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--Kd"), action="store", default=NA, type="numeric", help="my description"), 
 make_option(c("--Sediment_Ems"), action="store", default=NA, type="character", help="my description"), 
@@ -115,6 +116,13 @@ var_len = length(var)
 print(paste("Variable depth has length", var_len))
 
 depth = opt$depth
+print("Retrieving id")
+var = opt$id
+print(var)
+var_len = length(var)
+print(paste("Variable id has length", var_len))
+
+id <- gsub("\"", "", opt$id)
 print("Retrieving id")
 var = opt$id
 print(var)
