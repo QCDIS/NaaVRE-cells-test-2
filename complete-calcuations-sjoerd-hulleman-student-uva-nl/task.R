@@ -25,6 +25,10 @@ make_option(c("--bps"), action="store", default=NA, type="character", help="my d
 make_option(c("--cppfile"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--irrad"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_access_key"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_secret_key"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_user_prefix"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--sediment"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--spatio"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--walpha"), action="store", default=NA, type="character", help="my description"), 
@@ -108,6 +112,34 @@ var_len = length(var)
 print(paste("Variable irrad has length", var_len))
 
 irrad <- gsub("\"", "", opt$irrad)
+print("Retrieving param_s3_access_key")
+var = opt$param_s3_access_key
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_access_key has length", var_len))
+
+param_s3_access_key <- gsub("\"", "", opt$param_s3_access_key)
+print("Retrieving param_s3_endpoint")
+var = opt$param_s3_endpoint
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_endpoint has length", var_len))
+
+param_s3_endpoint <- gsub("\"", "", opt$param_s3_endpoint)
+print("Retrieving param_s3_secret_key")
+var = opt$param_s3_secret_key
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_secret_key has length", var_len))
+
+param_s3_secret_key <- gsub("\"", "", opt$param_s3_secret_key)
+print("Retrieving param_s3_user_prefix")
+var = opt$param_s3_user_prefix
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_user_prefix has length", var_len))
+
+param_s3_user_prefix <- gsub("\"", "", opt$param_s3_user_prefix)
 print("Retrieving sediment")
 var = opt$sediment
 print(var)
@@ -168,6 +200,15 @@ require(plot3D)
 palette("Dark2")
 options(width = 120)
 
+install.packages("aws.s3")
+library("aws.s3")
+
+Sys.setenv(
+    "AWS_ACCESS_KEY_ID" = param_s3_access_key,
+    "AWS_SECRET_ACCESS_KEY" = param_s3_secret_key,
+    "AWS_S3_ENDPOINT" = param_s3_endpoint
+    )
+
 load(file = spatio)
 load(file = wkd)
 load(file = irrad)
@@ -223,12 +264,10 @@ Benthic_xy <- data.frame(Bat_xyv,
 Rad_bottom <- data.frame(Bat_xyv, rad = colMeans(Rad))
 
 print("SAVING FILES")
-save(file = "../output_data/Pelagic_t.rda", Pelagic_t)
-save(file = "../output_data/Benthic_t.rda", Benthic_t)
-save(file = "../output_data/Pelagic_xy.rda", Pelagic_xy)
-save(file = "../output_data/Benthic_xy.rda", Benthic_xy)
 
 print("STARTING VISUALIZATIONS")
+png("output_plot.png", width = 1600, height = 1200)
+
 par(mfrow=c(2,3))
 with(Pelagic_xy, 
    points2D(longitude, latitude, colvar=depth, 
@@ -254,3 +293,8 @@ with(Sediment_Ems,
    points2D(longitude, latitude, colvar=Kd, 
          main = "Sediment extinction", clab="/m",
          asp=1.8, pch=".", cex=4))
+
+dev.off()
+
+print("SAVING FILE TO OBJECT STORAGE")
+put_object(region="", bucket="naa-vre-user-data", file="output_plot.png", object=paste0(param_s3_user_prefix, "/outputs/output_plot.png"))
