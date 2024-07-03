@@ -183,6 +183,7 @@ load(file = bps)
 
 sourceCpp(file = cppfile)  # compiles the C++ code and loads the functions
 
+print("STARTING FIRST CULCATIONS")
 system.time(
   ppPel <- intPP_mixed(Bat_xyv$depth, 
                  as.matrix(WKd_Ems    [, -1]), 
@@ -212,6 +213,7 @@ system.time(
                     as.matrix(BPs_Ems         [, -1]))
 )
 
+print("STARTING SECOND CULCATIONS")
 Pelagic_t <- apply(ppPel, MARGIN = 1, FUN = mean)
 Benthic_t <- apply(ppBen, MARGIN = 1, FUN = mean)
 
@@ -221,11 +223,13 @@ Benthic_xy <- data.frame(Bat_xyv,
                          ppBen = apply(ppBen, MARGIN = 2, FUN = mean))
 Rad_bottom <- data.frame(Bat_xyv, rad = colMeans(Rad))
 
+print("SAVING FILES")
 save(file = "../output_data/Pelagic_t.rda", Pelagic_t)
 save(file = "../output_data/Benthic_t.rda", Benthic_t)
 save(file = "../output_data/Pelagic_xy.rda", Pelagic_xy)
 save(file = "../output_data/Benthic_xy.rda", Benthic_xy)
 
+print("STARTING VISUALIZATIONS")
 par(mfrow=c(2,3))
 with(Pelagic_xy, 
    points2D(longitude, latitude, colvar=depth, 
