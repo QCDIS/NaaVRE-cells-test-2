@@ -24,6 +24,7 @@ make_option(c("--beopt"), action="store", default=NA, type="character", help="my
 make_option(c("--bps"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--cppfile"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--irrad"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_access_key"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
@@ -98,6 +99,13 @@ var_len = length(var)
 print(paste("Variable cppfile has length", var_len))
 
 cppfile <- gsub("\"", "", opt$cppfile)
+print("Retrieving id")
+var = opt$id
+print(var)
+var_len = length(var)
+print(paste("Variable id has length", var_len))
+
+id <- gsub("\"", "", opt$id)
 print("Retrieving id")
 var = opt$id
 print(var)
