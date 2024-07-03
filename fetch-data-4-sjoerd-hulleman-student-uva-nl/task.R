@@ -116,6 +116,8 @@ save_object(region="", bucket="naa-vre-user-data", file="/tmp/data/BAlpha_Ems.rd
 save_object(region="", bucket="naa-vre-user-data", file="/tmp/data/BEopt_Ems.rda", object=paste0(param_s3_user_prefix, "/input_data/BEopt_Ems.rda"))
 save_object(region="", bucket="naa-vre-user-data", file="/tmp/data/BPs_Ems.rda", object=paste0(param_s3_user_prefix, "/input_data/BPs_Ems.rda"))
 
+save_object(region="", bucket="naa-vre-user-data", file="/tmp/data/intPP2D.cpp", object=paste0(param_s3_user_prefix, "/cpp/intPP2D.cpp"))
+
 spatio = '/tmp/data/Spatio_temporal_settings.rda'
 wkd = '/tmp/data/WKd_Ems.rda'
 irrad = '/tmp/data/Irrad_Ems.rda'
@@ -127,6 +129,8 @@ sediment = '/tmp/data/Sediment_Ems.rda'
 balpha = '/tmp/data/BAlpha_Ems.rda'
 beopt = '/tmp/data/BEopt_Ems.rda'
 bps = '/tmp/data/BPs_Ems.rda'
+
+cppfile = '/tmp/data/intPP2D.cpp'
 
 
 
@@ -179,4 +183,8 @@ close(file)
 print('Serialization of bps')
 file <- file(paste0('/tmp/bps_', id, '.json'))
 writeLines(toJSON(bps, auto_unbox=TRUE), file)
+close(file)
+print('Serialization of cppfile')
+file <- file(paste0('/tmp/cppfile_', id, '.json'))
+writeLines(toJSON(cppfile, auto_unbox=TRUE), file)
 close(file)
