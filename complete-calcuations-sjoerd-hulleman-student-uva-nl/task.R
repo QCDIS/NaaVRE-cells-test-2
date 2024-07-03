@@ -164,10 +164,9 @@ print("Running the cell")
 
 require(Rcpp)
 
-install.packages(c('plot3D', 'Rcpp'))
-options(width = 120)
 require(plot3D)
 palette("Dark2")
+options(width = 120)
 
 load(file = spatio)
 load(file = wkd)
