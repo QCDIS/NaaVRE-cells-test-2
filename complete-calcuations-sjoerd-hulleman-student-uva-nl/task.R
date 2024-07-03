@@ -22,7 +22,7 @@ option_list = list(
 make_option(c("--balpha"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--beopt"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--bps"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--ccpfile"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--cppfile"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--irrad"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--sediment"), action="store", default=NA, type="character", help="my description"), 
@@ -87,13 +87,13 @@ var_len = length(var)
 print(paste("Variable bps has length", var_len))
 
 bps <- gsub("\"", "", opt$bps)
-print("Retrieving ccpfile")
-var = opt$ccpfile
+print("Retrieving cppfile")
+var = opt$cppfile
 print(var)
 var_len = length(var)
-print(paste("Variable ccpfile has length", var_len))
+print(paste("Variable cppfile has length", var_len))
 
-ccpfile <- gsub("\"", "", opt$ccpfile)
+cppfile <- gsub("\"", "", opt$cppfile)
 print("Retrieving id")
 var = opt$id
 print(var)
@@ -163,7 +163,11 @@ print("Running the cell")
 
 
 require(Rcpp)
-sourceCpp(cppfile)  # compiles the C++ code and loads the functions
+
+install.packages(c('plot3D', 'Rcpp'))
+options(width = 120)
+require(plot3D)
+palette("Dark2")
 
 load(file = spatio)
 load(file = wkd)
@@ -176,6 +180,8 @@ load(file = sediment)
 load(file = balpha)
 load(file = beopt)
 load(file = bps)
+
+sourceCpp(file = cppfile)  # compiles the C++ code and loads the functions
 
 system.time(
   ppPel <- intPP_mixed(Bat_xyv$depth, 
