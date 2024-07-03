@@ -22,6 +22,7 @@ option_list = list(
 make_option(c("--balpha"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--beopt"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--bps"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--ccpfile"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--irrad"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--sediment"), action="store", default=NA, type="character", help="my description"), 
@@ -86,6 +87,13 @@ var_len = length(var)
 print(paste("Variable bps has length", var_len))
 
 bps <- gsub("\"", "", opt$bps)
+print("Retrieving ccpfile")
+var = opt$ccpfile
+print(var)
+var_len = length(var)
+print(paste("Variable ccpfile has length", var_len))
+
+ccpfile <- gsub("\"", "", opt$ccpfile)
 print("Retrieving id")
 var = opt$id
 print(var)
@@ -155,7 +163,7 @@ print("Running the cell")
 
 
 require(Rcpp)
-sourceCpp("intPP2D.cpp")  # compiles the C++ code and loads the functions
+sourceCpp(cppfile)  # compiles the C++ code and loads the functions
 
 load(file = spatio)
 load(file = wkd)
