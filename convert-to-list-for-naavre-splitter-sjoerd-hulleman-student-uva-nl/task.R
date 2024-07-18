@@ -8,8 +8,8 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--num_cpu_benchmarks"), action="store", default=NA, type="integer", help="my description"), 
-make_option(c("--num_mem_benchmarks"), action="store", default=NA, type="integer", help="my description")
+make_option(c("--num_cpu_benchmarks"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--num_mem_benchmarks"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -57,14 +57,14 @@ print(var)
 var_len = length(var)
 print(paste("Variable num_cpu_benchmarks has length", var_len))
 
-num_cpu_benchmarks = opt$num_cpu_benchmarks
+num_cpu_benchmarks <- gsub("\"", "", opt$num_cpu_benchmarks)
 print("Retrieving num_mem_benchmarks")
 var = opt$num_mem_benchmarks
 print(var)
 var_len = length(var)
 print(paste("Variable num_mem_benchmarks has length", var_len))
 
-num_mem_benchmarks = opt$num_mem_benchmarks
+num_mem_benchmarks <- gsub("\"", "", opt$num_mem_benchmarks)
 
 
 print("Running the cell")
