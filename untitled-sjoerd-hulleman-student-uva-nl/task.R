@@ -7,6 +7,7 @@ library(jsonlite)
 print('option_list')
 option_list = list(
 
+make_option(c("--bencmarks"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description")
 )
 
@@ -42,6 +43,17 @@ var_serialization <- function(var){
     )
 }
 
+print("Retrieving bencmarks")
+var = opt$bencmarks
+print(var)
+var_len = length(var)
+print(paste("Variable bencmarks has length", var_len))
+
+print("------------------------Running var_serialization for bencmarks-----------------------")
+print(opt$bencmarks)
+bencmarks = var_serialization(opt$bencmarks)
+print("---------------------------------------------------------------------------------")
+
 print("Retrieving id")
 var = opt$id
 print(var)
@@ -52,11 +64,20 @@ id <- gsub("\"", "", opt$id)
 
 
 print("Running the cell")
-print("This is a test workflow")
+for (benchmark in bencmarks) {
+    benchmark_num_string <- sub(".*_(\\d+)$", "\\1", benchmark)
+    print(benchmark_num_string)
+    benchmark_num <- as.integer(benchmark_num_string)
 
-TestVar <- 1
-# capturing outputs
-print('Serialization of TestVar')
-file <- file(paste0('/tmp/TestVar_', id, '.json'))
-writeLines(toJSON(TestVar, auto_unbox=TRUE), file)
-close(file)
+    if (grepl("MEM", benchmark, fixed = TRUE)) {
+        print(paste("Performing MEMORY benchmark ", benchmark_num_string))
+
+
+
+    } else if (grepl("CPU", benchmark, fixed = TRUE)) {
+    print(paste("Performing CPU benchmark ", benchmark_num_string))
+
+    } else {
+        print("################# No benchmark type specified! #################")
+    }
+}
