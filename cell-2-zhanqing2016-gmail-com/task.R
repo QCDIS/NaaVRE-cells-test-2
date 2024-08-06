@@ -99,7 +99,7 @@ plotVals <- function(data,         # the dataset
 
 
 readEms <- function(File, keep=NULL){
-  Dir      <- "/home/jovyan/C14/readEMSdata/Benthic"
+  Dir      <- "/tmp/data"
   Data    <- read.csv2(file = paste(Dir, File, sep="/")) 
   if (ncol(Data) == 1)
     Data    <- read.csv(file = paste(Dir, File, sep="/")) 
