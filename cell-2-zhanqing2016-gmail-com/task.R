@@ -65,8 +65,6 @@ testFile <- gsub("\"", "", opt$testFile)
 
 print("Running the cell")
 
-testFile = "B_chl.csv"
-
 plotVals <- function(data,         # the dataset
                      stat = 1,     # name of station to be plotted
                      val  = 2,     # name of value to be plotted
