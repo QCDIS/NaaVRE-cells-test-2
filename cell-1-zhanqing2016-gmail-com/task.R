@@ -2,16 +2,23 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
+if (!requireNamespace("aws.s3", quietly = TRUE)) {
+	install.packages("aws.s3", repos="http://cran.us.r-project.org")
+}
+library(aws.s3)
 if (!requireNamespace("knitr", quietly = TRUE)) {
 	install.packages("knitr", repos="http://cran.us.r-project.org")
 }
 library(knitr)
 
+secret_s3_access_key = Sys.getenv('secret_s3_access_key')
+secret_s3_secret_key = Sys.getenv('secret_s3_secret_key')
 
 print('option_list')
 option_list = list(
 
-make_option(c("--id"), action="store", default=NA, type="character", help="my description")
+make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -53,12 +60,30 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
+print("Retrieving param_s3_endpoint")
+var = opt$param_s3_endpoint
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_endpoint has length", var_len))
+
+param_s3_endpoint <- gsub("\"", "", opt$param_s3_endpoint)
 
 
 print("Running the cell")
 
 
 testFile = "B_chl.csv"
+
+Sys.setenv(
+    "AWS_ACCESS_KEY_ID" = secret_s3_access_key,
+    "AWS_SECRET_ACCESS_KEY" = secret_s3_secret_key,
+    "AWS_S3_ENDPOINT" = param_s3_endpoint
+    )
+save_object(
+    region="", 
+    bucket="naa-vre-waddenzee-shared", 
+    file=paste0("/tmp/data/",testFile), 
+    object="/readEMSdata/Benthic/B_chl.csv")
 # capturing outputs
 print('Serialization of testFile')
 file <- file(paste0('/tmp/testFile_', id, '.json'))
