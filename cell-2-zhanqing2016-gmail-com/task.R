@@ -2,6 +2,10 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
+if (!requireNamespace("knitr", quietly = TRUE)) {
+	install.packages("knitr", repos="http://cran.us.r-project.org")
+}
+library(knitr)
 
 
 print('option_list')
@@ -124,9 +128,27 @@ B_ChlVar <- data.frame(variable = c("Chl_sed_ug.g",   "Chl_sed_mg.m2"),
                                        "Sediment surface-integrated Chlorophyll a concentration (0.5 cm0"),
                          ref =  "https://library.wur.nl/WebQuery/wurpubs/489709")
 
-summary(B_Chl)
+
+
+
+bstat <- data.frame(station = paste("EDB0", c(1, 3:6), sep=""),
+                    nr = c(1, 3:6),
+                    longitude = c(6.78829, 6.94832, 7.08396, 
+                                 7.15154, 7.17066),
+                    latitude = c(53.46742, 53.39422, 53.313, 
+                                  53.29703, 53.2566),
+                    X = c(248045.3, 258848.6, 268083.6,
+                          272630.6, 274016.6),
+                    Y = c(609930.4, 602003.6, 593170.4, 
+                          591501.7, 587034.5 ))
+
+knitr::kable(bstat) 
+
+
 attributes(B_Chl)$station   <- bstat
 attributes(B_Chl)$variables <- B_ChlVar
+
+summary(B_Chl)
 # capturing outputs
 print('Serialization of B_Chl')
 file <- file(paste0('/tmp/B_Chl_', id, '.json'))
