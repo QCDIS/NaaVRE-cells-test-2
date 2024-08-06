@@ -2,6 +2,10 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
+if (!requireNamespace("aws.s3", quietly = TRUE)) {
+	install.packages("aws.s3", repos="http://cran.us.r-project.org")
+}
+library(aws.s3)
 if (!requireNamespace("knitr", quietly = TRUE)) {
 	install.packages("knitr", repos="http://cran.us.r-project.org")
 }
@@ -149,8 +153,14 @@ attributes(B_Chl)$station   <- bstat
 attributes(B_Chl)$variables <- B_ChlVar
 
 summary(B_Chl)
+
+
+fig_out = "/tmp/data/B_Chl_Test.png"
+png(fig_out)
+plotVals(B_Chl, stat =1, val= "Chl_sed_mg.m2")
+dev.off()
 # capturing outputs
-print('Serialization of B_Chl')
-file <- file(paste0('/tmp/B_Chl_', id, '.json'))
-writeLines(toJSON(B_Chl, auto_unbox=TRUE), file)
+print('Serialization of fig_out')
+file <- file(paste0('/tmp/fig_out_', id, '.json'))
+writeLines(toJSON(fig_out, auto_unbox=TRUE), file)
 close(file)
