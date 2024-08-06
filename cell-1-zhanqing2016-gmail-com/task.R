@@ -2,6 +2,10 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
+if (!requireNamespace("knitr", quietly = TRUE)) {
+	install.packages("knitr", repos="http://cran.us.r-project.org")
+}
+library(knitr)
 
 
 print('option_list')
