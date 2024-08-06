@@ -11,11 +11,14 @@ if (!requireNamespace("knitr", quietly = TRUE)) {
 }
 library(knitr)
 
+secret_s3_access_key = Sys.getenv('secret_s3_access_key')
+secret_s3_secret_key = Sys.getenv('secret_s3_secret_key')
 
 print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--testFile"), action="store", default=NA, type="character", help="my description")
 )
 
@@ -58,6 +61,13 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
+print("Retrieving param_s3_endpoint")
+var = opt$param_s3_endpoint
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_endpoint has length", var_len))
+
+param_s3_endpoint <- gsub("\"", "", opt$param_s3_endpoint)
 print("Retrieving testFile")
 var = opt$testFile
 print(var)
@@ -159,6 +169,19 @@ fig_out = "/tmp/data/B_Chl_Test.png"
 png(fig_out)
 plotVals(B_Chl, stat =1, val= "Chl_sed_mg.m2")
 dev.off()
+
+
+Sys.setenv(
+    "AWS_ACCESS_KEY_ID" = secret_s3_access_key,
+    "AWS_SECRET_ACCESS_KEY" = secret_s3_secret_key,
+    "AWS_S3_ENDPOINT" = param_s3_endpoint
+    )
+
+put_object(
+    region="", 
+    bucket="naa-vre-waddenzee-shared", 
+    file=fig_out, 
+    object="/readEMSdata/Benthic/test/B_Chl_Test.png")
 # capturing outputs
 print('Serialization of fig_out')
 file <- file(paste0('/tmp/fig_out_', id, '.json'))
