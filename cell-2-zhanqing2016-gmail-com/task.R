@@ -182,6 +182,7 @@ put_object(
     bucket="naa-vre-waddenzee-shared", 
     file=fig_out, 
     object="/readEMSdata/Benthic/test/B_Chl_Test.png")
+
 # capturing outputs
 print('Serialization of fig_out')
 file <- file(paste0('/tmp/fig_out_', id, '.json'))
