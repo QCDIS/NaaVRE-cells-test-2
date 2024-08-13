@@ -98,7 +98,7 @@ require(dtLife)
 require(dtWad)
 require(dtPP)
 
-Filename = "RWSbiogeo.rda"
+
 
 Sys.setenv(
     "AWS_ACCESS_KEY_ID" = secret_s3_access_key,
