@@ -9,33 +9,33 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--aoi', action='store', type=str, required=True, dest='aoi')
-
-arg_parser.add_argument('--data_collection', action='store', type=str, required=True, dest='data_collection')
-
-arg_parser.add_argument('--end_date', action='store', type=str, required=True, dest='end_date')
-
-arg_parser.add_argument('--product_type', action='store', type=str, required=True, dest='product_type')
-
-arg_parser.add_argument('--start_date', action='store', type=str, required=True, dest='start_date')
-
 
 args = arg_parser.parse_args()
 print(args)
 
 id = args.id
 
-aoi = args.aoi.replace('"','')
-data_collection = args.data_collection.replace('"','')
-end_date = args.end_date.replace('"','')
-product_type = args.product_type.replace('"','')
-start_date = args.start_date.replace('"','')
 
 
 
+
+year = 2015
+start_date = f"{year}-01-01"
+end_date   = f"{year}-12-31"
+data_collection = "SENTINEL-2"
+product_type = "S2MSI1C"
+aoi = "POLYGON((5.938 53.186, 7.504 53.199, 7.504 53.710, 5.938 53.716, 5.938 53.186))'" ## ems dollards
 
 catalogue_response = dtSat.get_sentinel_catalogue(start_date, end_date, data_collection = data_collection, aoi= aoi, product_type=product_type, cloudcover=10.0, max_results=1000)
 
-file_catalogue_response = open("/tmp/catalogue_response_" + id + ".json", "w")
-file_catalogue_response.write(json.dumps(catalogue_response))
-file_catalogue_response.close()
+
+catalogue_sub = dtSat.filter_by_orbit_and_tile(catalogue_response, orbit = "R008", tile = "T32ULE", name_only = False)
+[catalogue_sub['value'][i]['Name'] for i in range(len(catalogue_sub["value"]))]
+print(len(catalogue_sub['value']))
+
+file_year = open("/tmp/year_" + id + ".json", "w")
+file_year.write(json.dumps(year))
+file_year.close()
+file_catalogue_sub = open("/tmp/catalogue_sub_" + id + ".json", "w")
+file_catalogue_sub.write(json.dumps(catalogue_sub))
+file_catalogue_sub.close()
