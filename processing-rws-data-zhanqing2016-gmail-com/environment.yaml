@@ -5,9 +5,10 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - r-dtWad
-  - r-dtLife
   - r-dtPP
+  - r-dtWad
+  - r-devtools
+  - r-dtLife
   - r-aws.s3
   - papermill
   - ipykernel
