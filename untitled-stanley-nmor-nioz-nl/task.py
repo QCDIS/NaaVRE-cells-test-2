@@ -1,4 +1,3 @@
-import sys
 
 import argparse
 import json
@@ -9,17 +8,17 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
+arg_parser.add_argument('--path_sys', action='store', type=str, required=True, dest='path_sys')
+
 
 args = arg_parser.parse_args()
 print(args)
 
 id = args.id
 
+path_sys = json.loads(args.path_sys)
 
 
 
-path_sys = sys.path
+print(path_sys)
 
-file_path_sys = open("/tmp/path_sys_" + id + ".json", "w")
-file_path_sys.write(json.dumps(path_sys))
-file_path_sys.close()
