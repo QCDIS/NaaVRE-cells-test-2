@@ -36,6 +36,7 @@ start_date = args.start_date.replace('"','')
 catalogue_response = dtSat.get_sentinel_catalogue(start_date, end_date, data_collection = data_collection, aoi= aoi, product_type=product_type, cloudcover=10.0, max_results=1000)
 
 catalogue_sub = dtSat.filter_by_orbit_and_tile(catalogue_response, orbit = "R008", tile = "T32ULE", name_only = False)
-[catalogue_sub['value'][i]['Name'] for i in range(len(catalogue_sub["value"]))]
-print(len(catalogue_sub['value']))
 
+file_catalogue_sub = open("/tmp/catalogue_sub_" + id + ".json", "w")
+file_catalogue_sub.write(json.dumps(catalogue_sub))
+file_catalogue_sub.close()
