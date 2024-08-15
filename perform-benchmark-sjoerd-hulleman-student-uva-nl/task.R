@@ -66,6 +66,8 @@ id <- gsub("\"", "", opt$id)
 print("Running the cell")
 options(warn=0)
 
+dir.create("/tmp")
+
 benchmark_code <- function() {
     1 + 1
 }
