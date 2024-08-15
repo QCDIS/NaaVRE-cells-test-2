@@ -1,3 +1,4 @@
+import folium
 
 import argparse
 import json
@@ -8,7 +9,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--path_sys', action='store', type=str, required=True, dest='path_sys')
+arg_parser.add_argument('--a', action='store', type=int, required=True, dest='a')
 
 
 args = arg_parser.parse_args()
@@ -16,9 +17,11 @@ print(args)
 
 id = args.id
 
-path_sys = json.loads(args.path_sys)
+a = args.a
 
 
 
-print(path_sys)
+b = a
+print(b)
+folium.Map()
 
