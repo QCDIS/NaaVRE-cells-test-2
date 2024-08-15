@@ -31,9 +31,6 @@ data_collection = "SENTINEL-2"
 product_type = "S2MSI1C"
 aoi = "POLYGON((5.938 53.186, 7.504 53.199, 7.504 53.710, 5.938 53.716, 5.938 53.186))'" ## ems dollards
 
-file_a = open("/tmp/a_" + id + ".json", "w")
-file_a.write(json.dumps(a))
-file_a.close()
 file_start_date = open("/tmp/start_date_" + id + ".json", "w")
 file_start_date.write(json.dumps(start_date))
 file_start_date.close()
