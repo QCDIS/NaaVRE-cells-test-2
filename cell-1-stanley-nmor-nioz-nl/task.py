@@ -1,5 +1,3 @@
-from git import Repo
-import importlib
 import os
 import sys
 
@@ -27,8 +25,9 @@ sys.path.append(homepath)
 
 repo_url = "https://github.com/stanleesocca/dtRemoteSensing.git"
 local_dir = "dtRemote"
-repo = Repo.clone_from(repo_url, local_dir)
 
+
+sys.path.insert(0, "/tmp/data")
 
 
 
