@@ -100,7 +100,12 @@ print("Running the cell")
 print(typeof(cpu_results))
 print(cpu_results)
 
-cpu_results_df <- as.data.frame(do.call(rbind, cpu_results))
+converted_to_list <- as.list(cpu_results)
+print("Converting")
+print(typeof(converted_to_list))
+print(converted_to_list)
+
+cpu_results_df <- as.data.frame(do.call(rbind, converted_to_list))
 
 print(is.data.frame(cpu_results_df))
 
