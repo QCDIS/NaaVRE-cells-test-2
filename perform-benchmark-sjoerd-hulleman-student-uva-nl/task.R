@@ -79,17 +79,18 @@ for (benchmark in benchmarks) {
     benchmark_num <- as.integer(benchmark_num_string)
 
     if (grepl("MEM", benchmark, fixed = TRUE)) {
-
-
-
+        
     } else if (grepl("CPU", benchmark, fixed = TRUE)) {
+        
         start_time <- proc.time()
         benchmark_code()
         end_time <- proc.time()
-
+        
         cpu_time <- end_time - start_time
+        elapsed_time <- cpu_time["elapsed"]
+        print(elapsed_time)
 
-        new_results <- list(cpu_time = cpu_time)
+        new_results <- list(cpu_time = elapsed_time)
         cpu_results <- c(cpu_results, new_results)
     } else {
         print("################# No benchmark type specified! #################")
