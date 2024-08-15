@@ -88,14 +88,16 @@ for (benchmark in benchmarks) {
         
         cpu_time <- end_time - start_time
         elapsed_time <- cpu_time["elapsed"]
-        print(elapsed_time)
 
         new_results <- list(cpu_time = elapsed_time)
-        cpu_results <- c(cpu_results, new_results)
+        cpu_results <- c(cpu_results, new_results, use.names=FALSE)
     } else {
         print("################# No benchmark type specified! #################")
     }
 }
+
+print(typeof(cpu_results))
+print(cpu_results)
 # capturing outputs
 print('Serialization of cpu_results')
 file <- file(paste0('/tmp/cpu_results_', id, '.json'))
