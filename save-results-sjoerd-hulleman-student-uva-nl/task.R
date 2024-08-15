@@ -104,7 +104,6 @@ print(is.data.frame(cpu_results_df))
 
 save(cpu_results_df, file='data_sjoerd.rda')
 
-
 Sys.setenv(
     "AWS_ACCESS_KEY_ID" = param_s3_access_key,
     "AWS_SECRET_ACCESS_KEY" = param_s3_secret_key,
