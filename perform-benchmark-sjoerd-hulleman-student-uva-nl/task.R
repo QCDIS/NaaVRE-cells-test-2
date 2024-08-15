@@ -64,21 +64,37 @@ id <- gsub("\"", "", opt$id)
 
 
 print("Running the cell")
+options(warn=0)
+
+benchmark_code <- function() {
+    1 + 1
+}
+
+cpu_results <- list()
 
 for (benchmark in benchmarks) {
     benchmark_num_string <- sub(".*_(\\d+)$", "\\1", benchmark)
-    print(benchmark_num_string)
     benchmark_num <- as.integer(benchmark_num_string)
 
     if (grepl("MEM", benchmark, fixed = TRUE)) {
-        print(paste("Performing MEMORY benchmark ", benchmark_num_string))
 
 
 
     } else if (grepl("CPU", benchmark, fixed = TRUE)) {
-    print(paste("Performing CPU benchmark ", benchmark_num_string))
+        start_time <- proc.time()
+        benchmark_code()
+        end_time <- proc.time()
 
+        cpu_time <- end_time - start_time
+
+        new_results <- list(cpu_time = cpu_time)
+        cpu_results <- c(cpu_results, new_results)
     } else {
         print("################# No benchmark type specified! #################")
     }
 }
+# capturing outputs
+print('Serialization of cpu_results')
+file <- file(paste0('/tmp/cpu_results_', id, '.json'))
+writeLines(toJSON(cpu_results, auto_unbox=TRUE), file)
+close(file)
