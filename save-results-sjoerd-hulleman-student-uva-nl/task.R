@@ -97,6 +97,8 @@ param_s3_user_prefix <- gsub("\"", "", opt$param_s3_user_prefix)
 
 print("Running the cell")
 
+print(typeof(cpu_results))
+print(cpu_results)
 
 cpu_results_df <- as.data.frame(do.call(rbind, cpu_results))
 
