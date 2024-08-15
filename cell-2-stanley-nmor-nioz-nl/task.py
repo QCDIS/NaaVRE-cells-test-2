@@ -37,6 +37,8 @@ catalogue_response = dtSat.get_sentinel_catalogue(start_date, end_date, data_col
 
 catalogue_sub = dtSat.filter_by_orbit_and_tile(catalogue_response, orbit = "R008", tile = "T32ULE", name_only = False)
 
+catalogue_sub = [(k, v) for k, v in catalogue_sub.items()]
+
 file_catalogue_sub = open("/tmp/catalogue_sub_" + id + ".json", "w")
 file_catalogue_sub.write(json.dumps(catalogue_sub))
 file_catalogue_sub.close()
