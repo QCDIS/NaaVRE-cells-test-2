@@ -1,3 +1,4 @@
+from git import Repo
 import os
 import sys
 
@@ -23,8 +24,14 @@ homepath = os.path.expanduser("~")
 sys.path.append(homepath)
 
 
+repo_url = "https://github.com/stanleesocca/dtRemoteSensing.git"
+local_dir = "dtRemote"
+repo = Repo.clone_from(repo_url, local_dir)
+
+
+
 a = 1
-year = 2015
+year = 2016
 start_date = f"{year}-01-01"
 end_date   = f"{year}-12-31"
 data_collection = "SENTINEL-2"
