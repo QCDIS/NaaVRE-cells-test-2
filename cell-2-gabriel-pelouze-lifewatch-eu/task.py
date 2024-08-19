@@ -1,3 +1,4 @@
+import something_custom
 import sys
 
 import argparse
@@ -21,5 +22,5 @@ custom_path = args.custom_path.replace('"','')
 
 sys.path.append(custom_path)
 
-print('end')
+something_custom.hello()
 
