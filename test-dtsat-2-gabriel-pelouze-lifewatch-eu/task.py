@@ -1,4 +1,5 @@
 from dtSat import dtSat
+import git
 
 import argparse
 import json
@@ -19,5 +20,6 @@ date = args.date.replace('"','')
 
 
 
+git.test()
 dtSat.get_date(date)
 
