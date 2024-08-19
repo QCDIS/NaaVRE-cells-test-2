@@ -21,4 +21,5 @@ custom_path = args.custom_path.replace('"','')
 
 sys.path.append(custom_path)
 
+print('end')
 
