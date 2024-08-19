@@ -22,7 +22,7 @@ custom_path = '/tmp/data/my/python/modules/'
 os.makedirs(custom_path, exist_ok=True)
 
 with open(os.path.join(custom_path, 'something_custom.py'), 'w') as f:
-    f.write('print("hello, world!")\n')
+    f.write('def hello():\n  print("hello, world!")\n')
 
 file_custom_path = open("/tmp/custom_path_" + id + ".json", "w")
 file_custom_path.write(json.dumps(custom_path))
