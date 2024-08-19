@@ -21,5 +21,5 @@ date = args.date.replace('"','')
 
 
 
-dtSat.get_date(date)
+print(dtSat.get_date(date))
 
