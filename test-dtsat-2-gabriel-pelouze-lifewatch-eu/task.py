@@ -20,6 +20,7 @@ date = args.date.replace('"','')
 
 
 
-git.test()
 dtSat.get_date(date)
+
+git.Git()
 
