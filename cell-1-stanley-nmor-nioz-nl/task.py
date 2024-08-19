@@ -1,5 +1,3 @@
-import os
-import sys
 
 import argparse
 import json
@@ -19,15 +17,10 @@ id = args.id
 
 
 
-homepath = os.path.expanduser("~")
-sys.path.append(homepath)
 
 
-repo_url = "https://github.com/stanleesocca/dtRemoteSensing.git"
-local_dir = "dtRemote"
 
 
-sys.path.insert(0, "/tmp/data")
 
 
 
