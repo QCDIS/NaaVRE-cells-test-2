@@ -71,7 +71,7 @@ for (message in res){
 cat("Message saved to", file_path)
 }
 # capturing outputs
-print('Serialization of he')
-file <- file(paste0('/tmp/he_', id, '.json'))
-writeLines(toJSON(he, auto_unbox=TRUE), file)
+print('Serialization of message')
+file <- file(paste0('/tmp/message_', id, '.json'))
+writeLines(toJSON(message, auto_unbox=TRUE), file)
 close(file)
