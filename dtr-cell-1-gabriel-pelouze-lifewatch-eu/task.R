@@ -6,6 +6,10 @@ if (!requireNamespace("git2r", quietly = TRUE)) {
 	install.packages("git2r", repos="http://cran.us.r-project.org")
 }
 library(git2r)
+if (!requireNamespace("sf", quietly = TRUE)) {
+	install.packages("sf", repos="http://cran.us.r-project.org")
+}
+library(sf)
 
 secret_gh_token = Sys.getenv('secret_gh_token')
 
