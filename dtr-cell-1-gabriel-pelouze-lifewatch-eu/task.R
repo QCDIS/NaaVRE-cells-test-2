@@ -66,10 +66,6 @@ param_gh_user <- gsub("\"", "", opt$param_gh_user)
 
 print("Running the cell")
 
-install.packages("git2r")
-
-require(git2r)
-
 conf_git_repo_url = "https://github.com/LTER-LIFE/dtR"
 conf_git_clone_dir = "/tmp/data/dtR"
 
