@@ -20,6 +20,5 @@ catalogue_sub = json.loads(args.catalogue_sub)
 
 
 
-x = len(catalogue_sub)
-print(x)
+print(len(catalogue_sub))
 
