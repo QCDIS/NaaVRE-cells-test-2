@@ -1,4 +1,4 @@
-import dtSat
+from dtSat import dtSat
 import json
 
 import argparse
