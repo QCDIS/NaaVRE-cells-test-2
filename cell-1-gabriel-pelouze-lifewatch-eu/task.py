@@ -24,7 +24,7 @@ start_date = f"{year}-01-01"
 end_date   = f"{year}-12-31"
 data_collection = "SENTINEL-2"
 product_type = "S2MSI1C"
-aoi = "POLYGON((5.938 53.186, 7.504 53.199, 7.504 53.710, 5.938 53.716, 5.938 53.186))'" ## ems dollards
+aoi = "POLYGON((5.938 53.186, 7.504 53.199, 7.504 53.710, 5.938 53.716, 5.938 53.186))" ## ems dollards
 
 file_start_date = open("/tmp/start_date_" + id + ".json", "w")
 file_start_date.write(json.dumps(start_date))
