@@ -64,6 +64,13 @@ print("-------------------------------------------------------------------------
 
 
 print("Running the cell")
+
 for (name in names){
-    print(sprintf("Hello, %s!",name))
+    res <- sprintf("Hello, %s!",name) 
+    print(res)
 }
+# capturing outputs
+print('Serialization of res')
+file <- file(paste0('/tmp/res_', id, '.json'))
+writeLines(toJSON(res, auto_unbox=TRUE), file)
+close(file)
