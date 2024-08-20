@@ -23,5 +23,5 @@ catalogue_sub_json = args.catalogue_sub_json.replace('"','')
 
 catalogue_sub = json.loads(catalogue_sub_json)
 
-print(len(catalogue_sub))
+print(catalogue_sub)
 
