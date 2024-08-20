@@ -1,4 +1,5 @@
 import dtSat
+import json
 
 import argparse
 import json
@@ -39,6 +40,8 @@ catalogue_sub = dtSat.filter_by_orbit_and_tile(catalogue_response, orbit = "R008
 
 catalogue_sub = [(k, v) for k, v in catalogue_sub.items()]
 
-file_catalogue_sub = open("/tmp/catalogue_sub_" + id + ".json", "w")
-file_catalogue_sub.write(json.dumps(catalogue_sub))
-file_catalogue_sub.close()
+catalogue_sub_json = json.dumps(catalogue_sub)
+
+file_catalogue_sub_json = open("/tmp/catalogue_sub_json_" + id + ".json", "w")
+file_catalogue_sub_json.write(json.dumps(catalogue_sub_json))
+file_catalogue_sub_json.close()
