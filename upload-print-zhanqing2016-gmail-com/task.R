@@ -79,7 +79,6 @@ print("-------------------------------------------------------------------------
 
 print("Running the cell")
 
-results <- list("a","b","c")
 output_file <- "/tmp/data/output.txt"
 
 output_results <- c()
@@ -100,10 +99,10 @@ Sys.setenv(
 put_object(
     region="", 
     bucket="naa-vre-waddenzee-shared", 
-    file= results, 
+    file= output_file, 
     object="/test_output.txt")
 # capturing outputs
-print('Serialization of message')
-file <- file(paste0('/tmp/message_', id, '.json'))
-writeLines(toJSON(message, auto_unbox=TRUE), file)
+print('Serialization of output_results')
+file <- file(paste0('/tmp/output_results_', id, '.json'))
+writeLines(toJSON(output_results, auto_unbox=TRUE), file)
 close(file)
