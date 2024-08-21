@@ -18,13 +18,6 @@ id = args.id
 
 
 
-
-
-
-
-
-
-a = 1
 year = 2016
 start_date = f"{year}-01-01"
 end_date   = f"{year}-12-31"
