@@ -1,3 +1,5 @@
+from dtSat import dtSat
+import json
 
 import argparse
 import json
@@ -25,18 +27,10 @@ data_collection = "SENTINEL-2"
 product_type = "S2MSI1C"
 aoi = "POLYGON((5.938 53.186, 7.504 53.199, 7.504 53.710, 5.938 53.716, 5.938 53.186))'" ## ems dollards
 
-file_start_date = open("/tmp/start_date_" + id + ".json", "w")
-file_start_date.write(json.dumps(start_date))
-file_start_date.close()
-file_end_date = open("/tmp/end_date_" + id + ".json", "w")
-file_end_date.write(json.dumps(end_date))
-file_end_date.close()
-file_data_collection = open("/tmp/data_collection_" + id + ".json", "w")
-file_data_collection.write(json.dumps(data_collection))
-file_data_collection.close()
-file_product_type = open("/tmp/product_type_" + id + ".json", "w")
-file_product_type.write(json.dumps(product_type))
-file_product_type.close()
-file_aoi = open("/tmp/aoi_" + id + ".json", "w")
-file_aoi.write(json.dumps(aoi))
-file_aoi.close()
+catalogue_response = dtSat.get_sentinel_catalogue(start_date, end_date, data_collection = data_collection, aoi= aoi, product_type=product_type, cloudcover=10.0, max_results=1000)
+
+catalogue_sub_json = json.dumps(catalogue_response)
+
+file_catalogue_sub_json = open("/tmp/catalogue_sub_json_" + id + ".json", "w")
+file_catalogue_sub_json.write(json.dumps(catalogue_sub_json))
+file_catalogue_sub_json.close()
