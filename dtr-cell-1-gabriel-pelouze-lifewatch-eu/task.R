@@ -2,14 +2,10 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
-if (!requireNamespace("git2r", quietly = TRUE)) {
-	install.packages("git2r", repos="http://cran.us.r-project.org")
+if (!requireNamespace("devtools", quietly = TRUE)) {
+	install.packages("devtools", repos="http://cran.us.r-project.org")
 }
-library(git2r)
-if (!requireNamespace("sf", quietly = TRUE)) {
-	install.packages("sf", repos="http://cran.us.r-project.org")
-}
-library(sf)
+library(devtools)
 
 secret_gh_token = Sys.getenv('secret_gh_token')
 
@@ -70,17 +66,9 @@ param_gh_user <- gsub("\"", "", opt$param_gh_user)
 
 print("Running the cell")
 
-conf_git_repo_url = "https://github.com/LTER-LIFE/dtR"
-conf_git_clone_dir = "/tmp/data/dtR"
-
-git2r::clone(
-    conf_git_repo_url,
-    local_path=conf_git_clone_dir,
-    credentials=git2r::cred_user_pass(username=param_gh_user, password=secret_gh_token))
-
-install.packages(paste0(conf_git_clone_dir, "/dtLife"), repos=NULL, type="source", depend=TRUE)
-install.packages(paste0(conf_git_clone_dir, "/dtWad"), repos=NULL, type="source", depend=TRUE)
-install.packages(paste0(conf_git_clone_dir, "/dtPP"), repos=NULL, type="source", depend=TRUE)
+devtools::install_github("LTER-LIFE/dtR/dtLife", auth_token=secret_gh_token, depend=TRUE, force=TRUE)
+devtools::install_github("LTER-LIFE/dtR/dtWad", auth_token=secret_gh_token, depend=FALSE, force=TRUE)
+devtools::install_github("LTER-LIFE/dtR/dtPP", auth_token=secret_gh_token, depend=FALSE, force=TRUE)
 
 require(dtLife)
 require(dtWad)
