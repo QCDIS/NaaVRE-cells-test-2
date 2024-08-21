@@ -2,12 +2,19 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
+if (!requireNamespace("aws.s3", quietly = TRUE)) {
+	install.packages("aws.s3", repos="http://cran.us.r-project.org")
+}
+library(aws.s3)
 
+secret_s3_access_key = Sys.getenv('secret_s3_access_key')
+secret_s3_secret_key = Sys.getenv('secret_s3_secret_key')
 
 print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--res"), action="store", default=NA, type="character", help="my description")
 )
 
@@ -50,6 +57,13 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
+print("Retrieving param_s3_endpoint")
+var = opt$param_s3_endpoint
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_endpoint has length", var_len))
+
+param_s3_endpoint <- gsub("\"", "", opt$param_s3_endpoint)
 print("Retrieving res")
 var = opt$res
 print(var)
@@ -61,15 +75,28 @@ res <- gsub("\"", "", opt$res)
 
 print("Running the cell")
 
-directory <- "/home/jovyan/workflow_test"
-file_name <- "print_output.txt"
+output_file <- "/tmp/data/output.txt"
 
-file_path <- file.path(directory, file_name)
+results <- c()
 
-for (message in res){
-    writeLines(message, file_path)
-cat("Message saved to", file_path)
+for (name in res) {
+    up.res <- sprintf("Hello, %s!", name)
+    results <- c(results, up.res)
 }
+
+writeLines(text=results,output_file)
+
+Sys.setenv(
+    "AWS_ACCESS_KEY_ID" = secret_s3_access_key,
+    "AWS_SECRET_ACCESS_KEY" = secret_s3_secret_key,
+    "AWS_S3_ENDPOINT" = param_s3_endpoint
+    )
+
+put_object(
+    region="", 
+    bucket="naa-vre-waddenzee-shared", 
+    file= results, 
+    object="/test_output.txt")
 # capturing outputs
 print('Serialization of message')
 file <- file(paste0('/tmp/message_', id, '.json'))
