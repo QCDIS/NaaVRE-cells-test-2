@@ -15,7 +15,7 @@ option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--res"), action="store", default=NA, type="character", help="my description")
+make_option(c("--results"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -64,27 +64,32 @@ var_len = length(var)
 print(paste("Variable param_s3_endpoint has length", var_len))
 
 param_s3_endpoint <- gsub("\"", "", opt$param_s3_endpoint)
-print("Retrieving res")
-var = opt$res
+print("Retrieving results")
+var = opt$results
 print(var)
 var_len = length(var)
-print(paste("Variable res has length", var_len))
+print(paste("Variable results has length", var_len))
 
-res <- gsub("\"", "", opt$res)
+print("------------------------Running var_serialization for results-----------------------")
+print(opt$results)
+results = var_serialization(opt$results)
+print("---------------------------------------------------------------------------------")
+
 
 
 print("Running the cell")
 
+results <- list("a","b","c")
 output_file <- "/tmp/data/output.txt"
 
-results <- c()
+output_results <- c()
 
-for (name in res) {
-    up.res <- sprintf("Hello, %s!", name)
-    results <- c(results, up.res)
+for (name in results) {
+    up_res <- sprintf("Hello, %s!", name)
+    output_results <- c(output_results, up_res)
 }
 
-writeLines(text=results,output_file)
+writeLines(text=output_results,output_file)
 
 Sys.setenv(
     "AWS_ACCESS_KEY_ID" = secret_s3_access_key,
