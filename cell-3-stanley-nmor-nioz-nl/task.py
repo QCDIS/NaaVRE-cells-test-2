@@ -1,3 +1,4 @@
+import json
 
 import argparse
 import json
@@ -8,7 +9,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--catalogue_sub', action='store', type=str, required=True, dest='catalogue_sub')
+arg_parser.add_argument('--catalogue_sub_json', action='store', type=str, required=True, dest='catalogue_sub_json')
 
 
 args = arg_parser.parse_args()
@@ -16,9 +17,10 @@ print(args)
 
 id = args.id
 
-catalogue_sub = json.loads(args.catalogue_sub)
+catalogue_sub_json = args.catalogue_sub_json.replace('"','')
 
 
 
-print(len(catalogue_sub))
+catalogue_sub = json.loads(catalogue_sub_json)
+print(catalogue_sub)
 
