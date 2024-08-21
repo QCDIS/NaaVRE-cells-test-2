@@ -1,4 +1,5 @@
 from dtSat import dtSat
+import git
 import json
 
 import argparse
@@ -33,6 +34,9 @@ product_type = args.product_type.replace('"','')
 start_date = args.start_date.replace('"','')
 
 
+
+
+print(git)
 
 catalogue_response = dtSat.get_sentinel_catalogue(start_date, end_date, data_collection = data_collection, aoi= aoi, product_type=product_type, cloudcover=10.0, max_results=1000)
 
