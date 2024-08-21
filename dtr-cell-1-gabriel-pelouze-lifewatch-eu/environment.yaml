@@ -5,7 +5,6 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - r-git2r
-  - r-sf
+  - r-devtools
   - papermill
   - ipykernel
