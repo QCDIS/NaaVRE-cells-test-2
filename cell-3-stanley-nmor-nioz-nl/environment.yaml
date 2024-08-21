@@ -7,4 +7,3 @@ dependencies:
   - nbconvert
   - papermill
   - ipykernel
-  - git
