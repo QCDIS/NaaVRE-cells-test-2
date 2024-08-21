@@ -3,6 +3,7 @@ channels:
   - conda-forge
 dependencies:
   - pip
+  - git
   - python>=3.8
   - nbconvert
   - papermill
