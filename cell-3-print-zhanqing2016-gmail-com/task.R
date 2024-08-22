@@ -65,6 +65,12 @@ print("-------------------------------------------------------------------------
 
 print("Running the cell")
 
-print(plot_RWSstations)
+print(print_RWSstations)
 
+print_list<- print_RWSstations
 
+# capturing outputs
+print('Serialization of print_list')
+file <- file(paste0('/tmp/print_list_', id, '.json'))
+writeLines(toJSON(print_list, auto_unbox=TRUE), file)
+close(file)
