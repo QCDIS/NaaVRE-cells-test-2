@@ -136,3 +136,8 @@ for (std in plot_RWSstations) {
     file=fig_out, 
     object=paste0("/waterinfo_RWS/plots/",std,"_2021.png"))
 }
+# capturing outputs
+print('Serialization of plot_RWSstations')
+file <- file(paste0('/tmp/plot_RWSstations_', id, '.json'))
+writeLines(toJSON(plot_RWSstations, auto_unbox=TRUE), file)
+close(file)
