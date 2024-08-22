@@ -1,5 +1,6 @@
 from dtSat import dtSat
 import json
+import os
 
 import argparse
 import json
@@ -38,4 +39,7 @@ with open(access_response_filename) as f:
 dtSat.data_sentinel_request(access_response, 
                             catalogue_sub, 
                            dir_path = f"/tmp/data/sentinel/{year}")
+
+print(os.listdir("/tmp/data/"))
+print(os.listdir(f"/tmp/data/sentinel/{year}"))
 
