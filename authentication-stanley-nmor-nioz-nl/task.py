@@ -1,4 +1,5 @@
-import dtSat
+from dtSat import dtSat
+import json
 
 import argparse
 import json
@@ -21,9 +22,13 @@ id = args.id
 param_copernicus_api = args.param_copernicus_api.replace('"','')
 
 
-access_response = dtSat.get_copernicus_access_token(username=param_copernicus_api, 
-                                                 password=secret_copernicus_api)
+access_response = dtSat.get_copernicus_access_token(username = param_copernicus_api, 
+                                                    password = secret_copernicus_api)
 
-file_access_response = open("/tmp/access_response_" + id + ".json", "w")
-file_access_response.write(json.dumps(access_response))
-file_access_response.close()
+access_response_filename = "/tmp/data/access_response.json"
+with open(access_response_filename, 'w') as f:
+    json.dump(access_response, f)
+
+file_access_response_filename = open("/tmp/access_response_filename_" + id + ".json", "w")
+file_access_response_filename.write(json.dumps(access_response_filename))
+file_access_response_filename.close()
