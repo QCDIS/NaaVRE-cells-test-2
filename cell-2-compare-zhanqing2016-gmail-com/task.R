@@ -118,7 +118,7 @@ for (std in plot_RWSstations) {
     file=paste0("/tmp/data/",acolite_file), 
     object= paste0("/waterinfo_RWS/acolite_processed_data/",acolite_file))
     
-    acolite_data <- read.csv(file)
+    acolite_data <- read.csv(paste0("/tmp/data/",acolite_file))
     acolite_data$time <- ymd_hms(acolite_data$time)
  
     fig_out = paste0("/tmp/data/",std,"_2021.png")
