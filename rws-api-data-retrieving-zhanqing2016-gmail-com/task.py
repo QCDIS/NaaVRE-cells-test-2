@@ -43,7 +43,7 @@ rws_file_path = f"/tmp/data/{station_name}_Chl_2021.csv"
 
 collect_catalogus = ('https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen')
 request = {
-    "Locatie": {"Code": station_info["Code"], "X": station_info["X"], "Y": station_info["Y"]},
+    "Locatie": {"Code": station_info[0]["Code"], "X": station_info[0]["X"], "Y": station_info[0]["Y"]},
     "AquoPlusWaarnemingMetadata": {
         "AquoMetadata": {"Compartiment": {"Code": "OW"}, "Grootheid": {"Code": "CONCTTE"},"Parameter":{"Code": "CHLFa"}},
         "WaarnemingMetadata": {"KwaliteitswaardecodeLijst": ["00", "10", "20", "25", "30", "40"]}
