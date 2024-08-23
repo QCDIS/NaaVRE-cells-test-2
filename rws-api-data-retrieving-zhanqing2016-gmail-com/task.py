@@ -1,19 +1,19 @@
-import csv
-from datetime import datetime
-import pytz
-import requests
+import aws.s3
 
 import argparse
 import json
 import os
 arg_parser = argparse.ArgumentParser()
 
+secret_s3_access_key = os.getenv('secret_s3_access_key')
+secret_s3_secret_key = os.getenv('secret_s3_secret_key')
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
 arg_parser.add_argument('--station_names', action='store', type=str, required=True, dest='station_names')
 
+arg_parser.add_argument('--param_s3_endpoint', action='store', type=str, required=True, dest='param_s3_endpoint')
 
 args = arg_parser.parse_args()
 print(args)
@@ -22,9 +22,13 @@ id = args.id
 
 station_names = json.loads(args.station_names)
 
+param_s3_endpoint = args.param_s3_endpoint.replace('"','')
 
 
 
+os.environ['AWS_ACCESS_KEY_ID']=secret_s3_access_key
+os.environ['AWS_SECRET_ACCESS_KEY']=secret_s3_secret_key
+os.environ["AWS_S3_ENDPOINT"]=param_s3_endpoint
 
 
 RWSstations = [{"Code": "DANTZGT", "X": 681288.275516119, "Y": 5920359.91317053},
@@ -80,6 +84,13 @@ with open(rws_file_path, mode='w', newline='') as file:
             formatted_time = dt_cet.strftime('%Y-%m-%d %H:%M:%S %Z')
             
             writer.writerow([formatted_time, locatie_code, x, y, compartiment_code, grootheid_code, waarde_numeriek])
+            
+            
+put_object(
+    region="", 
+    bucket="naa-vre-waddenzee-shared", 
+    file= rws_file_path, 
+    object=f"/waterinfo_RWS/raw_data/{station_name}_Chl_2021.csv")
 
 file_rws_file_path = open("/tmp/rws_file_path_" + id + ".json", "w")
 file_rws_file_path.write(json.dumps(rws_file_path))
