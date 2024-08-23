@@ -77,10 +77,6 @@ output_results <- c(output_results, up_res)
 }
 
 writeLines(text = output_results, output_file)
-
-
-
-
 # capturing outputs
 print('Serialization of output_file')
 file <- file(paste0('/tmp/output_file_', id, '.json'))
