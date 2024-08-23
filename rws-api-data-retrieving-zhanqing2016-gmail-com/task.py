@@ -26,11 +26,6 @@ param_s3_endpoint = args.param_s3_endpoint.replace('"','')
 
 
 
-os.environ['AWS_ACCESS_KEY_ID']=secret_s3_access_key
-os.environ['AWS_SECRET_ACCESS_KEY']=secret_s3_secret_key
-os.environ["AWS_S3_ENDPOINT"]=param_s3_endpoint
-
-
 RWSstations = [{"Code": "DANTZGT", "X": 681288.275516119, "Y": 5920359.91317053},
                {"Code": "DOOVBWT", "X": 636211.321319897, "Y": 5880086.51911216},
                {"Code": "MARSDND", "X": 617481.059435953, "Y": 5871760.70559602},
@@ -84,13 +79,20 @@ with open(rws_file_path, mode='w', newline='') as file:
             formatted_time = dt_cet.strftime('%Y-%m-%d %H:%M:%S %Z')
             
             writer.writerow([formatted_time, locatie_code, x, y, compartiment_code, grootheid_code, waarde_numeriek])
-            
-            
-put_object(
-    region="", 
-    bucket="naa-vre-waddenzee-shared", 
-    file= rws_file_path, 
-    object=f"/waterinfo_RWS/raw_data/{station_name}_Chl_2021.csv")
+
+
+os.environ['AWS_ACCESS_KEY_ID']=secret_s3_access_key
+os.environ['AWS_SECRET_ACCESS_KEY']=secret_s3_secret_key
+os.environ["AWS_S3_ENDPOINT"]=param_s3_endpoint
+
+MINIO_CLIENT = Minio(param_s3_endpoint, 
+                     access_key=secret_s3_access_key, 
+                     secret_key=secret_s3_secret_key)
+MINIO_CLIENT.fput_object( 
+    bucket_name="naa-vre-waddenzee-shared", 
+    file_path= rws_file_path, 
+    object_name=f"/waterinfo_RWS/raw_data/{station_name}_Chl_2021.csv",)
+
 
 file_rws_file_path = open("/tmp/rws_file_path_" + id + ".json", "w")
 file_rws_file_path.write(json.dumps(rws_file_path))
