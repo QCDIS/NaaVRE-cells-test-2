@@ -122,8 +122,8 @@ for (std in plot_RWSstations[3]) {
  
     fig_out = paste0("/tmp/data/",std,"_2021.png")
     png(fig_out)
-    plot(Wad_biogeo_RWS$datetime[which(Wad_biogeo_RWS$station==std)], 
-     Wad_biogeo_RWS$Chl[which(Wad_biogeo_RWS$station==std)],type="o",pch=19,
+    plot(Wad_biogeo_RWS$datetime[which(Wad_biogeo_RWS$LocatieCode==std)], 
+     Wad_biogeo_RWS$Chl[which(Wad_biogeo_RWS$LocatieCode==std)],type="o",pch=19,
     col="black",xlab = "2021", ylab = "Chl (ug/l)", main = std)
     
     points(acolite_data$time, acolite_data$chl_re_gons,type="p",col="red",pch=19,cex=1.6)
