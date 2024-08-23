@@ -12,7 +12,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--RWSstations', action='store', type=str, required=True, dest='RWSstations')
+arg_parser.add_argument('--station_names', action='store', type=str, required=True, dest='station_names')
 
 
 args = arg_parser.parse_args()
@@ -20,13 +20,20 @@ print(args)
 
 id = args.id
 
-RWSstations = json.loads(args.RWSstations)
+station_names = json.loads(args.station_names)
 
 
 
 
-station_info = RWSstations[0]
-station_name = station_info["Code"]
+station_names = "DANTZGT"
+
+RWSstations = [{"Code": "DANTZGT", "X": 681288.275516119, "Y": 5920359.91317053},
+               {"Code": "DOOVBWT", "X": 636211.321319897, "Y": 5880086.51911216},
+               {"Code": "MARSDND", "X": 617481.059435953, "Y": 5871760.70559602},
+               {"Code": "VLIESM", "X": 643890.614308217, "Y": 5909304.23136001}]
+
+station_info = [station for station in RWSstations if station["Code"] == station_names][0]
+
 
 
 
@@ -45,11 +52,10 @@ request = {
 }
 resp = requests.post(collect_catalogus, json=request)
 elements = resp.json()
-
+elements
 
 
 rws_file_path = f"/tmp/data/{station_name}_Chl_2021.csv"
-rws_file_path
 
 with open(rws_file_path, mode='w', newline='') as file:
     writer = csv.writer(file)
