@@ -12,12 +12,15 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
+arg_parser.add_argument('--plot_RWSstations', action='store', type=str, required=True, dest='plot_RWSstations')
+
 
 args = arg_parser.parse_args()
 print(args)
 
 id = args.id
 
+plot_RWSstations = json.loads(args.plot_RWSstations)
 
 
 
@@ -41,7 +44,9 @@ request = {
 resp = requests.post(collect_catalogus, json=request)
 elements = resp.json()
 
-rws_file_path = '/tmp/data/Chl_2021.csv'
+station_name = plot_RWSstations
+rws_file_path = f"/tmp/data/{station_name}_Chl_2021.csv"
+
 
 with open(rws_file_path, mode='w', newline='') as file:
     writer = csv.writer(file)
