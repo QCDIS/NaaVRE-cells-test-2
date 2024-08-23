@@ -8,7 +8,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--RWSstations', action='store', type=str, required=True, dest='RWSstations')
+arg_parser.add_argument('--station_names', action='store', type=str, required=True, dest='station_names')
 
 
 args = arg_parser.parse_args()
@@ -16,7 +16,7 @@ print(args)
 
 id = args.id
 
-RWSstations = json.loads(args.RWSstations)
+station_names = json.loads(args.station_names)
 
 
 
@@ -30,7 +30,7 @@ RWSstations = [
     {"Code": "VLIESM", "X": 643890.614308217, "Y": 5909304.23136001}
 ]
 
-selected_location = [station for station in RWSstations if station["Code"] == station_names[2]]
+selected_location = [station for station in RWSstations if station["Code"] == station_names]
 
 print(selected_location)
 
