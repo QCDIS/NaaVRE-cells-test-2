@@ -30,7 +30,7 @@ RWSstations = [{"Code": "DANTZGT", "X": 681288.275516119, "Y": 5920359.91317053}
 
 station_info = [station for station in RWSstations if station["Code"] == station_names]
 
-station_name = station_info["Code"]
+station_name = station_info[0]["Code"]
 rws_file_path = f"/tmp/data/{station_name}_Chl_2021.csv"
 
 file_rws_file_path = open("/tmp/rws_file_path_" + id + ".json", "w")
