@@ -5,7 +5,7 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - r-aws.s3
   - r-lubridate
+  - r-aws.s3
   - papermill
   - ipykernel
