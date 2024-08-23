@@ -8,8 +8,7 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--RWSstations"), action="store", default=NA, type="character", help="my description")
+make_option(c("--station_names"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -51,22 +50,15 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving id")
-var = opt$id
+print("Retrieving station_names")
+var = opt$station_names
 print(var)
 var_len = length(var)
-print(paste("Variable id has length", var_len))
+print(paste("Variable station_names has length", var_len))
 
-id <- gsub("\"", "", opt$id)
-print("Retrieving RWSstations")
-var = opt$RWSstations
-print(var)
-var_len = length(var)
-print(paste("Variable RWSstations has length", var_len))
-
-print("------------------------Running var_serialization for RWSstations-----------------------")
-print(opt$RWSstations)
-RWSstations = var_serialization(opt$RWSstations)
+print("------------------------Running var_serialization for station_names-----------------------")
+print(opt$station_names)
+station_names = var_serialization(opt$station_names)
 print("---------------------------------------------------------------------------------")
 
 
@@ -74,8 +66,6 @@ print("-------------------------------------------------------------------------
 print("Running the cell")
 
 
-station_info = RWSstations[[1]]
+station_info = as.character(station_names)
 
-output_txt <- c()
-
-print(station_info$Code)
+print(if(station_info=="DANTZGT"){"TRUE"}else{"FALSE"})
