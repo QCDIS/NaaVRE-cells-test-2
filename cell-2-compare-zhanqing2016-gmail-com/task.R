@@ -137,7 +137,7 @@ for (std in plot_RWSstations) {
     object=paste0("/waterinfo_RWS/plots/",std,"_2021.png"))
 }
 
-print_RWSstations <- plot_RWSstations
+print_RWSstations <- list(plot_RWSstations)
 # capturing outputs
 print('Serialization of print_RWSstations')
 file <- file(paste0('/tmp/print_RWSstations_', id, '.json'))
