@@ -1,19 +1,19 @@
-import aws.s3
+import csv
+from datetime import datetime
+import pytz
+import requests
 
 import argparse
 import json
 import os
 arg_parser = argparse.ArgumentParser()
 
-secret_s3_access_key = os.getenv('secret_s3_access_key')
-secret_s3_secret_key = os.getenv('secret_s3_secret_key')
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
 arg_parser.add_argument('--station_names', action='store', type=str, required=True, dest='station_names')
 
-arg_parser.add_argument('--param_s3_endpoint', action='store', type=str, required=True, dest='param_s3_endpoint')
 
 args = arg_parser.parse_args()
 print(args)
@@ -22,7 +22,7 @@ id = args.id
 
 station_names = json.loads(args.station_names)
 
-param_s3_endpoint = args.param_s3_endpoint.replace('"','')
+
 
 
 
