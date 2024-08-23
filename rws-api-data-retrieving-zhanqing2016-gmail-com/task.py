@@ -12,7 +12,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--plot_RWSstations', action='store', type=str, required=True, dest='plot_RWSstations')
+arg_parser.add_argument('--RWSstations', action='store', type=str, required=True, dest='RWSstations')
 
 
 args = arg_parser.parse_args()
@@ -20,18 +20,20 @@ print(args)
 
 id = args.id
 
-plot_RWSstations = json.loads(args.plot_RWSstations)
+RWSstations = json.loads(args.RWSstations)
 
 
 
 
+station_info = RWSstations[1]
+station_name = station_info["Code"]
 
 
 
 
 collect_catalogus = ('https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen')
 request = {
-    "Locatie": {"Code": "MARSDND", "X": 617481.059435953, "Y": 5871760.70559602},
+    "Locatie": {"Code": station_info["Code"], "X": station_info["X"], "Y": station_info["Y"]},
     "AquoPlusWaarnemingMetadata": {
         "AquoMetadata": {"Compartiment": {"Code": "OW"}, "Grootheid": {"Code": "CONCTTE"},"Parameter":{"Code": "CHLFa"}},
         "WaarnemingMetadata": {"KwaliteitswaardecodeLijst": ["00", "10", "20", "25", "30", "40"]}
@@ -44,9 +46,10 @@ request = {
 resp = requests.post(collect_catalogus, json=request)
 elements = resp.json()
 
-station_name = plot_RWSstations
-rws_file_path = f"/tmp/data/{station_name}_Chl_2021.csv"
 
+
+rws_file_path = f"/tmp/data/{station_name}_Chl_2021.csv"
+rws_file_path
 
 with open(rws_file_path, mode='w', newline='') as file:
     writer = csv.writer(file)
