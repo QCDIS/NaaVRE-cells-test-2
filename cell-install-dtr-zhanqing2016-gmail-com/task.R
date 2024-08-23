@@ -70,7 +70,6 @@ require(dtPP)
 
 plot_RWSstations <- c("DANTZGT","DOOVBWT","MARSDND","VLIESM")
 
-save(file="/tmp/data/Wad_biogeo_RWS.rda", Wad_biogeo_RWS)
 Wad_biogeo_RWS_name <- "Wad_biogeo_RWS"
 # capturing outputs
 print('Serialization of plot_RWSstations')
