@@ -58,9 +58,9 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-devtools::install_github("LTER-LIFE/dtR/dtLife",depend=TRUE, auth_token=secret_github_auth_token)
-devtools::install_github("LTER-LIFE/dtR/dtWad", depend=FALSE, auth_token=secret_github_auth_token)
-devtools::install_github("LTER-LIFE/dtR/dtPP", depend=FALSE, auth_token=secret_github_auth_token)
+devtools::install_github("LTER-LIFE/dtR/dtLife",depend=TRUE, force=TRUE, auth_token=secret_github_auth_token)
+devtools::install_github("LTER-LIFE/dtR/dtWad", depend=FALSE, force=TRUE, auth_token=secret_github_auth_token)
+devtools::install_github("LTER-LIFE/dtR/dtPP", depend=FALSE, force=TRUE, auth_token=secret_github_auth_token)
 
 require(dtLife)
 require(dtWad)
