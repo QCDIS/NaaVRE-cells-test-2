@@ -25,7 +25,7 @@ station_names = json.loads(args.station_names)
 
 
 
-station_names = "DANTZGT"
+
 
 RWSstations = [{"Code": "DANTZGT", "X": 681288.275516119, "Y": 5920359.91317053},
                {"Code": "DOOVBWT", "X": 636211.321319897, "Y": 5880086.51911216},
@@ -55,7 +55,7 @@ elements = resp.json()
 elements
 
 
-rws_file_path = f"/tmp/data/{station_name}_Chl_2021.csv"
+rws_file_path = f"/tmp/data/{station_names}_Chl_2021.csv"
 
 with open(rws_file_path, mode='w', newline='') as file:
     writer = csv.writer(file)
