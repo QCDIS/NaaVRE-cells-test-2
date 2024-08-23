@@ -64,14 +64,15 @@ print("-------------------------------------------------------------------------
 
 
 print("Running the cell")
-
+plot_RWSstations <- c("DANTZGT","DOOVBWT","MARSDND","VLIESM")
+print_RWSstations <- list(plot_RWSstations)
 output_file <- "/tmp/data/output.txt"
 
 output_results <- c()
 
 for (name in print_RWSstations){
 
-    up_res <- sprintf("Hello,", name)
+    up_res <- sprintf("Hello, %s!",name)
 output_results <- c(output_results, up_res)
 }
 
