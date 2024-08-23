@@ -60,6 +60,7 @@ RWSstations <- list(
   list(Code = "MARSDND", X = 617481.059435953, Y = 5871760.70559602),
   list(Code = "VLIESM", X = 643890.614308217, Y = 5909304.23136001)
 )
+RWSstations
 # capturing outputs
 print('Serialization of RWSstations')
 file <- file(paste0('/tmp/RWSstations_', id, '.json'))
