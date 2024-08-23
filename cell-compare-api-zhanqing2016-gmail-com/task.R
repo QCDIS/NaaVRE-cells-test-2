@@ -100,7 +100,7 @@ Sys.setenv(
 require(lubridate)
 Wad_biogeo_RWS <- read.csv(rws_file_path)
 
-for (std in plot_RWSstations[3]) {
+for (std in plot_RWSstations) {
     
     
     if (std == "DANTZGT"){
