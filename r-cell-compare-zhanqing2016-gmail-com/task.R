@@ -24,6 +24,7 @@ option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--rws_file_path"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--RWSstations"), action="store", default=NA, type="character", help="my description")
 )
 
@@ -73,6 +74,13 @@ var_len = length(var)
 print(paste("Variable param_s3_endpoint has length", var_len))
 
 param_s3_endpoint <- gsub("\"", "", opt$param_s3_endpoint)
+print("Retrieving rws_file_path")
+var = opt$rws_file_path
+print(var)
+var_len = length(var)
+print(paste("Variable rws_file_path has length", var_len))
+
+rws_file_path <- gsub("\"", "", opt$rws_file_path)
 print("Retrieving RWSstations")
 var = opt$RWSstations
 print(var)
