@@ -74,6 +74,13 @@ param_s3_endpoint <- gsub("\"", "", opt$param_s3_endpoint)
 
 
 print("Running the cell")
+
+Sys.setenv(
+    "AWS_ACCESS_KEY_ID" = secret_s3_access_key,
+    "AWS_SECRET_ACCESS_KEY" = secret_s3_secret_key,
+    "AWS_S3_ENDPOINT" = param_s3_endpoint
+    )
+
     put_object(
     region="", 
     bucket="naa-vre-waddenzee-shared", 
