@@ -25,7 +25,7 @@ RWSstations = json.loads(args.RWSstations)
 
 
 
-station_info = RWSstations[1]
+station_info = RWSstations
 station_name = station_info["Code"]
 
 
