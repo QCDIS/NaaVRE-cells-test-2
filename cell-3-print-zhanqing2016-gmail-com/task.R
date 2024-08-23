@@ -65,12 +65,27 @@ print("-------------------------------------------------------------------------
 
 print("Running the cell")
 
-print(print_RWSstations)
+output_file <- "/tmp/data/output.txt"
 
-print_list<- print_RWSstations
+output_results <- c()
+
+for (name in print_RWSstations){
+
+    up_res <- sprintf("Hello,", name)
+output_results <- c(output_results, up_res)
+}
+
+writeLines(text = output_results, output_file)
+
+
+    put_object(
+    region="", 
+    bucket="naa-vre-waddenzee-shared", 
+    file=output_file, 
+    object=paste0("/waterinfo_RWS/plots/output.txt"))
 
 # capturing outputs
-print('Serialization of print_list')
-file <- file(paste0('/tmp/print_list_', id, '.json'))
-writeLines(toJSON(print_list, auto_unbox=TRUE), file)
+print('Serialization of output_results')
+file <- file(paste0('/tmp/output_results_', id, '.json'))
+writeLines(toJSON(output_results, auto_unbox=TRUE), file)
 close(file)
