@@ -24,7 +24,6 @@ station_names = json.loads(args.station_names)
 
 
 
-station_names = ["DANTZGT", "MARSDND", "VLIESM"]
 
 RWSstations = [{"Code": "DANTZGT", "X": 681288.275516119, "Y": 5920359.91317053},
                {"Code": "DOOVBWT", "X": 636211.321319897, "Y": 5880086.51911216},
