@@ -1,19 +1,19 @@
-import aws.s3
+import csv
+from datetime import datetime
+import pytz
+import requests
 
 import argparse
 import json
 import os
 arg_parser = argparse.ArgumentParser()
 
-secret_s3_access_key = os.getenv('secret_s3_access_key')
-secret_s3_secret_key = os.getenv('secret_s3_secret_key')
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
 arg_parser.add_argument('--station_names', action='store', type=str, required=True, dest='station_names')
 
-arg_parser.add_argument('--param_s3_endpoint', action='store', type=str, required=True, dest='param_s3_endpoint')
 
 args = arg_parser.parse_args()
 print(args)
@@ -22,21 +22,21 @@ id = args.id
 
 station_names = json.loads(args.station_names)
 
-param_s3_endpoint = args.param_s3_endpoint.replace('"','')
 
 
-
+station_names = ["DANTZGT", "MARSDND", "VLIESM"]
 
 RWSstations = [{"Code": "DANTZGT", "X": 681288.275516119, "Y": 5920359.91317053},
                {"Code": "DOOVBWT", "X": 636211.321319897, "Y": 5880086.51911216},
                {"Code": "MARSDND", "X": 617481.059435953, "Y": 5871760.70559602},
                {"Code": "VLIESM", "X": 643890.614308217, "Y": 5909304.23136001}]
 
-station_info = [station for station in RWSstations if station["Code"] == station_names[0]]
-
+for station in station_names:
+    station_info = [station for station in RWSstations if station["Code"] == station]
 
 station_name = station_info[0]["Code"]
-rws_file_path = f"/tmp/data/{station_name}_Chl_2021.csv"
+rws_file_path = f"/tmp/data/{station}_Chl_2021.csv"
+
 
 
 
@@ -80,21 +80,6 @@ with open(rws_file_path, mode='w', newline='') as file:
             formatted_time = dt_cet.strftime('%Y-%m-%d %H:%M:%S %Z')
             
             writer.writerow([formatted_time, locatie_code, x, y, compartiment_code, grootheid_code, waarde_numeriek])
-
-
-
-os.environ['AWS_ACCESS_KEY_ID']=secret_s3_access_key
-os.environ['AWS_SECRET_ACCESS_KEY']=secret_s3_secret_key
-os.environ["AWS_S3_ENDPOINT"]=param_s3_endpoint
-
-MINIO_CLIENT = Minio(param_s3_endpoint, 
-                     access_key=secret_s3_access_key, 
-                     secret_key=secret_s3_secret_key)
-MINIO_CLIENT.fput_object( 
-    bucket_name="naa-vre-waddenzee-shared", 
-    file_path= rws_file_path, 
-    object_name=f"/waterinfo_RWS/raw_data/{station_name}_Chl_2021.csv",)
-
 
 file_rws_file_path = open("/tmp/rws_file_path_" + id + ".json", "w")
 file_rws_file_path.write(json.dumps(rws_file_path))
