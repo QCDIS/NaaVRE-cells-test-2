@@ -5,7 +5,6 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - pytz
-  - requests
+  - aws.s3
   - papermill
   - ipykernel
