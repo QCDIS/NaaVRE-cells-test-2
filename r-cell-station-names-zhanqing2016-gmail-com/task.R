@@ -53,7 +53,7 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-station_names = list("DANTZGT", "DOOVBWT", "MARSDND", "VLIESM")
+station_names = list("DANTZGT", "MARSDND", "VLIESM")
 station_names
 # capturing outputs
 print('Serialization of station_names')
