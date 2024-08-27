@@ -11,8 +11,6 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--download_done', action='store', type=str, required=True, dest='download_done')
-
 arg_parser.add_argument('--filename', action='store', type=str, required=True, dest='filename')
 
 
@@ -22,16 +20,14 @@ print(args)
 id = args.id
 parameters = {}
 
-download_done = args.download_done.replace('"','')
-parameters['download_done'] = download_done
 filename = args.filename.replace('"','')
 parameters['filename'] = filename
 
 
 
 pm.execute_notebook(
-    'visualize-rasterio-sample-tif-spiros-koulouzis-lifewatch-eu.ipynb',
-    'visualize-rasterio-sample-tif-spiros-koulouzis-lifewatch-eu-output.ipynb',
+    'task.ipynb',
+    'task-output.ipynb',
     prepare_only=True,
     parameters=dict(parameters)
 )
