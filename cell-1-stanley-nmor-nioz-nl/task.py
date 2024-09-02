@@ -47,7 +47,7 @@ def download_satellite_from_minio(client = None, bucket_name = "naa-vre-waddenze
             
                 
 
-minio_client = Minio(param_s3_server, access_key=param_s3_access_key, secret_key=param_s3_secret_key, region = "nl", secure=True)
+minio_client = Minio(param_s3_server, access_key=secret_s3_access_key, secret_key=secret_s3_secret_key, region = "nl", secure=True)
 minio_client
 
 download_satellite_from_minio(client=minio_client,
