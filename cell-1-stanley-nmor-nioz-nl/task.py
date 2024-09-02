@@ -1,15 +1,19 @@
-from dtSat import dtSat
-import json
+from minio import Minio
+import acolite as ac
+import zipfile
 
 import argparse
 import json
 import os
 arg_parser = argparse.ArgumentParser()
 
+secret_s3_access_key = os.getenv('secret_s3_access_key')
+secret_s3_secret_key = os.getenv('secret_s3_secret_key')
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
+arg_parser.add_argument('--param_s3_server', action='store', type=str, required=True, dest='param_s3_server')
 
 args = arg_parser.parse_args()
 print(args)
@@ -17,38 +21,51 @@ print(args)
 id = args.id
 
 
+param_s3_server = args.param_s3_server.replace('"','')
 
 
-year = 2015
-start_date = f"{year}-01-01"
-end_date   = f"{year}-12-31"
-data_collection = "SENTINEL-2"
-product_type = "S2MSI1C"
-aoi = "POLYGON((5.938 53.186, 7.504 53.199, 7.504 53.710, 5.938 53.716, 5.938 53.186))'" ## ems dollards
 
-catalogue_response = dtSat.get_sentinel_catalogue(start_date, end_date, data_collection = data_collection, aoi= aoi, product_type=product_type, cloudcover=10.0, max_results=1000)
+def download_satellite_from_minio(client = None, bucket_name = "naa-vre-waddenzee-shared",dir_path = "./", 
+                                 filename = "S2A_MSIL1C_20150706T105016_N0204_R051_T31UFU_20150706T105351.SAFE"):
+        """
+    Utility function for downloading acolite output files from a miniO S3 Bucket to a local LTER directory 
+    
+    -----------------
+    Example:
+    local_path = "../tmp/data"
+    download_acolite_from_minio(bucket_name = param_s3_public_bucket,  
+                               dir_path = local_path, 
+                               tile = "T31UFU", collection = "sentinel", year = 2023)
+    """
+        objects = client.list_objects(bucket_name, prefix=f"acolite_input/{filename}.zip",recursive = True)
+        
+        for obj in objects:
+            filename = dir_path 
+            print(filename)
+            print(dir_path + obj.object_name)
+            client.fget_object("naa-vre-waddenzee-shared", obj.object_name, dir_path + obj.object_name)
+            
+                
 
-catalogue_sub = dtSat.filter_by_orbit_and_tile(catalogue_response, orbit = "R008", tile = "T32ULE", name_only = False)
+minio_client = Minio(param_s3_server, access_key=param_s3_access_key, secret_key=param_s3_secret_key, region = "nl", secure=True)
+minio_client
 
-catalogue_sub_filename = "/tmp/data/catalogue_sub.json"
-with open(catalogue_sub_filename, "w") as f:
-    json.dump(catalogue_response, f)
+download_satellite_from_minio(client=minio_client,
+                              dir_path = "/tmp/data/")
 
-file_start_date = open("/tmp/start_date_" + id + ".json", "w")
-file_start_date.write(json.dumps(start_date))
-file_start_date.close()
-file_end_date = open("/tmp/end_date_" + id + ".json", "w")
-file_end_date.write(json.dumps(end_date))
-file_end_date.close()
-file_data_collection = open("/tmp/data_collection_" + id + ".json", "w")
-file_data_collection.write(json.dumps(data_collection))
-file_data_collection.close()
-file_product_type = open("/tmp/product_type_" + id + ".json", "w")
-file_product_type.write(json.dumps(product_type))
-file_product_type.close()
-file_aoi = open("/tmp/aoi_" + id + ".json", "w")
-file_aoi.write(json.dumps(aoi))
-file_aoi.close()
-file_catalogue_sub_filename = open("/tmp/catalogue_sub_filename_" + id + ".json", "w")
-file_catalogue_sub_filename.write(json.dumps(catalogue_sub_filename))
-file_catalogue_sub_filename.close()
+
+with zipfile.ZipFile("/tmp/data/acolite_input/S2A_MSIL1C_20150706T105016_N0204_R051_T31UFU_20150706T105351.SAFE.zip", 'r') as zip_ref:
+    zip_ref.extractall("/tmp/data/acolite_input/")
+    print(f"Downloaded file unzipping completed!!!!") 
+
+    
+settings = {'limit': [52.5,4.7,53.50,5.4], 
+            'inputfile': '/tmp/data/acolite_input/S2A_MSIL1C_20150706T105016_N0204_R051_T31UFU_20150706T105351.SAFE', 
+            'output': '/tmp/data/acolite_output/S2A_MSIL1C_20150706T105016', 
+            "cirrus_correction": True,
+            'l2w_parameters' : ["rhow_*","rhos_*", "Rrs_*", "chl_oc3", "chl_re_gons", "chl_re_gons740", 
+                                "chl_re_moses3b", "chl_re_moses3b740",  "chl_re_mishra", "chl_re_bramich", 
+                                "ndci", "ndvi","spm_nechad2010"]}
+
+ac.acolite.acolite_run(settings=settings)
+
