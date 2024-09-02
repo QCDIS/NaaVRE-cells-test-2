@@ -29,6 +29,7 @@ RWSstations = [{"Code": "DANTZGT", "X": 681288.275516119, "Y": 5920359.91317053}
 
 station_info = [{"Code":"VLIESM","X":643890.614308217,"Y":5909304.23136001}]
 
+station = "DANTZGT"
 
 station_name = station_info[0]["Code"]
 
