@@ -22,6 +22,16 @@ id = args.id
 
 
 
+RWSstations = [{"Code": "DANTZGT", "X": 681288.275516119, "Y": 5920359.91317053},
+               {"Code": "DOOVBWT", "X": 636211.321319897, "Y": 5880086.51911216},
+               {"Code": "MARSDND", "X": 617481.059435953, "Y": 5871760.70559602},
+               {"Code": "VLIESM", "X": 643890.614308217, "Y": 5909304.23136001}]
+
+station_info = [{"Code":"VLIESM","X":643890.614308217,"Y":5909304.23136001}]
+
+
+station_name = station_info[0]["Code"]
+
 rws_file_path = f"/tmp/data/{station}_Chl_2021.csv"
 
 
