@@ -61,6 +61,6 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-for (name in names) {
-  print(paste("Hello,", name, "!"))
+for (file in files) {
+  print(paste("Hello,", file, "!"))
 }
