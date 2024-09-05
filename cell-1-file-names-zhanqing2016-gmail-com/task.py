@@ -18,7 +18,7 @@ id = args.id
 
 
 
-files = ["20230915_019.csv", "20231022_001.csv", "20231022_002.csv"]
+files = ["20230915_019", "20231022_001", "20231022_002"]
 files
 
 file_files = open("/tmp/files_" + id + ".json", "w")
