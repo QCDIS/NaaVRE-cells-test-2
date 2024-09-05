@@ -84,10 +84,11 @@ param_s3_endpoint <- gsub("\"", "", opt$param_s3_endpoint)
 
 print("Running the cell")
 
+RWSbiogeo_ind <- 
 for (file in files) {
 save_object(
     region="", 
     bucket="naa-vre-waddenzee-shared", 
-    file=paste0("/tmp/data/",file), 
+    file=paste0("/tmp/data/",file,".csv", sep=""), 
     object= paste0("/waterinfo_RWS/raw_data/",file))
 }
