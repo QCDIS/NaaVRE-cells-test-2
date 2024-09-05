@@ -41,6 +41,10 @@ print(f"Raw images will be stored in {app_configuration['raw_inputdir']}")
 print(f"Analysis with acolite will start with images from {app_configuration['acolite_inputdir']}")
 print(f"Processed images from acolite will be stored in {app_configuration['acolite_outputdir']}")
 
+
+for key, val in app_configuration.items():
+    print(key)
+
     
 
 
