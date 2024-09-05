@@ -1,5 +1,7 @@
+from minio import Minio
 from dtAcolite import dtAcolite
 from dtSat import dtSat
+import glob
 import json
 import os
 
@@ -76,6 +78,44 @@ dtSat.data_sentinel_request(access_response,
 
 print(f"List of all images downloaded in {app_configuration['raw_inputdir']} included: ")
 print(os.listdir(app_configuration["raw_inputdir"]))
+
+minio_client = Minio(param_s3_server, access_key=secret_s3_access_key, secret_key=secret_s3_secret_key, region = "nl", secure=True)
+minio_client
+
+dtSat.upload_satellite_to_minio(client = minio_client,
+                                bucket_name = param_s3_public_bucket,  
+                                local_path = app_configuration["raw_inputdir"],
+                                minio_path = f"/app_acolite/raw/{app_configuration['collection']}/{app_configuration['year']}", 
+                                collection = app_configuration["raw_inputdir"], 
+                                year = app_configuration["raw_inputdir"])
+
+
+inputfilenames = dtAcolite.create_acolite_input(app_configuration = app_configuration)
+outfilepaths   = dtAcolite.create_acolite_output(app_configuration=app_configuration, filenames=inputfilenames)
+dtAcolite.unzip_inputfiles(app_configuration=app_configuration)
+
+settings = {'limit': [52.5,4.7,53.50,5.4], 
+            'inputfile': '', 
+            'output': '', 
+            "cirrus_correction": True,
+            'l2w_parameters' : ["rhow_*","rhos_*", "Rrs_*", "chl_oc3", "chl_re_gons", "chl_re_gons740", 
+                                "chl_re_moses3b", "chl_re_moses3b740",  "chl_re_mishra", "chl_re_bramich", 
+                                "ndci", "ndvi","spm_nechad2010"]}
+
+inputfilepaths = glob.glob(f"{app_configuration['acolite_inputdir']}/**")
+outputfilepaths = glob.glob(f"{app_configuration['acolite_outputdir']}/**")
+outputfilepaths
+
+
+for i in range(len(inputfilepaths)):
+    print("---------------------------------------------------------------------------------------")
+    settings['inputfile'] = inputfilepaths[i]
+    settings['output']    = outputfilepaths[i]
+    ac.acolite.acolite_run(settings=settings)
+print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+print(f"processing done and output is in {inputfilepaths[i]}")
+print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+
 
 file_app_configuration = open("/tmp/app_configuration_" + id + ".json", "w")
 file_app_configuration.write(json.dumps(app_configuration))
