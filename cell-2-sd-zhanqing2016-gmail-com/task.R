@@ -49,7 +49,11 @@ print(var)
 var_len = length(var)
 print(paste("Variable files has length", var_len))
 
-files <- gsub("\"", "", opt$files)
+print("------------------------Running var_serialization for files-----------------------")
+print(opt$files)
+files = var_serialization(opt$files)
+print("---------------------------------------------------------------------------------")
+
 print("Retrieving id")
 var = opt$id
 print(var)
