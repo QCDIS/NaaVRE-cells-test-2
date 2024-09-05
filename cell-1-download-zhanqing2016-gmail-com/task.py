@@ -19,6 +19,7 @@ arg_parser.add_argument('--id', action='store', type=str, required=True, dest='i
 arg_parser.add_argument('--param_copernicus_api', action='store', type=str, required=True, dest='param_copernicus_api')
 arg_parser.add_argument('--param_s3_public_bucket', action='store', type=str, required=True, dest='param_s3_public_bucket')
 arg_parser.add_argument('--param_s3_server', action='store', type=str, required=True, dest='param_s3_server')
+arg_parser.add_argument('--secret_s3_access_key', action='store', type=str, required=True, dest='secret_s3_access_key')
 
 args = arg_parser.parse_args()
 print(args)
@@ -29,6 +30,7 @@ id = args.id
 param_copernicus_api = args.param_copernicus_api.replace('"','')
 param_s3_public_bucket = args.param_s3_public_bucket.replace('"','')
 param_s3_server = args.param_s3_server.replace('"','')
+secret_s3_access_key = args.secret_s3_access_key.replace('"','')
 
 
 
