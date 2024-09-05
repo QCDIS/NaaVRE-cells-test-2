@@ -5,7 +5,7 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - r-aws.s3
-  - r-devtools
+  - aws.s3
+  - dtAcolite
   - papermill
   - ipykernel
