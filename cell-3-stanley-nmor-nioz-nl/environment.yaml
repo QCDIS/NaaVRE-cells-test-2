@@ -6,6 +6,7 @@ dependencies:
   - python>=3.8
   - nbconvert
   - minio
+  - pandas
   - pip:
     - git+https://github.com/stanleesocca/dtRemoteSensing.git
   - papermill
