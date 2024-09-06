@@ -79,7 +79,7 @@ print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 dtSat.upload_local_directory_to_minio(client = minio_client,
                                       bucket_name = param_s3_public_bucket,  
-                                      local_path = app_configuration['acolite_output'], 
+                                      local_path = app_configuration['acolite_outputdir'], 
                                       minio_path = f"/{minio_base_path}/processed/outputdir/{app_configuration['collection']}/{app_configuration['year']}", 
                                       collection = collection, 
                                       year = year)
