@@ -1,3 +1,4 @@
+from minio import Minio
 import acolite as ac
 from dtAcolite import dtAcolite
 from dtSat import dtSat
@@ -33,6 +34,8 @@ param_s3_server = args.param_s3_server.replace('"','')
 
 
 
+minio_client = Minio(param_s3_server, access_key=secret_s3_access_key, secret_key=secret_s3_secret_key, region = "nl", secure=True)
+minio_client
 
 dtSat.upload_local_directory_to_minio(client = minio_client,
                                       bucket_name = param_s3_public_bucket,  
