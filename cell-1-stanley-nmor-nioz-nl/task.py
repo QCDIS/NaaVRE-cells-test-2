@@ -25,7 +25,6 @@ param_copernicus_api = args.param_copernicus_api.replace('"','')
 
 
 
-
 year = 2015
 start_date = f"{year}-01-01"
 end_date   = f"{year}-12-31"
