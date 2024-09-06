@@ -54,6 +54,10 @@ access_response_filename = "/tmp/data/access_response.json"
 with open(access_response_filename, 'w') as f:
     json.dump(access_response, f)
     
+
+print(f"Raw images will be stored in {app_configuration['raw_inputdir']}")
+print(f"Analysis with acolite will start with images from {app_configuration['acolite_inputdir']}")
+print(f"Processed images from acolite will be stored in {app_configuration['acolite_outputdir']}")    
     
 
 file_year = open("/tmp/year_" + id + ".json", "w")
