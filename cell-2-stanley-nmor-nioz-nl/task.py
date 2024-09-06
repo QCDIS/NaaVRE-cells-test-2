@@ -1,4 +1,6 @@
+from dtSat import dtSat
 import json
+import os
 
 import argparse
 import json
@@ -37,17 +39,13 @@ with open(access_response_filename) as f:
 with open(app_configuration_filename) as f:
     app_configuration = json.load(f)
     
-print(f"Raw images will be stored in {app_configuration['raw_inputdir']}")
-print(f"Analysis with acolite will start with images from {app_configuration['acolite_inputdir']}")
-print(f"Processed images from acolite will be stored in {app_configuration['acolite_outputdir']}")
+dtSat.data_sentinel_request(access_response, 
+                            catalogue_sub, 
+                            dir_path = app_configuration["raw_inputdir"])
 
 
-for key, val in app_configuration.items():
-    print(key)
-
-    
-
-
+print(f"List of all images downloaded in {app_configuration['raw_inputdir']} included: ")
+print(os.listdir(app_configuration["raw_inputdir"]))
 
 file_app_configuration = open("/tmp/app_configuration_" + id + ".json", "w")
 file_app_configuration.write(json.dumps(app_configuration))
