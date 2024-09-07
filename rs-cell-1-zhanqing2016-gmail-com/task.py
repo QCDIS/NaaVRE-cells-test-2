@@ -96,29 +96,13 @@ inputfilenames = dtAcolite.create_acolite_input(app_configuration = app_configur
 outfilepaths   = dtAcolite.create_acolite_output(app_configuration=app_configuration, filenames=inputfilenames)
 dtAcolite.unzip_inputfiles(app_configuration=app_configuration)
 
-
-settings = {'limit': [52.5,4.7,53.50,5.4], 
-            'inputfile': '', 
-            'output': '', 
-            "cirrus_correction": True,
-            'l2w_parameters' : ["rhow_*","rhos_*", "Rrs_*", "chl_oc3", "chl_re_gons", "chl_re_gons740", 
-                                "chl_re_moses3b", "chl_re_moses3b740",  "chl_re_mishra", "chl_re_bramich", 
-                                "ndci", "ndvi","spm_nechad2010"]}
-
 inputfilepaths = glob.glob(f"{app_configuration['acolite_inputdir']}/**")
 outputfilepaths = glob.glob(f"{app_configuration['acolite_outputdir']}/**")
 outputfilepaths
 inputfilepaths
 
-
 path_ids = list(range(len(inputfilepaths)))
 
-file_app_configuration = open("/tmp/app_configuration_" + id + ".json", "w")
-file_app_configuration.write(json.dumps(app_configuration))
-file_app_configuration.close()
-file_settings = open("/tmp/settings_" + id + ".json", "w")
-file_settings.write(json.dumps(settings))
-file_settings.close()
 file_path_ids = open("/tmp/path_ids_" + id + ".json", "w")
 file_path_ids.write(json.dumps(path_ids))
 file_path_ids.close()
