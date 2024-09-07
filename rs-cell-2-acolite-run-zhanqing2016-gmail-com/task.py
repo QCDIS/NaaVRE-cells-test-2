@@ -49,7 +49,7 @@ for i in range(len(inputfilepaths)):
 print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 print(f"processing done and output is in {inputfilepaths[i]}")
 print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-acolite_run = "processing done" 
+
 
 file_acolite_processing = open("/tmp/acolite_processing_" + id + ".json", "w")
 file_acolite_processing.write(json.dumps(acolite_processing))
