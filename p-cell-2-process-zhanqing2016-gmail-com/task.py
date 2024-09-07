@@ -24,7 +24,7 @@ names = json.loads(args.names)
 
 output_names = []
 for name in names:
-    a = print(f"Hello, {name}!")    
+    a = f"Hello, {name}!"    
     output_names.append(a)
 
 file_output_names = open("/tmp/output_names_" + id + ".json", "w")
