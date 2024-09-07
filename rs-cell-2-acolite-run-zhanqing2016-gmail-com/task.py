@@ -14,7 +14,7 @@ arg_parser.add_argument('--id', action='store', type=str, required=True, dest='i
 
 arg_parser.add_argument('--app_configuration', action='store', type=str, required=True, dest='app_configuration')
 
-arg_parser.add_argument('--outputfilepaths', action='store', type=str, required=True, dest='outputfilepaths')
+arg_parser.add_argument('--path_ids', action='store', type=str, required=True, dest='path_ids')
 
 arg_parser.add_argument('--settings', action='store', type=str, required=True, dest='settings')
 
@@ -28,7 +28,7 @@ print(args)
 id = args.id
 
 app_configuration = json.loads(args.app_configuration)
-outputfilepaths = json.loads(args.outputfilepaths)
+path_ids = json.loads(args.path_ids)
 settings = json.loads(args.settings)
 
 param_copernicus_api = args.param_copernicus_api.replace('"','')
@@ -37,8 +37,9 @@ param_s3_server = args.param_s3_server.replace('"','')
 
 
 
+
 acolite_processing = []
-for i in range(len(inputfilepaths)):
+for i in path_ids:
     print("---------------------------------------------------------------------------------------")
     settings['inputfile'] = inputfilepaths[i]
     settings['output']    = outputfilepaths[i]
