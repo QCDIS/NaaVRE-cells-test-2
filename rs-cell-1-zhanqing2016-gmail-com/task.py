@@ -110,7 +110,8 @@ outputfilepaths = glob.glob(f"{app_configuration['acolite_outputdir']}/**")
 outputfilepaths
 inputfilepaths
 
-path_ids = range(len(inputfilepaths))
+
+path_ids = list(range(len(inputfilepaths)))
 
 file_app_configuration = open("/tmp/app_configuration_" + id + ".json", "w")
 file_app_configuration.write(json.dumps(app_configuration))
