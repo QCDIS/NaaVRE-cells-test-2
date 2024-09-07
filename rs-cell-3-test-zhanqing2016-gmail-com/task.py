@@ -8,7 +8,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--app_configuration', action='store', type=str, required=True, dest='app_configuration')
+arg_parser.add_argument('--outputfilepaths', action='store', type=str, required=True, dest='outputfilepaths')
 
 
 args = arg_parser.parse_args()
@@ -16,7 +16,7 @@ print(args)
 
 id = args.id
 
-app_configuration = json.loads(args.app_configuration)
+outputfilepaths = json.loads(args.outputfilepaths)
 
 
 
