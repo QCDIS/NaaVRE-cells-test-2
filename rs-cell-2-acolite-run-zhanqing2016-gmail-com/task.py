@@ -1,4 +1,5 @@
 import acolite as ac
+from dtAcolite import dtAcolite
 import glob
 
 import argparse
@@ -13,11 +14,7 @@ secret_s3_secret_key = os.getenv('secret_s3_secret_key')
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--app_configuration', action='store', type=str, required=True, dest='app_configuration')
-
 arg_parser.add_argument('--path_ids', action='store', type=str, required=True, dest='path_ids')
-
-arg_parser.add_argument('--settings', action='store', type=str, required=True, dest='settings')
 
 arg_parser.add_argument('--param_copernicus_api', action='store', type=str, required=True, dest='param_copernicus_api')
 arg_parser.add_argument('--param_s3_public_bucket', action='store', type=str, required=True, dest='param_s3_public_bucket')
@@ -28,9 +25,7 @@ print(args)
 
 id = args.id
 
-app_configuration = json.loads(args.app_configuration)
 path_ids = json.loads(args.path_ids)
-settings = json.loads(args.settings)
 
 param_copernicus_api = args.param_copernicus_api.replace('"','')
 param_s3_public_bucket = args.param_s3_public_bucket.replace('"','')
@@ -38,8 +33,16 @@ param_s3_server = args.param_s3_server.replace('"','')
 
 
 
+app_configuration = dtAcolite.configure_acolite_directory(base_dir = "/tmp/data", year = year, collection = collection)
 inputfilepaths = glob.glob(f"{app_configuration['acolite_inputdir']}/**")
 outputfilepaths = glob.glob(f"{app_configuration['acolite_outputdir']}/**")
+settings = {'limit': [52.5,4.7,53.50,5.4], 
+            'inputfile': '', 
+            'output': '', 
+            "cirrus_correction": True,
+            'l2w_parameters' : ["rhow_*","rhos_*", "Rrs_*", "chl_oc3", "chl_re_gons", "chl_re_gons740", 
+                                "chl_re_moses3b", "chl_re_moses3b740",  "chl_re_mishra", "chl_re_bramich", 
+                                "ndci", "ndvi","spm_nechad2010"]}
 
 acolite_processing = []
 for i in path_ids:
