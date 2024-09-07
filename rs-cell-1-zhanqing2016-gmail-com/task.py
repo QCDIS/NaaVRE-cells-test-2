@@ -108,6 +108,9 @@ settings = {'limit': [52.5,4.7,53.50,5.4],
 inputfilepaths = glob.glob(f"{app_configuration['acolite_inputdir']}/**")
 outputfilepaths = glob.glob(f"{app_configuration['acolite_outputdir']}/**")
 outputfilepaths
+inputfilepaths
+
+path_ids = range(len(inputfilepaths))
 
 file_app_configuration = open("/tmp/app_configuration_" + id + ".json", "w")
 file_app_configuration.write(json.dumps(app_configuration))
@@ -115,6 +118,6 @@ file_app_configuration.close()
 file_settings = open("/tmp/settings_" + id + ".json", "w")
 file_settings.write(json.dumps(settings))
 file_settings.close()
-file_outputfilepaths = open("/tmp/outputfilepaths_" + id + ".json", "w")
-file_outputfilepaths.write(json.dumps(outputfilepaths))
-file_outputfilepaths.close()
+file_path_ids = open("/tmp/path_ids_" + id + ".json", "w")
+file_path_ids.write(json.dumps(path_ids))
+file_path_ids.close()
