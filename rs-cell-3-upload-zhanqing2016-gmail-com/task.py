@@ -21,6 +21,7 @@ arg_parser.add_argument('--acolite_processing', action='store', type=str, requir
 arg_parser.add_argument('--param_copernicus_api', action='store', type=str, required=True, dest='param_copernicus_api')
 arg_parser.add_argument('--param_s3_public_bucket', action='store', type=str, required=True, dest='param_s3_public_bucket')
 arg_parser.add_argument('--param_s3_server', action='store', type=str, required=True, dest='param_s3_server')
+arg_parser.add_argument('--param_year', action='store', type=int, required=True, dest='param_year')
 
 args = arg_parser.parse_args()
 print(args)
@@ -32,12 +33,14 @@ acolite_processing = json.loads(args.acolite_processing)
 param_copernicus_api = args.param_copernicus_api.replace('"','')
 param_s3_public_bucket = args.param_s3_public_bucket.replace('"','')
 param_s3_server = args.param_s3_server.replace('"','')
+param_year = args.param_year
 
 
 
-year = 2015
+acolite_processing
+
 start_date = f"{year}-01-01"
-end_date   = f"{year}-09-30"
+end_date   = f"{year}-12-31"
 data_collection = "SENTINEL-2"
 product_type = "S2MSI1C"
 aoi = "POLYGON((4.6 53.1, 4.9 53.1, 4.9 52.8, 4.6 52.8, 4.6 53.1))'"
