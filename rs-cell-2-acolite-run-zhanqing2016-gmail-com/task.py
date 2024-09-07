@@ -1,4 +1,5 @@
 import acolite as ac
+import glob
 
 import argparse
 import json
@@ -37,6 +38,8 @@ param_s3_server = args.param_s3_server.replace('"','')
 
 
 
+inputfilepaths = glob.glob(f"{app_configuration['acolite_inputdir']}/**")
+outputfilepaths = glob.glob(f"{app_configuration['acolite_outputdir']}/**")
 
 acolite_processing = []
 for i in path_ids:
