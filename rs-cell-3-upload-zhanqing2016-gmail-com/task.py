@@ -37,6 +37,7 @@ param_s3_server = args.param_s3_server.replace('"','')
 
 acolite_processing # this variable is dummy list to merge the workflow
 
+app_configuration = dtAcolite.configure_acolite_directory(base_dir = "/tmp/data", year = year, collection = collection)
 minio_client = Minio(param_s3_server, access_key=secret_s3_access_key, secret_key=secret_s3_secret_key, region = "nl", secure=True)
 minio_client
 
