@@ -19,7 +19,7 @@ arg_parser.add_argument('--path_ids', action='store', type=str, required=True, d
 arg_parser.add_argument('--param_copernicus_api', action='store', type=str, required=True, dest='param_copernicus_api')
 arg_parser.add_argument('--param_s3_public_bucket', action='store', type=str, required=True, dest='param_s3_public_bucket')
 arg_parser.add_argument('--param_s3_server', action='store', type=str, required=True, dest='param_s3_server')
-arg_parser.add_argument('--param_year', action='store', type=int, required=True, dest='param_year')
+arg_parser.add_argument('--year', action='store', type=int, required=True, dest='year')
 
 args = arg_parser.parse_args()
 print(args)
@@ -31,7 +31,7 @@ path_ids = json.loads(args.path_ids)
 param_copernicus_api = args.param_copernicus_api.replace('"','')
 param_s3_public_bucket = args.param_s3_public_bucket.replace('"','')
 param_s3_server = args.param_s3_server.replace('"','')
-param_year = args.param_year
+year = args.year
 
 
 
