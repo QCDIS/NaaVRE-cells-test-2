@@ -69,11 +69,6 @@ print("Running the cell")
 
 
 
-install.packages("aws.s3")
-require(aws.s3)
-
-
-
 Sys.setenv(
     "AWS_ACCESS_KEY_ID" = secret_s3_access_key,
     "AWS_SECRET_ACCESS_KEY" = secret_s3_secret_key,
@@ -122,75 +117,7 @@ read_acolite_files <- function(station, ...){
     RWS_RS$station = station
     return(RWS_RS)
 }
-        
-stations <- c("MARSDND", "DOOVWST", "DANTZGND", "VLIESM")
-RWS_RS <- lapply(stations, function(x) read_acolite_files(x))
-RWS_RS <- do.call("rbind", RWS_RS)
-                 
-bucket_name <- "naa-vre-waddenzee-shared"  # Replace with your bucket name
-minio_folder <- "in_situ/"  # Replace with your folder in the bucket
-local_folder <- "/tmp/data/in_situ"  # Replace with the local folder path
-
-if (!dir.exists(local_folder)) {
-  dir.create(local_folder, recursive = TRUE)
-}
-
-download_files_from_minio(bucket = bucket_name, folder = minio_folder, local_path = local_folder)
-                 
-load(paste0(local_folder,'/RWSbiogeo.rda'))
-load(paste0(local_folder,'/RWSstations.rda'))
-                 
-                 
-local_folder <- "/tmp/data/output"  # Replace with the local folder path
-
-if (!dir.exists(local_folder)) {
-  dir.create(local_folder, recursive = TRUE)
-}
-
-file_name = "chl_validation.png"
-file_path = paste0(local_folder, "/", file_name, sep="")
-
-png(file_path, width = 680, height = 580, units = "px", res = 100)
-op <- par(mfrow = c(2, 2))
-Wad_biogeo_RWS <- subset(RWSbiogeo, 
-                        subset=datetime >= "2015-04-20" & datetime < "2021-10-31" & station == 'MARSDND')
-plot(Wad_biogeo_RWS$datetime, Wad_biogeo_RWS$Chl, type = "o", pch = 19, col = 'black', ylim = c(0, 30),
-     xlab = "", ylab = "Chl (ug/l)", main = "MARSDND")
-idx <- which(RWS_RS$station == "MARSDND")
-points(RWS_RS$time[idx], RWS_RS$chl_re_gons[idx], type = "p", pch = 19, cex = 1.5, col = "red")
-
-Wad_biogeo_RWS <- subset(RWSbiogeo, 
-                        subset=datetime >= "2015-04-20" & datetime < "2021-10-31" & station == 'DOOVBWT')
-plot(Wad_biogeo_RWS$datetime, Wad_biogeo_RWS$Chl, type = "o", pch = 19, col = 'black',ylim = c(0, 40),
-     xlab = "", ylab = "Chl (ug/l)", main = "DOOVWST")
-idx <- which(RWS_RS$station == "DOOVWST")
-points(RWS_RS$time[idx], RWS_RS$chl_re_gons[idx], type = "p", pch = 19, cex = 1.5, col = "red")
-
-Wad_biogeo_RWS <- subset(RWSbiogeo, 
-                        subset=datetime >= "2015-04-20" & datetime < "2021-10-31" & station == 'DANTZGT')
-plot(Wad_biogeo_RWS$datetime, Wad_biogeo_RWS$Chl, type = "o", pch = 19, col = 'black',ylim = c(0, 70),
-     xlab = "", ylab = "Chl (ug/l)", main = "DANTZGT")
-idx <- which(RWS_RS$station == "DANTZGND")
-points(RWS_RS$time[idx], RWS_RS$chl_re_gons[idx], type = "p", pch = 19, cex = 1.5, col = "red")
-
-Wad_biogeo_RWS <- subset(RWSbiogeo, 
-                        subset=datetime >= "2015-04-20" & datetime < "2021-10-31" & station == 'VLIESM')
-plot(Wad_biogeo_RWS$datetime, Wad_biogeo_RWS$Chl, type = "o", pch = 19, col = 'black',ylim = c(0, 50),
-     xlab = "", ylab = "Chl (ug/l)", main = "VLIESM")
-idx <- which(RWS_RS$station == "VLIESM")
-points(RWS_RS$time[idx], RWS_RS$chl_re_gons[idx], type = "p", pch = 19, cex = 1.5, col = "red")
-par(op)
-dev.off()
-
-
-miniofile_path = paste0("/output/",file_name,sep="")
-put_object(
-    region="", 
-    bucket="naa-vre-waddenzee-shared", 
-    file=file_path, 
-    object= miniofile_path)
-                 
-Haha = "sowhat"
+                    
 # capturing outputs
 print('Serialization of Haha')
 file <- file(paste0('/tmp/Haha_', id, '.json'))
