@@ -117,7 +117,8 @@ read_acolite_files <- function(station, ...){
     RWS_RS$station = station
     return(RWS_RS)
 }
-                    
+
+Haha = "Sowhat"
 # capturing outputs
 print('Serialization of Haha')
 file <- file(paste0('/tmp/Haha_', id, '.json'))
