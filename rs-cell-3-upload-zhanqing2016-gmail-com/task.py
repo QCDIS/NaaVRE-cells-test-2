@@ -52,10 +52,11 @@ app_configuration = dtAcolite.configure_acolite_directory(base_dir = "/tmp/data"
 minio_client = Minio(param_s3_server, access_key=secret_s3_access_key, secret_key=secret_s3_secret_key, region = "nl", secure=True)
 minio_client
 
+minio_base_path = "app_acolite_qing"
 dtSat.upload_local_directory_to_minio(client = minio_client,
                                       bucket_name = param_s3_public_bucket,  
                                       local_path = app_configuration['acolite_outputdir'], 
-                                      minio_path = f"/app_acolite/processed/outputdir/{app_configuration['collection']}/{app_configuration['year']}", 
+                                      minio_path = f"/{minio_base_path}/processed/outputdir/{app_configuration['collection']}/{app_configuration['year']}", 
                                       collection = collection, 
                                       year = year)
 
@@ -110,11 +111,11 @@ stations_df = pd.DataFrame({"st_lon":  [4.75,  5.03, 4.90,     ],
 
 full_df = extract_chla_all_station(stations = stations_df, year = app_configuration['year'])
 full_df
-full_df.to_csv(app_configuration['acolite_csv'] + f"/Ems_Dollards_{app_configuration['year']}.csv", sep = ",")
+full_df.to_csv(app_configuration['acolite_csv'] + f"/Marsdiep_{app_configuration['year']}.csv", sep = ",")
 dtSat.upload_csv_to_minio(client = minio_client,
                           bucket_name = param_s3_public_bucket,  
                           local_path = app_configuration['acolite_csv'], 
-                          minio_path = f"/app_acolite/processed/csv/{app_configuration['collection']}/{app_configuration['year']}", 
+                          minio_path = f"/{minio_base_path}/processed/csv/{app_configuration['collection']}/{app_configuration['year']}", 
                           collection = app_configuration['collection'], 
                           year = app_configuration['year'])
 
