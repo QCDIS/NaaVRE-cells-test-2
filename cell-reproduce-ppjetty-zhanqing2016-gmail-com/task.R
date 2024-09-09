@@ -240,52 +240,6 @@ system.time(
   
 )
 
-
-dim(PPall)
-
-points2D(Chl_stats$longitude, Chl_stats$latitude, colvar = PPall[1, ], xlab = "longitude", ylab = "latitude", clab = "Integrated PP")
-
-op <- par(mfrow = c(2, 2))
-with(na.omit(zz), points2D(x = longitude, y = latitude, colvar = chlorophyll, log = "c", pch = 18, 
-                           cex = 2, NAcol ="grey", asp = 1.162, main = "Chlorophyll data\n landsat-8"))
-plot(WadShape[1], add = TRUE)
-
-with(zz_naomit, points2D(x = longitude, y = latitude, colvar = chlorophyll, log = "c", asp = 1))
-
-points2D(Chl_stats$longitude, Chl_stats$latitude, colvar = Chl_stats$z, main = 'Bathymetry')
-
-points2D(Chl_stats$longitude, Chl_stats$latitude, colvar = PPall[1, ], pch = ".", cex = 2,
-         main = "Integrated PP (mass/surface/time)", xlab = "longitude", 
-         ylab = "latitude", clab = "Integrated PP")
-
-
-pelagic_pp <- interp(x = Chl_stats$longitude, y = Chl_stats$latitude, z = PPall[1, ], linear = TRUE)
-filled.contour(x = pelagic_pp$x,
-               y = pelagic_pp$y,
-               z = pelagic_pp$z)
-
-with(pelagic_pp, image2D(x = x, y = y, z = z, resfac = 3, asp = 4, 
-                  main = "Pelagic Photosynthesis", xlab = "Longitude", 
-                  ylab = "Latitude", clab = "mgC/m2/h"))
-
-
-local_folder = "/tmp/data/output/"
-file_name = "PP_calculation.png"
-file_path = paste0(local_folder, file_name, sep="")
-
-png(file_path, width = 680, height = 580, units = "px", res = 100)
-plot(Wad_shape[1], add = TRUE)
-
-dev.off()
-
-
-miniofile_path = paste0("/output/",file_name,sep="")
-put_object(
-    region="", 
-    bucket="naa-vre-waddenzee-shared", 
-    file=file_path, 
-    object= miniofile_path)
-                 
 Haha = "sowhat"
 # capturing outputs
 print('Serialization of Haha')
