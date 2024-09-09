@@ -85,10 +85,11 @@ print(os.listdir(app_configuration["raw_inputdir"]))
 minio_client = Minio(param_s3_server, access_key=secret_s3_access_key, secret_key=secret_s3_secret_key, region = "nl", secure=True)
 minio_client
 
+minio_base_path = "app_acolite_qing"
 dtSat.upload_satellite_to_minio(client = minio_client,
                                 bucket_name = param_s3_public_bucket,  
                                 local_path = app_configuration["raw_inputdir"],
-                                minio_path = f"/app_acolite/raw/{app_configuration['collection']}/{app_configuration['year']}", 
+                                minio_path = f"/{minio_base_path}/raw/{app_configuration['collection']}/{app_configuration['year']}", 
                                 collection = app_configuration["raw_inputdir"], 
                                 year = app_configuration["raw_inputdir"])
 
