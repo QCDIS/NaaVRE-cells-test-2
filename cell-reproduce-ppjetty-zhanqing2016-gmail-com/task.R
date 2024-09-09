@@ -257,7 +257,12 @@ pelagic_pp <- interp(x = Chl_stats$longitude, y = Chl_stats$latitude, z = PPall[
 local_folder = "/tmp/data/output/"
 file_name = "PP_calculation.png"
 file_path = paste0(local_folder, file_name, sep="")
-png(file_path, width = 680, height = 580, units = "px", res = 100)
+
+if (!dir.exists(local_folder)) {
+  dir.create(local_folder, recursive = TRUE)
+}
+
+png(file_path, width = 80, height = 50, units = "cm", res = 100)
 with(pelagic_pp, image2D(x = x, y = y, z = z, resfac = 3, asp = 4, 
                   main = "Pelagic Photosynthesis", xlab = "Longitude", 
                   ylab = "Latitude", clab = "mgC/m2/h"))
