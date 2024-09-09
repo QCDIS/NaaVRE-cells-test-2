@@ -62,7 +62,7 @@ for i in path_ids:
     acolite_processing.append(message)
 
 
-acolite_processing
+print(acolite_processing)
 
 file_acolite_processing = open("/tmp/acolite_processing_" + id + ".json", "w")
 file_acolite_processing.write(json.dumps(acolite_processing))
