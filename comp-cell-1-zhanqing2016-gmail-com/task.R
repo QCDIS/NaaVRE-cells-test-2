@@ -118,7 +118,34 @@ read_acolite_files <- function(station, ...){
     return(RWS_RS)
 }
 
-Haha = "Sowhat"
+stations <- c("MARSDND", "DOOVWST", "DANTZGND", "VLIESM")
+RWS_RS <- lapply(stations, function(x) read_acolite_files(x))
+RWS_RS <- do.call("rbind", RWS_RS)
+                 
+bucket_name <- "naa-vre-waddenzee-shared"  # Replace with your bucket name
+minio_folder <- "in_situ/"  # Replace with your folder in the bucket
+local_folder <- "/tmp/data/in_situ"  # Replace with the local folder path
+
+if (!dir.exists(local_folder)) {
+  dir.create(local_folder, recursive = TRUE)
+}
+
+download_files_from_minio(bucket = bucket_name, folder = minio_folder, local_path = local_folder)
+                 
+load(paste0(local_folder,'/RWSbiogeo.rda'))
+load(paste0(local_folder,'/RWSstations.rda'))
+                 
+                 
+local_folder <- "/tmp/data/output"  # Replace with the local folder path
+
+if (!dir.exists(local_folder)) {
+  dir.create(local_folder, recursive = TRUE)
+}
+
+file_name = "chl_validation.png"
+file_path = paste0(local_folder, "/", file_name, sep="")
+                 
+Haha = "sowhat"
 # capturing outputs
 print('Serialization of Haha')
 file <- file(paste0('/tmp/Haha_', id, '.json'))
