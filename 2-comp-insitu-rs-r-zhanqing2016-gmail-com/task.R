@@ -13,9 +13,9 @@ secret_s3_secret_key = Sys.getenv('secret_s3_secret_key')
 print('option_list')
 option_list = list(
 
-make_option(c("--acolite_processing"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_s3_server"), action="store", default=NA, type="character", help="my description")
+make_option(c("--param_s3_server"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--path_ids"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -50,13 +50,6 @@ var_serialization <- function(var){
     )
 }
 
-print("Retrieving acolite_processing")
-var = opt$acolite_processing
-print(var)
-var_len = length(var)
-print(paste("Variable acolite_processing has length", var_len))
-
-acolite_processing <- gsub("\"", "", opt$acolite_processing)
 print("Retrieving id")
 var = opt$id
 print(var)
@@ -71,10 +64,21 @@ var_len = length(var)
 print(paste("Variable param_s3_server has length", var_len))
 
 param_s3_server <- gsub("\"", "", opt$param_s3_server)
+print("Retrieving path_ids")
+var = opt$path_ids
+print(var)
+var_len = length(var)
+print(paste("Variable path_ids has length", var_len))
+
+print("------------------------Running var_serialization for path_ids-----------------------")
+print(opt$path_ids)
+path_ids = var_serialization(opt$path_ids)
+print("---------------------------------------------------------------------------------")
+
 
 
 print("Running the cell")
-acolite_processing
+
 
 
 Sys.setenv(
@@ -99,8 +103,8 @@ download_files_from_minio <- function(bucket, folder, local_path) {
 }
 
 bucket_name <- "naa-vre-waddenzee-shared"  # Replace with your bucket name
-minio_folder <- "app_acolite/processed_results/"  # Replace with your folder in the bucket
-local_folder <- "/tmp/data/app_acolite"  # Replace with the local folder path
+minio_folder <- "protoDT_WadPP/Input_data/processed_results/"  # Replace with your folder in the bucket
+local_folder <- "/tmp/data/processed_results"  # Replace with the local folder path
 
 if (!dir.exists(local_folder)) {
   dir.create(local_folder, recursive = TRUE)
@@ -131,7 +135,7 @@ RWS_RS <- lapply(stations, function(x) read_acolite_files(x))
 RWS_RS <- do.call("rbind", RWS_RS)
                  
 bucket_name <- "naa-vre-waddenzee-shared"  # Replace with your bucket name
-minio_folder <- "in_situ/"  # Replace with your folder in the bucket
+minio_folder <- "protoDT_WadPP/Input_data/in_situ/"  # Replace with your folder in the bucket
 local_folder <- "/tmp/data/in_situ"  # Replace with the local folder path
 
 if (!dir.exists(local_folder)) {
@@ -187,7 +191,7 @@ par(op)
 dev.off()
 
 
-miniofile_path = paste0("/output/",file_name,sep="")
+miniofile_path = paste0("/protoDT_WadPP/output/",file_name,sep="")
 put_object(
     region="", 
     bucket="naa-vre-waddenzee-shared", 
