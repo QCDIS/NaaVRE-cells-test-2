@@ -32,6 +32,7 @@ param_s3_server = args.param_s3_server.replace('"','')
 
 
 
+year = 2015
 start_date = f"{year}-01-01"
 end_date   = f"{year}-12-31"
 data_collection = "SENTINEL-2"
