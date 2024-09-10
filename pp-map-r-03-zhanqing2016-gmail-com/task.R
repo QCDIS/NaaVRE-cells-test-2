@@ -26,7 +26,7 @@ secret_s3_secret_key = Sys.getenv('secret_s3_secret_key')
 print('option_list')
 option_list = list(
 
-make_option(c("--Haha"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--dummy_output"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_server"), action="store", default=NA, type="character", help="my description")
 )
@@ -63,13 +63,13 @@ var_serialization <- function(var){
     )
 }
 
-print("Retrieving Haha")
-var = opt$Haha
+print("Retrieving dummy_output")
+var = opt$dummy_output
 print(var)
 var_len = length(var)
-print(paste("Variable Haha has length", var_len))
+print(paste("Variable dummy_output has length", var_len))
 
-Haha <- gsub("\"", "", opt$Haha)
+dummy_output <- gsub("\"", "", opt$dummy_output)
 print("Retrieving id")
 var = opt$id
 print(var)
@@ -87,6 +87,8 @@ param_s3_server <- gsub("\"", "", opt$param_s3_server)
 
 
 print("Running the cell")
+
+dummy_output
 
 devtools::install_github("LTER-LIFE/dtR/dtLife",depend=TRUE, force = TRUE, auth_token=secret_github_auth_token)
 devtools::install_github("LTER-LIFE/dtR/dtWad", depend=FALSE, force = TRUE, auth_token=secret_github_auth_token)
