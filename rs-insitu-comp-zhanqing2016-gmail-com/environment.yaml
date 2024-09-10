@@ -1,0 +1,15 @@
+name: venv
+channels:
+  - conda-forge
+dependencies:
+  - pip
+  - python>=3.8
+  - nbconvert
+  - r-ncdf4
+  - r-dtWad
+  - r-dtPP
+  - r-devtools
+  - r-dtLife
+  - r-plot3D
+  - papermill
+  - ipykernel
