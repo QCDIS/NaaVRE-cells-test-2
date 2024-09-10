@@ -38,8 +38,7 @@ make_option(c("--acolite_processing"), action="store", default=NA, type="charact
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_copernicus_api"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_public_bucket"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_s3_server"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--year"), action="store", default=NA, type="integer", help="my description")
+make_option(c("--param_s3_server"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -113,13 +112,6 @@ var_len = length(var)
 print(paste("Variable param_s3_server has length", var_len))
 
 param_s3_server <- gsub("\"", "", opt$param_s3_server)
-print("Retrieving year")
-var = opt$year
-print(var)
-var_len = length(var)
-print(paste("Variable year has length", var_len))
-
-year = opt$year
 
 
 print("Running the cell")
