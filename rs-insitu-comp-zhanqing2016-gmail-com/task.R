@@ -36,6 +36,7 @@ option_list = list(
 
 make_option(c("--acolite_processing"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_copernicus_api"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_public_bucket"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_server"), action="store", default=NA, type="character", help="my description")
@@ -84,6 +85,13 @@ print(opt$acolite_processing)
 acolite_processing = var_serialization(opt$acolite_processing)
 print("---------------------------------------------------------------------------------")
 
+print("Retrieving id")
+var = opt$id
+print(var)
+var_len = length(var)
+print(paste("Variable id has length", var_len))
+
+id <- gsub("\"", "", opt$id)
 print("Retrieving id")
 var = opt$id
 print(var)
