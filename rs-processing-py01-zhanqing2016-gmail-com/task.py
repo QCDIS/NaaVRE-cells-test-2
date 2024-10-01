@@ -1,3 +1,4 @@
+import acolite as ac
 from dtAcolite import dtAcolite
 import glob
 
@@ -56,6 +57,7 @@ for i in path_ids:
     print("---------------------------------------------------------------------------------------")
     settings['inputfile'] = inputfilepaths[i]
     settings['output']    = outputfilepaths[i]
+    ac.acolite.acolite_run(settings=settings)
 
     message = f"processing done and output is in {inputfilepaths[i]}"
     acolite_processing.append(message)
