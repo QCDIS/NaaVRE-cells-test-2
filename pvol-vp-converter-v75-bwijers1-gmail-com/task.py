@@ -158,6 +158,7 @@ def vol2bird(in_file, out_dir, radar_db, add_version=True, add_sector=False, ove
 
 vertical_profile_paths = []
 radar_db = load_radar_db(conf_local_radar_db)
+odim_pvol_paths = [pathlib.Path(path) for path in odim_pvol_paths]
 for odim_pvol_path in odim_pvol_paths:
     pvol_path, vp_path = vol2bird(odim_pvol_path, conf_local_vp, radar_db, overwrite = False)
     vertical_profile_paths.append(vp_path)
