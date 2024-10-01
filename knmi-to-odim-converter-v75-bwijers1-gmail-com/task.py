@@ -218,6 +218,7 @@ if str2bool(param_upload_results):
         else:
             print(f"{remote_odim_pvol_path} exists, skipping ")
     print("Finished uploading results")
+odim_pvol_paths = [path.as_posix() for path in odim_pvol_paths]
 
 file_odim_pvol_paths = open("/tmp/odim_pvol_paths_" + id + ".json", "w")
 file_odim_pvol_paths.write(json.dumps(odim_pvol_paths))
