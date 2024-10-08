@@ -134,7 +134,7 @@ download_files_from_minio <- function(bucket, folder, local_path) {
     local_file_path <- file.path(local_path, file_name)
     cat("Downloading", object$Key, "to", local_file_path, "\n")
     
-    save_object(object = object$Key, bucket = bucket, file = local_file_path, region="")
+    save_object(object = object$Key, bucket = bucket, file = local_file_path, region="nl-uvalight")
     
     cat("File", object$Key, "downloaded successfully.\n")
   }
