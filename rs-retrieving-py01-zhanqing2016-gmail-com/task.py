@@ -80,7 +80,7 @@ print(f"List of all images downloaded in {app_configuration['raw_inputdir']} inc
 print(os.listdir(app_configuration["raw_inputdir"]))
 
 
-minio_client = Minio(param_s3_server, access_key=secret_s3_access_key, secret_key=secret_s3_secret_key, region = "nl", secure=True)
+minio_client = Minio(param_s3_server, access_key=secret_s3_access_key, secret_key=secret_s3_secret_key, region = "nl-uvalight", secure=True)
 minio_client
 
 minio_base_path = "app_acolite_qing"
