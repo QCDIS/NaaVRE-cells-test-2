@@ -119,7 +119,7 @@ miniofile_path = paste0(minio_folder,file_name,sep="")
 local_folder = "/tmp/data/Input_data/RS_Download/"  # Replace with the local folder path
 local_file_path = paste0(local_folder, file_name)
 
-save_object(object = miniofile_path, bucket = bucket_name, file = local_file_path, region="")
+save_object(object = miniofile_path, bucket = bucket_name, file = local_file_path, region="nl-uvalight")
 
 nc = nc_open(local_file_path)
 chla = ncvar_get(nc, "chl_re_mishra")
@@ -283,7 +283,7 @@ dev.off()
 
 miniofile_path = paste0("/protoDT_WadPP/output/",file_name,sep="")
 put_object(
-    region="", 
+    region="nl-uvalight", 
     bucket="naa-vre-waddenzee-shared", 
     file=file_path, 
     object= miniofile_path)
