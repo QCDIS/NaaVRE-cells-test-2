@@ -5,11 +5,11 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - r-ncdf4
-  - r-dtWad
-  - r-dtPP
-  - r-devtools
-  - r-dtLife
   - r-plot3D
+  - r-dtPP
+  - r-dtWad
+  - r-dtLife
+  - r-ncdf4
+  - r-devtools
   - papermill
   - ipykernel
