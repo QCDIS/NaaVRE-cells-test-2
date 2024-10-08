@@ -127,7 +127,7 @@ Sys.setenv(
 
 download_files_from_minio <- function(bucket, folder, local_path) {
   
-  objects <- get_bucket(bucket = bucket, prefix = folder, region="")
+  objects <- get_bucket(bucket = bucket, prefix = folder, region="nl-uvalight")
   
   for (object in objects) {
     file_name <- basename(object$Key)
@@ -226,7 +226,7 @@ dev.off()
 
 miniofile_path = paste0("/protoDT_WadPP/output/",file_name,sep="")
 put_object(
-    region="", 
+    region="nl-uvalight", 
     bucket="naa-vre-waddenzee-shared", 
     file=file_path, 
     object= miniofile_path)
