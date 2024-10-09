@@ -6,9 +6,6 @@ dependencies:
   - python>=3.8
   - nbconvert
   - r-plot3D
-  - r-dtPP
-  - r-dtWad
-  - r-dtLife
   - r-ncdf4
   - r-devtools
   - papermill
