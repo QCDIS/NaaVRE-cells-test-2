@@ -181,11 +181,11 @@ if str2bool(param_upload_results):
         vp_path = pathlib.Path(vp_path)
         local_vp_storage = pathlib.Path(conf_local_vp)
         relative_path = vp_path.relative_to(local_vp_storage)
-        remote_vp_path = param_minio_user_vp_output_prefix.joinpath(relative_path)
+        remote_vp_path = pathlib.Path(param_minio_user_vp_output_prefix).joinpath(relative_path)
         exists = False
         try:
             _ = minioClient.stat_object(bucket = conf_minio_user_bucket_name,
-                                    prefix = remote_vp_path)
+                                    prefix = remote_vp_path.as_posix())
             exists = True
         except:
             pass
@@ -195,7 +195,7 @@ if str2bool(param_upload_results):
                         file_stat = os.stat(vp_path)
                         minioClient.put_object(
                             bucket_name=conf_minio_user_bucket_name,
-                            object_name=remote_vp_path,
+                            object_name=remote_vp_path.as_posix(),
                             data=file_data,
                             length=file_stat.st_size,
                         )
