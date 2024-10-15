@@ -102,15 +102,14 @@ retrieve_dataverse_data <- function(dataset,
 
   }
 
-  dataset_metadata_url_string = paste0("https://", server, "/api/", "datasets/:persistentId?persistentId=", dataset_doi)
-  dataset_id <- httr::GET(url = dataset_metadata_url_string,
-                          httr::add_headers("X-Dataverse-key" = key)) |>
+  dataset_id <- httr::GET(url = paste0("https://", server, "/api/",
+                                       "datasets/:persistentId?persistentId=", dataset_doi)) |>
     httr::content(as = "text", encoding = "UTF-8") |>
     jsonlite::fromJSON() |>
     purrr::pluck("data") |>
     purrr::pluck("id")
 
-    dataset_files <- httr::GET(url = paste0("https://", server, "/api/",
+  dataset_files <- httr::GET(url = paste0("https://", server, "/api/",
                                           "datasets/", dataset_id, "/",
                                           "versions/", version, "/",
                                           "files")) |>
