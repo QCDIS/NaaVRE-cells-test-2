@@ -5,8 +5,8 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - r-stringr
   - r-lubridate
   - r-dplyr
+  - r-stringr
   - papermill
   - ipykernel
