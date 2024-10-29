@@ -5,9 +5,9 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - r-devtools
   - r-akima
   - r-ncdf4
   - r-aws.s3
+  - r-devtools
   - papermill
   - ipykernel
