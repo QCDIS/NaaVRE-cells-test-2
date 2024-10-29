@@ -5,6 +5,9 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
+  - r-dtWad
+  - r-dtLife
+  - r-dtPP
   - r-plot3D
   - r-ncdf4
   - r-devtools
