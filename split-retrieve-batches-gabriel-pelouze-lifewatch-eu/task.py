@@ -26,6 +26,3 @@ print(f'Processed batches: {processed_batches}')
 processed_items = list(chain(*processed_batches))
 print(f'Processed items: {processed_items}')
 
-file_processed_items = open("/tmp/processed_items_" + id + ".json", "w")
-file_processed_items.write(json.dumps(processed_items))
-file_processed_items.close()
