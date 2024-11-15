@@ -33,9 +33,6 @@ def batch_items(items, max_batch_count) -> list:
 batches = batch_items(items, param_max_batch_count)
 print(f'Item batches: {batches}')
 
-file_items = open("/tmp/items_" + id + ".json", "w")
-file_items.write(json.dumps(items))
-file_items.close()
 file_batches = open("/tmp/batches_" + id + ".json", "w")
 file_batches.write(json.dumps(batches))
 file_batches.close()
