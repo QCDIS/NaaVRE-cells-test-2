@@ -10,15 +10,16 @@ import json
 import os
 arg_parser = argparse.ArgumentParser()
 
-secret_copernicus_api = os.getenv('secret_copernicus_api')
+secret_copernicus_api_password = os.getenv('secret_copernicus_api_password')
 secret_s3_access_key = os.getenv('secret_s3_access_key')
 secret_s3_secret_key = os.getenv('secret_s3_secret_key')
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--param_copernicus_api', action='store', type=str, required=True, dest='param_copernicus_api')
-arg_parser.add_argument('--param_s3_public_bucket', action='store', type=str, required=True, dest='param_s3_public_bucket')
+arg_parser.add_argument('--param_copernicus_api_username', action='store', type=str, required=True, dest='param_copernicus_api_username')
+arg_parser.add_argument('--param_s3_base_path', action='store', type=str, required=True, dest='param_s3_base_path')
+arg_parser.add_argument('--param_s3_bucket', action='store', type=str, required=True, dest='param_s3_bucket')
 arg_parser.add_argument('--param_s3_server', action='store', type=str, required=True, dest='param_s3_server')
 
 args = arg_parser.parse_args()
@@ -27,8 +28,9 @@ print(args)
 id = args.id
 
 
-param_copernicus_api = args.param_copernicus_api.replace('"','')
-param_s3_public_bucket = args.param_s3_public_bucket.replace('"','')
+param_copernicus_api_username = args.param_copernicus_api_username.replace('"','')
+param_s3_base_path = args.param_s3_base_path.replace('"','')
+param_s3_bucket = args.param_s3_bucket.replace('"','')
 param_s3_server = args.param_s3_server.replace('"','')
 
 
@@ -83,11 +85,10 @@ print(os.listdir(app_configuration["raw_inputdir"]))
 minio_client = Minio(param_s3_server, access_key=secret_s3_access_key, secret_key=secret_s3_secret_key, region = "nl-uvalight", secure=True)
 minio_client
 
-minio_base_path = "app_acolite_qing"
 dtSat.upload_satellite_to_minio(client = minio_client,
-                                bucket_name = param_s3_public_bucket,  
+                                bucket_name = param_s3_bucket,  
                                 local_path = app_configuration["raw_inputdir"],
-                                minio_path = f"/{minio_base_path}/raw/{app_configuration['collection']}/{app_configuration['year']}", 
+                                minio_path = f"/{param_s3_base_path}/raw/{app_configuration['collection']}/{app_configuration['year']}", 
                                 collection = app_configuration["raw_inputdir"], 
                                 year = app_configuration["raw_inputdir"])
 
