@@ -18,6 +18,7 @@ arg_parser.add_argument('--id', action='store', type=str, required=True, dest='i
 
 
 arg_parser.add_argument('--param_copernicus_api_username', action='store', type=str, required=True, dest='param_copernicus_api_username')
+arg_parser.add_argument('--param_max_batch_count', action='store', type=int, required=True, dest='param_max_batch_count')
 arg_parser.add_argument('--param_s3_base_path', action='store', type=str, required=True, dest='param_s3_base_path')
 arg_parser.add_argument('--param_s3_bucket', action='store', type=str, required=True, dest='param_s3_bucket')
 arg_parser.add_argument('--param_s3_server', action='store', type=str, required=True, dest='param_s3_server')
@@ -29,6 +30,7 @@ id = args.id
 
 
 param_copernicus_api_username = args.param_copernicus_api_username.replace('"','')
+param_max_batch_count = args.param_max_batch_count
 param_s3_base_path = args.param_s3_base_path.replace('"','')
 param_s3_bucket = args.param_s3_bucket.replace('"','')
 param_s3_server = args.param_s3_server.replace('"','')
