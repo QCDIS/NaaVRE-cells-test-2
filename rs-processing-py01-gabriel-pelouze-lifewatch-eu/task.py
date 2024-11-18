@@ -54,7 +54,7 @@ for path_id_batch in path_id_batches:
 
         message = f"processing done and output is in {inputfilepaths[i]}"
         acolite_processing_batch.append(message)
-    acolite_processing_batches.append(acolite_processing_batche)
+    acolite_processing_batches.append(acolite_processing_batch)
 
 
 print(acolite_processing_batches)
