@@ -55,8 +55,8 @@ catalogue_sub_filename = "/tmp/data/catalogue_sub.json"
 with open(catalogue_sub_filename, 'w') as f:
     json.dump(catalogue_sub, f)
     
-access_response = dtSat.get_copernicus_access_token(username = param_copernicus_api, 
-                                                    password = secret_copernicus_api)
+access_response = dtSat.get_copernicus_access_token(username = param_copernicus_api_username, 
+                                                    password = secret_copernicus_api_password)
 
 access_response_filename = "/tmp/data/access_response.json"
 with open(access_response_filename, 'w') as f:
