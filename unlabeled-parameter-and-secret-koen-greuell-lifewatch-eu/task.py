@@ -17,12 +17,9 @@ id = args.id
 
 
 
-text: str = 'input text'
-secret_text: str = 'do not containerize'
+text: str = 'input text \n'
+secret_text: str = 'do not containerize \n'
 
 file_text = open("/tmp/text_" + id + ".json", "w")
 file_text.write(json.dumps(text))
 file_text.close()
-file_secret_text = open("/tmp/secret_text_" + id + ".json", "w")
-file_secret_text.write(json.dumps(secret_text))
-file_secret_text.close()
