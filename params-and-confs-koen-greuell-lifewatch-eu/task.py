@@ -18,7 +18,7 @@ id = args.id
 
 
 param_n_prints: int = 3
-conf_fixed_text: str = 'this is a configured text' 
+conf_fixed_text: str = 'this is a configured text \n' 
 
 file_param_n_prints = open("/tmp/param_n_prints_" + id + ".json", "w")
 file_param_n_prints.write(json.dumps(param_n_prints))
