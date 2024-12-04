@@ -10,9 +10,9 @@ arg_parser.add_argument('--id', action='store', type=str, required=True, dest='i
 
 arg_parser.add_argument('--conf_fixed_text', action='store', type=str, required=True, dest='conf_fixed_text')
 
-arg_parser.add_argument('--param_n_prints', action='store', type=int, required=True, dest='param_n_prints')
+arg_parser.add_argument('--created_text', action='store', type=str, required=True, dest='created_text')
 
-arg_parser.add_argument('--secret_text', action='store', type=str, required=True, dest='secret_text')
+arg_parser.add_argument('--param_n_prints', action='store', type=int, required=True, dest='param_n_prints')
 
 
 args = arg_parser.parse_args()
@@ -21,8 +21,8 @@ print(args)
 id = args.id
 
 conf_fixed_text = args.conf_fixed_text.replace('"','')
+created_text = args.created_text.replace('"','')
 param_n_prints = args.param_n_prints
-secret_text = args.secret_text.replace('"','')
 
 
 
@@ -39,7 +39,7 @@ def write_to_file(filename, content):
 
 concatenated_string: str = ''
 for i in list(range(param_n_prints)):
-    concatenated_string += secret_text
+    concatenated_string += created_text
 concatenated_string += conf_fixed_text
 
 write_to_file('output.txt', concatenated_string)
