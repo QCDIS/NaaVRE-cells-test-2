@@ -17,7 +17,7 @@ id = args.id
 
 
 
-param_secrets_file_path: str = "../secrets.yaml"
+param_secrets_file_path: str # = "../secrets.yaml"
 param_KMNI_key_name: str = "KNMI_OPEN_DATA_API_KEY"
 param_incorrect_file_path: str = "../nonexistent_file.yaml"
 param_polluted_file_path: str = "../polluted_secrets_file.yaml"
