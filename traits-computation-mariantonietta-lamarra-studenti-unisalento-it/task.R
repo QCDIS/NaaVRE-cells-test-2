@@ -24,7 +24,12 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--id"), action="store", default=NA, type="character", help="my description")
+make_option(c("--param_CalcType"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_CompTraits"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_CountingStrategy"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_hostname"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_login"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_password"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -66,13 +71,48 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving id")
-var = opt$id
+print("Retrieving param_CalcType")
+var = opt$param_CalcType
 print(var)
 var_len = length(var)
-print(paste("Variable id has length", var_len))
+print(paste("Variable param_CalcType has length", var_len))
 
-id <- gsub("\"", "", opt$id)
+param_CalcType <- gsub("\"", "", opt$param_CalcType)
+print("Retrieving param_CompTraits")
+var = opt$param_CompTraits
+print(var)
+var_len = length(var)
+print(paste("Variable param_CompTraits has length", var_len))
+
+param_CompTraits <- gsub("\"", "", opt$param_CompTraits)
+print("Retrieving param_CountingStrategy")
+var = opt$param_CountingStrategy
+print(var)
+var_len = length(var)
+print(paste("Variable param_CountingStrategy has length", var_len))
+
+param_CountingStrategy <- gsub("\"", "", opt$param_CountingStrategy)
+print("Retrieving param_hostname")
+var = opt$param_hostname
+print(var)
+var_len = length(var)
+print(paste("Variable param_hostname has length", var_len))
+
+param_hostname <- gsub("\"", "", opt$param_hostname)
+print("Retrieving param_login")
+var = opt$param_login
+print(var)
+var_len = length(var)
+print(paste("Variable param_login has length", var_len))
+
+param_login <- gsub("\"", "", opt$param_login)
+print("Retrieving param_password")
+var = opt$param_password
+print(var)
+var_len = length(var)
+print(paste("Variable param_password has length", var_len))
+
+param_password <- gsub("\"", "", opt$param_password)
 
 
 print("Running the cell")
@@ -82,12 +122,6 @@ print("Running the cell")
 
 
 
-param_hostname = 'https://lifewatch.lab.uvalight.net/webdav/vl-phytoplankton/mariantonietta/'
-param_login = 'mariantonietta'
-param_password = 'ZTVkNzIzYmI3YjJkNjdlMTY5'
-param_CalcType = 'advanced'
-param_CompTraits = 'biovolume,totalbiovolume,density,surfacearea,surfacevolumeratio,cellcarboncontent,totalcarboncontent'
-param_CountingStrategy = 'density0'
 
 conf_datain1 = "Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv"
 conf_datain2 = '2_FILEinformativo_OPERATORE.csv'
