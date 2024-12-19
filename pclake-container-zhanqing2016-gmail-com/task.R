@@ -58,7 +58,7 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-install.packages("usethis")
+install.packages("usethis", repos='http://cran.us.r-project.org')
 library(usethis)
 Sys.setenv(
     "GITHUB_PAT" = secret_github_auth_token
