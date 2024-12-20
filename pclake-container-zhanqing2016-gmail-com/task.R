@@ -2,10 +2,6 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
-if (!requireNamespace("libgit2", quietly = TRUE)) {
-	install.packages("libgit2", repos="http://cran.us.r-project.org")
-}
-library(libgit2)
 if (!requireNamespace("usethis", quietly = TRUE)) {
 	install.packages("usethis", repos="http://cran.us.r-project.org")
 }
