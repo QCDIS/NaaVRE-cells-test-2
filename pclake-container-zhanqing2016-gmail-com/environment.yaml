@@ -6,6 +6,5 @@ dependencies:
   - python>=3.8
   - nbconvert
   - r-usethis
-  - r-libgit2
   - papermill
   - ipykernel
