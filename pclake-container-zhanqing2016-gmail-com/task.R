@@ -54,6 +54,7 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
+library(usethis)
 
 Sys.setenv(
     "GITHUB_PAT" = secret_github_auth_token
