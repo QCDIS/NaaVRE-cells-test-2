@@ -2,10 +2,6 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
-if (!requireNamespace("usethis", quietly = TRUE)) {
-	install.packages("usethis", repos="http://cran.us.r-project.org")
-}
-library(usethis)
 
 secret_github_auth_token = Sys.getenv('secret_github_auth_token')
 
@@ -58,8 +54,6 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-install.packages("usethis", repos='https://mirrors.evoluso.com/CRAN/')
-library(usethis)
 
 Sys.setenv(
     "GITHUB_PAT" = secret_github_auth_token
