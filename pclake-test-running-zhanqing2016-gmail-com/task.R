@@ -147,4 +147,5 @@ write.table(x=dfOUTPUT_FINAL, file=paste(dir_SCEN,"results/","singlerun_",work_c
 	
 WriteLogFile(LogFile,ln=paste("end of PCShell at: ",Sys.time(),sep=""))
 
+result_filename
                                        
