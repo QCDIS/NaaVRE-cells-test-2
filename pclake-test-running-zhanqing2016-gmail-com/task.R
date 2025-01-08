@@ -143,6 +143,7 @@ for (nSET in 1:ncol(dfPARAMS_INIT)) {      # loop over sets
 	WriteLogFile(LogFile,ln=paste("Initials recorded for Set_",nSET-1,sep=""))
 }
 
+write.table(x=dfOUTPUT_FINAL, file=paste(dir_SCEN,"results/","singlerun_",work_case,".csv",sep=""),sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 	
 	
 
                                        
