@@ -151,4 +151,4 @@ Output_filename = paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel13
 Output_filename
                                        
 results_test_run = read.csv(Output_filename)
-                                       
+results_test_run$aSecchi
