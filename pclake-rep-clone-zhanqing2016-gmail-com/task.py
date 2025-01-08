@@ -21,6 +21,9 @@ id = args.id
 
 dest_dir  = "/tmp/data/pclake_Naavre" 
 
+if not os.path.exists(dest_dir):
+    os.makedirs(dest_dir)
+    
 clone = "git clone https://github.com/NIOZ-QingZ/PCModel.git"
 
 
