@@ -62,6 +62,7 @@ id <- gsub("\"", "", opt$id)
 print("Running the cell")
 
 
+
 dir_SCHIL           =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/")	# location of PCShell
 
 dir_DATM			=	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/")					# location of DATM implementation (excel)
@@ -104,53 +105,15 @@ colnames(dfSTATES_INIT_T0)=colnames(dfSTATES)
 dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iReport','sMinValue','sMaxValue')),drop=F])
 
 
-for (nSET in 1:ncol(dfPARAMS_INIT)) {      # loop over sets
 	
-	new_pars     =	dfPARAMS_INIT[,nSET]
-	names(new_pars) <- rownames(dfPARAMS_INIT) 
 	
-	new_states	=	dfSTATES_INIT_T0[,nSET+2]
-	names(new_states) <- rownames(dfSTATES_INIT_T0) 
 	
    
-    int        <- "vode"
-    error      <- class(tryCatch(output <- as.data.frame(RunModel(new_states,times,new_pars,forcings,aux_number,aux_names,"vode",state_names,internal_time_step)),error = function(e) e))[1] == "simpleError"
-    output	   <- as.data.frame(subset(output, , subset=(time %in% c((fREP_START_YEAR*365):max(times)))))
-    if(any(is.na(output)) | error) {  # run the model again when integrator "vode" returns negative or NA outputs, rerun with integrator "daspk"
-      int        <- "daspk"
-      error      <- class(tryCatch(output <- as.data.frame(RunModel(new_states,times,new_pars,forcings,aux_number,aux_names,"daspk",state_names,internal_time_step)),error = function(e) e))[1] == "simpleError"
-      output	   <- as.data.frame(subset(output, subset=(time %in% c((fREP_START_YEAR*365):max(times)))))
-      if(any(is.na(output)) | error) { # run the model again when integrator "daspk" returns negative or NA outputs, rerun with integrator "euler"
-        int        <- "euler"
-        error      <- class(tryCatch(output <- as.data.frame(RunModel(new_states,times,new_pars,forcings,aux_number,aux_names,"euler",state_names,0.003)),error = function(e) e))[1] == "simpleError"
-        output	   <- as.data.frame(subset(output, subset=(time %in% c((fREP_START_YEAR*365):max(times)))))
-        if(any(is.na(output)) | error) { # run the model again when integrator "euler" returns negative or NA outputs, rerun with integrator "euler" with timesept 0.002
-		  error      <- class(tryCatch(output <- as.data.frame(RunModel(new_states,times,new_pars,forcings,aux_number,aux_names,"euler",state_names,0.002)),error = function(e) e))[1] == "simpleError"
-          output	   <- as.data.frame(subset(output, subset=(time %in% c((fREP_START_YEAR*365):max(times)))))
-        }
-      }
-    }
 	
 	
 	
-	if(colnames(dfPARAMS_INIT)[nSET]=="sDefault0"){
-		dfOUTPUT_FINAL	=	cbind.data.frame(nParamSet=nSET, nStateSet=nSET, output)
 					
-	}else{
-		dfOUTPUT_FINAL	=	rbind.data.frame(dfOUTPUT_FINAL, cbind.data.frame(nParamSet=nSET, nStateSet=nSET, output))
-	}
-	WriteLogFile(LogFile,ln=paste("Initials recorded for Set_",nSET-1,sep=""))
-}
 
-write.table(x=dfOUTPUT_FINAL, file=paste(dir_SCEN,"results/","singlerun_",work_case,".csv",sep=""),sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 	
 	
-WriteLogFile(LogFile,ln=paste("end of PCShell at: ",Sys.time(),sep=""))
 
-result_filename <- paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/R_base_work_case/results/singlerun_R_base_work_case.csv")
                                        
-print(result_filename)
-# capturing outputs
-print('Serialization of result_filename')
-file <- file(paste0('/tmp/result_filename_', id, '.json'))
-writeLines(toJSON(result_filename, auto_unbox=TRUE), file)
-close(file)
