@@ -147,7 +147,6 @@ write.table(x=dfOUTPUT_FINAL, file=paste(dir_SCEN,"results/","singlerun_",work_c
 WriteLogFile(LogFile,ln=paste("end of PCShell at: ",Sys.time(),sep=""))
 
 result_filename <- paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/R_base_work_case/results/singlerun_R_base_work_case.csv")
-results_test_run <- read.csv(result_filename)
                                        
 print(result_filename)
 # capturing outputs
