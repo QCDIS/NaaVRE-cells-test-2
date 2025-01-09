@@ -18,8 +18,8 @@ id = args.id
 
 
 
-P_load = list[1,2,3]
+P_loads = [1,2,3]
 
-file_P_load = open("/tmp/P_load_" + id + ".json", "w")
-file_P_load.write(json.dumps(P_load))
-file_P_load.close()
+file_P_loads = open("/tmp/P_loads_" + id + ".json", "w")
+file_P_loads.write(json.dumps(P_loads))
+file_P_loads.close()
