@@ -65,13 +65,15 @@ print("-------------------------------------------------------------------------
 
 print("Running the cell")
 
-P_loads
+
+new_Ploads = list()
 for (P_load in P_loads){
     new_Pload = P_load*2000+1
+    new_Ploads = append(new_Ploads, new_Pload)
 }
     
 # capturing outputs
-print('Serialization of new_Pload')
-file <- file(paste0('/tmp/new_Pload_', id, '.json'))
-writeLines(toJSON(new_Pload, auto_unbox=TRUE), file)
+print('Serialization of new_Ploads')
+file <- file(paste0('/tmp/new_Ploads_', id, '.json'))
+writeLines(toJSON(new_Ploads, auto_unbox=TRUE), file)
 close(file)
