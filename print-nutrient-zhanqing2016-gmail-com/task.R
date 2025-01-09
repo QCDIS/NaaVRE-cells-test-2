@@ -8,7 +8,7 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--P_load"), action="store", default=NA, type="character", help="my description")
+make_option(c("--P_loads"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -50,20 +50,24 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving P_load")
-var = opt$P_load
+print("Retrieving P_loads")
+var = opt$P_loads
 print(var)
 var_len = length(var)
-print(paste("Variable P_load has length", var_len))
+print(paste("Variable P_loads has length", var_len))
 
-print("------------------------Running var_serialization for P_load-----------------------")
-print(opt$P_load)
-P_load = var_serialization(opt$P_load)
+print("------------------------Running var_serialization for P_loads-----------------------")
+print(opt$P_loads)
+P_loads = var_serialization(opt$P_loads)
 print("---------------------------------------------------------------------------------")
 
 
 
 print("Running the cell")
 
-new_Pload = P_load*200
-new_Pload
+P_loads
+for (P_load in P_loads){
+    new_Pload = P_load*200
+    print(new_Pload)
+}
+    
