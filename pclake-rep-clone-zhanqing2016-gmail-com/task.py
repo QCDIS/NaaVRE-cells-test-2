@@ -33,9 +33,6 @@ os.system(clone) # Cloning
 dest_dir  = "/tmp/data/PCLake_NaaVRE"
 Bifur_PLoads = [0.0001, 0.002, 0.005] # P loading in gP/m2/day
 
-file_dest_dir = open("/tmp/dest_dir_" + id + ".json", "w")
-file_dest_dir.write(json.dumps(dest_dir))
-file_dest_dir.close()
 file_Bifur_PLoads = open("/tmp/Bifur_PLoads_" + id + ".json", "w")
 file_Bifur_PLoads.write(json.dumps(Bifur_PLoads))
 file_Bifur_PLoads.close()
