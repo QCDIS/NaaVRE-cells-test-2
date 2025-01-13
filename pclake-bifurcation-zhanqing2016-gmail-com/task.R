@@ -147,11 +147,14 @@ for (PLoad in Bifur_PLoads){
       dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
       
     }else{
-      dfOUTPUT_FINAL	=	rbind.data.frame(dfOUTPUT_FINAL, cbind.data.frame(nParamSet=nSET, nStateSet=nSET, output))
+      dfOUTPUT_FINAL	=	rbind.data.frame(dfOUTPUT_FINAL, cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output))
     }
     WriteLogFile(LogFile,ln=paste("Initials recorded for Set_",nSET-1,sep=""))
-    bifur_output = append(bifur_output, list(dfOUTPUT_FINAL))
+    write.table(x=dfOUTPUT_FINAL, file=paste(dir_SCEN,"results/","singlerun_",work_case,".csv",sep=""),sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 	
+	bifur_output = append(bifur_output, 
+                         paste(dir_SCEN,"results/","singlerun_",work_case,"_",PLoad,".csv",sep=""))
 }
+
 
 
 
