@@ -8,7 +8,6 @@ print('option_list')
 option_list = list(
 
 make_option(c("--Bifur_PLoads"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--dest_dir"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description")
 )
 
@@ -55,13 +54,6 @@ print(opt$Bifur_PLoads)
 Bifur_PLoads = var_serialization(opt$Bifur_PLoads)
 print("---------------------------------------------------------------------------------")
 
-print("Retrieving dest_dir")
-var = opt$dest_dir
-print(var)
-var_len = length(var)
-print(paste("Variable dest_dir has length", var_len))
-
-dest_dir <- gsub("\"", "", opt$dest_dir)
 print("Retrieving id")
 var = opt$id
 print(var)
@@ -75,6 +67,7 @@ print("Running the cell")
 
 
 
+dest_dir  = "/tmp/data/PCLake_NaaVRE" 
 dir_SCHIL           =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/")	# location of PCShell
 
 dir_DATM			=	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/")					# location of DATM implementation (excel)
@@ -117,7 +110,7 @@ colnames(dfSTATES_INIT_T0)=colnames(dfSTATES)
 dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iReport','sMinValue','sMaxValue')),drop=F])
 
 
-bifur_output <- NULL
+bifur_output = list()
 for (PLoad in Bifur_PLoads){
     nSET = 1
     
@@ -157,21 +150,16 @@ for (PLoad in Bifur_PLoads){
       dfOUTPUT_FINAL	=	rbind.data.frame(dfOUTPUT_FINAL, cbind.data.frame(nParamSet=nSET, nStateSet=nSET, output))
     }
     WriteLogFile(LogFile,ln=paste("Initials recorded for Set_",nSET-1,sep=""))
-    bifur_output = rbind(dfOUTPUT_FINAL, bifur_output)
+    bifur_output = append(bifur_output, dfOUTPUT_FINAL)
 }
 
 
-plot(bifur_output$time[which(bifur_output$PLoad==0.005)], bifur_output$oChla[which(bifur_output$PLoad==0.005)], ylim=c(0,180)
-     , col="red", t="l",
-     ylab="oChla [mg/m3]", xlab="time")
-lines(bifur_output$time[which(bifur_output$PLoad==0.002)], bifur_output$oChla[which(bifur_output$PLoad==0.002)], col="green")
-points(bifur_output$time[which(bifur_output$PLoad==1e-4)], bifur_output$oChla[which(bifur_output$PLoad==1e-4)], 
-       col="orange", pch=19, cex=0.2)
-legend("topleft",legend=c("Pload 0.005 gP/m2/day",
-                          "Pload 0.002 gP/m2/day",
-                          "Pload 0.0001 gP/m2/day"), text.col = c("red","green","orange"))
 
-bifur_output$oChla
 	
 
                                        
+# capturing outputs
+print('Serialization of bifur_output')
+file <- file(paste0('/tmp/bifur_output_', id, '.json'))
+writeLines(toJSON(bifur_output, auto_unbox=TRUE), file)
+close(file)
