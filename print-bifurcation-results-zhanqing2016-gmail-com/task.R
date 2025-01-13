@@ -65,5 +65,5 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-
-print(bifur_output)
+results_test_run = read.csv(bifur_output)
+results_test_run[,1]
