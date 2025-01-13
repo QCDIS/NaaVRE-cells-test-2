@@ -150,7 +150,7 @@ for (PLoad in Bifur_PLoads){
       dfOUTPUT_FINAL	=	rbind.data.frame(dfOUTPUT_FINAL, cbind.data.frame(nParamSet=nSET, nStateSet=nSET, output))
     }
     WriteLogFile(LogFile,ln=paste("Initials recorded for Set_",nSET-1,sep=""))
-    bifur_output = append(bifur_output, dfOUTPUT_FINAL)
+    bifur_output = append(bifur_output, list(dfOUTPUT_FINAL))
 }
 
 
