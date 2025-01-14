@@ -18,7 +18,6 @@ id = args.id
 
 
 
-
 clone_dir  = "/tmp/data" 
 
 if not os.path.exists(clone_dir):
@@ -33,6 +32,6 @@ os.system(clone) # Cloning
 dest_dir  = "/tmp/data/PCLake_NaaVRE"
 Bifur_PLoads = [0.0001, 0.002] 
 
-file_Bifur_PLoads = open("/tmp/Bifur_PLoads_" + id + ".json", "w")
-file_Bifur_PLoads.write(json.dumps(Bifur_PLoads))
-file_Bifur_PLoads.close()
+file_dest_dir = open("/tmp/dest_dir_" + id + ".json", "w")
+file_dest_dir.write(json.dumps(dest_dir))
+file_dest_dir.close()
