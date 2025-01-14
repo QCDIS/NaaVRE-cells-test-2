@@ -67,6 +67,7 @@ print("Running the cell")
 
             
 
+bifur_output = list()
     PLoad = 0.0001
     nSET = 1
     
@@ -145,6 +146,8 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
                                        
     WriteLogFile(LogFile,ln=paste("Initials recorded for Set_",nSET-1,sep=""))
     write.table(x=dfOUTPUT_FINAL, file=paste(dir_SCEN,"results/","singlerun_",work_case,".csv",sep=""),sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 	
+    bifur_output = append(bifur_output, 
+                         list(dfOUTPUT_FINAL))
 
 dfOUTPUT_FINAL
 
