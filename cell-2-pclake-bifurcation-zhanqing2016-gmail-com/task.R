@@ -98,7 +98,6 @@ source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))  
 
 
 
-WriteLogFile(LogFile,ln="- initialize model")
 dfSTATES_INIT_T0	= 	as.data.frame(dfSTATES[,which(colnames(dfSTATES) %in% c('iReportState','sInitialStateName'))])
 dfSTATES_INIT		=	as.data.frame(dfSTATES[,-which(colnames(dfSTATES) %in% c('iReportState','sInitialStateName'))])
 for (nSET in 1:ncol(dfSTATES_INIT)){
@@ -144,8 +143,6 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
                                        
-    WriteLogFile(LogFile,ln=paste("Initials recorded for Set_",nSET-1,sep=""))
-    write.table(x=dfOUTPUT_FINAL, file=paste(dir_SCEN,"results/","singlerun_",work_case,".csv",sep=""),sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 	
     bifur_output = append(bifur_output, 
                          list(dfOUTPUT_FINAL))
  }
