@@ -155,8 +155,3 @@ dfOUTPUT_FINAL
 	
 
                                        
-# capturing outputs
-print('Serialization of bifur_output')
-file <- file(paste0('/tmp/bifur_output_', id, '.json'))
-writeLines(toJSON(bifur_output, auto_unbox=TRUE), file)
-close(file)
