@@ -135,7 +135,7 @@ source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))  
     WriteLogFile(LogFile,ln=paste("Initials recorded for Set_",nSET-1,sep=""))
     write.table(x=dfOUTPUT_FINAL, file=paste(dir_SCEN,"results/","singlerun_",work_case,".csv",sep=""),sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 	
 	bifur_output = append(bifur_output, 
-                         paste(dir_SCEN,"results/","singlerun_",work_case,"_",PLoad,".csv",sep=""))
+                         list(dfOUTPUT_FINAL))
 }
 
 
