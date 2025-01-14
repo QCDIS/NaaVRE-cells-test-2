@@ -68,6 +68,7 @@ print("Running the cell")
             
 
 bifur_output = list()
+Bifur_PLoads <- list(0.0001) # P loading in gP/m2/day
 for (PLoad in Bifur_PLoads){
     nSET = 1
     
@@ -142,12 +143,8 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     
     
     
-    if(colnames(dfPARAMS_INIT)[nSET]=="sDefault0"){
-      dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
-      
-    }else{
-      dfOUTPUT_FINAL	=	rbind.data.frame(dfOUTPUT_FINAL, cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output))
-    }
+    dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
+                                       
     WriteLogFile(LogFile,ln=paste("Initials recorded for Set_",nSET-1,sep=""))
     write.table(x=dfOUTPUT_FINAL, file=paste(dir_SCEN,"results/","singlerun_",work_case,".csv",sep=""),sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 	
 	bifur_output = append(bifur_output, 
