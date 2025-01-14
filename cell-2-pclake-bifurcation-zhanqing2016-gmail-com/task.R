@@ -95,7 +95,23 @@ file.copy(cpp_files, file.path(dir_SCHIL, work_case,"source_cpp"),overwrite=T)
 
 source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))    	 # Initialisation (read user defined input + convert cpp files of model + compile model)
 
-     
+
+
+
+WriteLogFile(LogFile,ln="- initialize model")
+dfSTATES_INIT_T0	= 	as.data.frame(dfSTATES[,which(colnames(dfSTATES) %in% c('iReportState','sInitialStateName'))])
+dfSTATES_INIT		=	as.data.frame(dfSTATES[,-which(colnames(dfSTATES) %in% c('iReportState','sInitialStateName'))])
+for (nSET in 1:ncol(dfSTATES_INIT)){
+	
+	vSTATES_LIST		=	dfSTATES_INIT[,nSET]
+	names(vSTATES_LIST)	=	dfSTATES$sInitialStateName
+	InitializeModel(n_states, vSTATES_LIST)
+	dfSTATES_INIT_T0=cbind.data.frame(dfSTATES_INIT_T0,states)
+}
+colnames(dfSTATES_INIT_T0)=colnames(dfSTATES)
+
+dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iReport','sMinValue','sMaxValue')),drop=F])
+
                                   
     new_pars     =	dfPARAMS_INIT[,nSET]
     names(new_pars) <- rownames(dfPARAMS_INIT) 
