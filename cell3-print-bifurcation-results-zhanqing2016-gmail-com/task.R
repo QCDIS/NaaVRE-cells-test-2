@@ -65,4 +65,6 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-bifur_output
+data = read.csv(bifur_output)
+data[,1]
+mean(data[,2])
