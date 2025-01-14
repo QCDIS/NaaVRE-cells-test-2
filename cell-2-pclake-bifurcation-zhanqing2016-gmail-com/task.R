@@ -65,11 +65,12 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
+
             
 
 bifur_output = list()
  for (PLoad in Bifur_PLoads){
-
+PLoad
     
 
 
@@ -97,7 +98,7 @@ source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))  
 
 
 
-
+WriteLogFile(LogFile,ln="- initialize model")
 dfSTATES_INIT_T0	= 	as.data.frame(dfSTATES[,which(colnames(dfSTATES) %in% c('iReportState','sInitialStateName'))])
 dfSTATES_INIT		=	as.data.frame(dfSTATES[,-which(colnames(dfSTATES) %in% c('iReportState','sInitialStateName'))])
 for (nSET in 1:ncol(dfSTATES_INIT)){
@@ -140,7 +141,6 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     }
     
     
-    
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
                                        
     bifur_output = append(bifur_output, 
@@ -148,8 +148,8 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
  }
 
 bifur_output
-
-
-	
-
-                                       
+# capturing outputs
+print('Serialization of bifur_output')
+file <- file(paste0('/tmp/bifur_output_', id, '.json'))
+writeLines(toJSON(bifur_output, auto_unbox=TRUE), file)
+close(file)
