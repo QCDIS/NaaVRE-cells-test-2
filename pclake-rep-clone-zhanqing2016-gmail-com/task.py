@@ -31,7 +31,7 @@ os.chdir(clone_dir) # Specifying the path where the cloned project needs to be c
 os.system(clone) # Cloning
 
 dest_dir  = "/tmp/data/PCLake_NaaVRE"
-Bifur_PLoads = [0.0001, 0.002, 0.005] # P loading in gP/m2/day
+Bifur_PLoads = [0.0001, 0.002] 
 
 file_Bifur_PLoads = open("/tmp/Bifur_PLoads_" + id + ".json", "w")
 file_Bifur_PLoads.write(json.dumps(Bifur_PLoads))
