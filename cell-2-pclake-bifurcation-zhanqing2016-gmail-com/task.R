@@ -79,7 +79,7 @@ dir_SCHIL           =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCMod
 dir_DATM			=	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/")					# location of DATM implementation (excel)
 
 file_DATM			=	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PL613162.xls")																			# file name of the DATM implementation
-work_case           =	"R_base_work_case"                      												# name of work case
+work_case           =	paste0("R_work_case","PLoad",PLoad)                      												# name of work case
 modelname 			=	"_org"																					# name of the model (suffix to specific model files)
 
 nCORES	=	4
@@ -143,6 +143,7 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
                                        
+    write.table(x=dfOUTPUT_FINAL, file=paste(dir_SCEN,"results/","singlerun_",work_case,".csv",sep=""),sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 	
     bifur_output = append(bifur_output, 
                          list(dfOUTPUT_FINAL))
  }
