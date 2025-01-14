@@ -67,9 +67,8 @@ print("Running the cell")
 
             
 
-bifur_output = list()
- for (PLoad in Bifur_PLoads){
-
+for (PLoad in Bifur_PLoads){
+PLoad
     
 
 
@@ -79,7 +78,7 @@ dir_SCHIL           =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCMod
 dir_DATM			=	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/")					# location of DATM implementation (excel)
 
 file_DATM			=	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PL613162.xls")																			# file name of the DATM implementation
-work_case           =	paste0("R_work_case","PLoad",PLoad)                      												# name of work case
+work_case           =	"R_work_case"                      												# name of work case
 modelname 			=	"_org"																					# name of the model (suffix to specific model files)
 
 nCORES	=	4
@@ -97,60 +96,16 @@ source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))  
 
 
 
-
-dfSTATES_INIT_T0	= 	as.data.frame(dfSTATES[,which(colnames(dfSTATES) %in% c('iReportState','sInitialStateName'))])
-dfSTATES_INIT		=	as.data.frame(dfSTATES[,-which(colnames(dfSTATES) %in% c('iReportState','sInitialStateName'))])
-for (nSET in 1:ncol(dfSTATES_INIT)){
+                                  
+                                  
 	
-	vSTATES_LIST		=	dfSTATES_INIT[,nSET]
-	names(vSTATES_LIST)	=	dfSTATES$sInitialStateName
-	InitializeModel(n_states, vSTATES_LIST)
-	dfSTATES_INIT_T0=cbind.data.frame(dfSTATES_INIT_T0,states)
-}
-colnames(dfSTATES_INIT_T0)=colnames(dfSTATES)
 
-dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iReport','sMinValue','sMaxValue')),drop=F])
 
-    nSET = 1                             
-    new_pars     =	dfPARAMS_INIT[,nSET]
-    names(new_pars) <- rownames(dfPARAMS_INIT) 
-    
-    new_pars["ReadPLoad"] = 1
-    new_pars["mPLoad"] = PLoad
-    
-    new_states	=	dfSTATES_INIT_T0[,nSET+2]
-    names(new_states) <- rownames(dfSTATES_INIT_T0) 
-    
-    int        <- "vode"
-    error      <- class(tryCatch(output <- as.data.frame(RunModel(new_states,times,new_pars,forcings,aux_number,aux_names,"vode",state_names,internal_time_step)),error = function(e) e))[1] == "simpleError"
-    output	   <- as.data.frame(subset(output, , subset=(time %in% c((fREP_START_YEAR*365):max(times)))))
-    if(any(is.na(output)) | error) {  # run the model again when integrator "vode" returns negative or NA outputs, rerun with integrator "daspk"
-      int        <- "daspk"
-      error      <- class(tryCatch(output <- as.data.frame(RunModel(new_states,times,new_pars,forcings,aux_number,aux_names,"daspk",state_names,internal_time_step)),error = function(e) e))[1] == "simpleError"
-      output	   <- as.data.frame(subset(output, subset=(time %in% c((fREP_START_YEAR*365):max(times)))))
-      if(any(is.na(output)) | error) { # run the model again when integrator "daspk" returns negative or NA outputs, rerun with integrator "euler"
-        int        <- "euler"
-        error      <- class(tryCatch(output <- as.data.frame(RunModel(new_states,times,new_pars,forcings,aux_number,aux_names,"euler",state_names,0.003)),error = function(e) e))[1] == "simpleError"
-        output	   <- as.data.frame(subset(output, subset=(time %in% c((fREP_START_YEAR*365):max(times)))))
-        if(any(is.na(output)) | error) { # run the model again when integrator "euler" returns negative or NA outputs, rerun with integrator "euler" with timesept 0.002
-          error      <- class(tryCatch(output <- as.data.frame(RunModel(new_states,times,new_pars,forcings,aux_number,aux_names,"euler",state_names,0.002)),error = function(e) e))[1] == "simpleError"
-          output	   <- as.data.frame(subset(output, subset=(time %in% c((fREP_START_YEAR*365):max(times)))))
-        }
-      }
-    }
     
     
     
-    dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
+    
+    
                                        
-    write.table(x=dfOUTPUT_FINAL, file=paste(dir_SCEN,"results/","singlerun_",work_case,".csv",sep=""),sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 	
-    bifur_output = append(bifur_output, 
-                         list(dfOUTPUT_FINAL))
  }
 
-bifur_output
-
-
-	
-
-                                       
