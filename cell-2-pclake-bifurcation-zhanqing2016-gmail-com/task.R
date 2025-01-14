@@ -67,19 +67,20 @@ print("Running the cell")
 
             
 
-for (PLoad in Bifur_PLoads){
+bifur_output = list()
+ for (PLoad in Bifur_PLoads){
 PLoad
     
 
 
 dest_dir  = "/tmp/data/PCLake_NaaVRE" 
-dir_SCHIL           =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/")	# location of PCShell
+dir_SCHIL =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/")	# location of PCShell
 
-dir_DATM			=	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/")					# location of DATM implementation (excel)
+dir_DATM = paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/")					# location of DATM implementation (excel)
 
-file_DATM			=	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PL613162.xls")																			# file name of the DATM implementation
-work_case           =	"R_work_case"                      												# name of work case
-modelname 			=	"_org"																					# name of the model (suffix to specific model files)
+file_DATM	=	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PL613162.xls") # file name of the DATM implementation
+work_case   =	"R_base_work_case"                      												# name of work case
+modelname 	=	"_org"																					# name of the model (suffix to specific model files)
 
 nCORES	=	4
 
@@ -96,8 +97,6 @@ source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))  
 
 
 
-                                  
-                                  
 	
 
 
@@ -106,6 +105,8 @@ source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))  
     
     
     
+    
                                        
  }
 
+bifur_output
