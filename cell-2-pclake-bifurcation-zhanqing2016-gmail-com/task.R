@@ -70,7 +70,6 @@ print("Running the cell")
 bifur_output = list()
  for (PLoad in Bifur_PLoads){
 
-    nSET = 1
     
 
 
@@ -113,7 +112,7 @@ colnames(dfSTATES_INIT_T0)=colnames(dfSTATES)
 
 dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iReport','sMinValue','sMaxValue')),drop=F])
 
-                                  
+    nSET = 1                             
     new_pars     =	dfPARAMS_INIT[,nSET]
     names(new_pars) <- rownames(dfPARAMS_INIT) 
     
