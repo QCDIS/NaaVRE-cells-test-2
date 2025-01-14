@@ -65,6 +65,7 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
+
             
 
 bifur_output = list()
@@ -152,3 +153,8 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
  }
 
 bifur_output
+# capturing outputs
+print('Serialization of bifur_output')
+file <- file(paste0('/tmp/bifur_output_', id, '.json'))
+writeLines(toJSON(bifur_output, auto_unbox=TRUE), file)
+close(file)
