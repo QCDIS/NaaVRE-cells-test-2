@@ -143,11 +143,12 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
                                        
-    bifur_output = append(bifur_output, 
-                         list(dfOUTPUT_FINAL))
+    output_filename=paste("/tmp/data/bifurcation_output/P_",PLoad,".csv",sep="")
+	write.csv(x=dfOUTPUT_FINAL, file=output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
+    bifur_output = append(bifur_output, output_filename)
  }
 
-bifur_output
+
 # capturing outputs
 print('Serialization of bifur_output')
 file <- file(paste0('/tmp/bifur_output_', id, '.json'))
