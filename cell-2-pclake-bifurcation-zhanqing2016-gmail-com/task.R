@@ -65,12 +65,11 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-
             
 
 bifur_output = list()
- for (PLoad in Bifur_PLoads){
-PLoad
+for (n in 1:length(Bifur_PLoads)){
+ PLoad = Bifur_PLoads[[n]]
     
 
 
@@ -143,14 +142,13 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
                                        
-    output_filename=paste("/tmp/data/bifurcation_output/P_",PLoad,".csv",sep="")
-	write.csv(x=dfOUTPUT_FINAL, file=output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
+    output_folder= paste0("/tmp/data/bifurcation_output/Pvalue_",n)
+    if (!dir.exists(output_folder)) {
+      dir.create(output_folder, recursive = TRUE)
+    }
+    output_filename = paste0(output_folder,"/PLoad_",PLoad,".csv")                         
+	write.csv(x=dfOUTPUT_FINAL, file= output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
     bifur_output = append(bifur_output, output_filename)
  }
 
-
-# capturing outputs
-print('Serialization of bifur_output')
-file <- file(paste0('/tmp/bifur_output_', id, '.json'))
-writeLines(toJSON(bifur_output, auto_unbox=TRUE), file)
-close(file)
+bifur_output
