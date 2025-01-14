@@ -84,8 +84,3 @@ file.copy(cpp_files, file.path(dir_SCHIL, work_case,"source_cpp"),overwrite=T)
 source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))    	 # Initialisation (read user defined input + convert cpp files of model + compile model)
 
 Bifur_PLoads = list(0.0001,0.002)
-# capturing outputs
-print('Serialization of Bifur_PLoads')
-file <- file(paste0('/tmp/Bifur_PLoads_', id, '.json'))
-writeLines(toJSON(Bifur_PLoads, auto_unbox=TRUE), file)
-close(file)
