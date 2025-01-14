@@ -62,6 +62,8 @@ id <- gsub("\"", "", opt$id)
 print("Running the cell")
 
 
+Bifur_PLoads = list(0.0001,0.002)
+
 dir_SCHIL =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/")	# location of PCShell
 
 dir_DATM = paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/")					# location of DATM implementation (excel)
@@ -82,5 +84,8 @@ cpp_files <- list.files(file.path(dir_DATM,paste("Frameworks/Osiris/3.01/PCLake/
 file.copy(cpp_files, file.path(dir_SCHIL, work_case,"source_cpp"),overwrite=T)
 
 source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))    	 # Initialisation (read user defined input + convert cpp files of model + compile model)
-
-Bifur_PLoads = list(0.0001,0.002)
+# capturing outputs
+print('Serialization of Bifur_PLoads')
+file <- file(paste0('/tmp/Bifur_PLoads_', id, '.json'))
+writeLines(toJSON(Bifur_PLoads, auto_unbox=TRUE), file)
+close(file)
