@@ -73,10 +73,17 @@ for (n in 1:length(Bifur_PLoads)){
     
 
 
+dir_SCHIL =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/")	# location of PCShell
 
+dir_DATM = paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/")					# location of DATM implementation (excel)
 
+file_DATM	=	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PL613162.xls") # file name of the DATM implementation
+work_case   =	"R_base_work_case"                      												# name of work case
+modelname 	=	"_org"																					# name of the model (suffix to specific model files)
 
+nCORES	=	4
 
+tGENERATE_INIT	=	FALSE
 
 
 
@@ -133,6 +140,7 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     }
     output_filename = paste0(output_folder,"/PLoad_",PLoad,".csv")                         
 	write.csv(x=dfOUTPUT_FINAL, file= output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
+    dfOUTPUT_FINAL
     bifur_output = append(bifur_output, output_filename)
  }
 
