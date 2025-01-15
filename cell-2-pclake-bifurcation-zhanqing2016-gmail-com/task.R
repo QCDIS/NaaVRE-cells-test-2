@@ -65,14 +65,16 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
+
             
-Bifur_PLoads = fromJSON("/tmp/data/Bifur_PLoads.json", simplifyVector = TRUE)
+
 bifur_output = list()
-for (n in 1:length(Bifur_PLoads)){
- PLoad = Bifur_PLoads[[n]]
+ for (PLoad in Bifur_PLoads){
+
     
 
 
+dest_dir  = "/tmp/data/PCLake_NaaVRE" 
 dir_SCHIL =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/")	# location of PCShell
 
 dir_DATM = paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/")					# location of DATM implementation (excel)
@@ -85,11 +87,18 @@ nCORES	=	4
 
 tGENERATE_INIT	=	FALSE
 
+source(paste(dir_SCHIL,"scripts/R_system/functions.r",sep=""))  					 # Define functions
+cpp_files <- list.files(file.path(dir_DATM,paste("Frameworks/Osiris/3.01/PCLake/",sep="")), full.names = TRUE)[
+					which((lapply(strsplit(x=list.files(file.path(dir_DATM,paste("Frameworks/Osiris/3.01/PCLake/",sep="")), full.names = TRUE), split="[/]"), 
+							function(x) which(x %in% c("pl61316ra.cpp","pl61316rc.cpp","pl61316rd.cpp","pl61316ri.cpp","pl61316rp.cpp","pl61316rs.cpp",
+														"pl61316sa.cpp","pl61316sc.cpp","pl61316sd.cpp","pl61316si.cpp","pl61316sp.cpp","pl61316ss.cpp")))>0)==TRUE)]		
+file.copy(cpp_files, file.path(dir_SCHIL, work_case,"source_cpp"),overwrite=T)
+
+source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))    	 # Initialisation (read user defined input + convert cpp files of model + compile model)
 
 
 
 
-WriteLogFile(LogFile,ln="- initialize model")
 dfSTATES_INIT_T0	= 	as.data.frame(dfSTATES[,which(colnames(dfSTATES) %in% c('iReportState','sInitialStateName'))])
 dfSTATES_INIT		=	as.data.frame(dfSTATES[,-which(colnames(dfSTATES) %in% c('iReportState','sInitialStateName'))])
 for (nSET in 1:ncol(dfSTATES_INIT)){
@@ -132,17 +141,20 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     }
     
     
+    
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
-                                       
-    output_folder= paste0("/tmp/data/bifurcation_output/Pvalue_",n)
-    if (!dir.exists(output_folder)) {
-      dir.create(output_folder, recursive = TRUE)
-    }
-    output_filename = paste0(output_folder,"/PLoad_",PLoad,".csv")                         
-	write.csv(x=dfOUTPUT_FINAL, file= output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
-    dfOUTPUT_FINAL
-    bifur_output = append(bifur_output, output_filename)
+    head(dfOUTPUT_FINAL)               
+    bifur_output = append(bifur_output, 
+                         list(dfOUTPUT_FINAL))
  }
 
 
-bifur_output
+
+	
+
+                                       
+# capturing outputs
+print('Serialization of bifur_output')
+file <- file(paste0('/tmp/bifur_output_', id, '.json'))
+writeLines(toJSON(bifur_output, auto_unbox=TRUE), file)
+close(file)
