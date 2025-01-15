@@ -18,7 +18,6 @@ id = args.id
 
 
 
-
 clone_dir  = "/tmp/data" 
 
 if not os.path.exists(clone_dir):
@@ -30,8 +29,7 @@ clone = "git clone https://github.com/NIOZ-QingZ/PCLake_NaaVRE.git"
 os.chdir(clone_dir) # Specifying the path where the cloned project needs to be copied
 os.system(clone) # Cloning
 
-dest_dir  = "/tmp/data/PCLake_NaaVRE"
-Bifur_PLoads = [0.0001, 0.002, 0.005] # P loading in gP/m2/day
+Bifur_PLoads = [0.0001, 0.002] # P loading in gP/m2/day
 
 file_Bifur_PLoads = open("/tmp/Bifur_PLoads_" + id + ".json", "w")
 file_Bifur_PLoads.write(json.dumps(Bifur_PLoads))
