@@ -144,8 +144,15 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
     head(dfOUTPUT_FINAL)               
-    bifur_output = append(bifur_output, 
-                         list(dfOUTPUT_FINAL))
+        output_folder= paste0("/tmp/data/bifurcation_output/Pvalue_",n)
+    if (!dir.exists(output_folder)) {
+      dir.create(output_folder, recursive = TRUE)
+    }
+    output_filename = paste0(output_folder,"/PLoad_",PLoad,".csv")                         
+	write.csv(x=dfOUTPUT_FINAL, file= output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
+    dfOUTPUT_FINAL
+    bifur_output = append(bifur_output, output_filename)
+                                       
  }
 
 
