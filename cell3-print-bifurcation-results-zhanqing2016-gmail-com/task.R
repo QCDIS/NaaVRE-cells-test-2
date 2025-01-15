@@ -66,8 +66,8 @@ id <- gsub("\"", "", opt$id)
 print("Running the cell")
 
 for (df_output in bifur_output){
-    head(df_output)
-    print(mean(df_output[,"oChla"]))
-    print(unique(df_output[,"PLoad"]))
+    df <- read.csv(df_output)
+    print(mean(df[,"oChla"]))
+    print(unique(df[,"PLoad"]))
 }
 
