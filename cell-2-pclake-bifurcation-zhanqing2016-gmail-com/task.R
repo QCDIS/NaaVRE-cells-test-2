@@ -66,7 +66,7 @@ id <- gsub("\"", "", opt$id)
 print("Running the cell")
 
             
-
+Bifur_PLoads = fromJSON("/tmp/data/Bifur_PLoads.json", simplifyVector = TRUE)
 bifur_output = list()
 for (n in 1:length(Bifur_PLoads)){
  PLoad = Bifur_PLoads[[n]]
@@ -143,5 +143,6 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     dfOUTPUT_FINAL
     bifur_output = append(bifur_output, output_filename)
  }
+
 
 bifur_output
