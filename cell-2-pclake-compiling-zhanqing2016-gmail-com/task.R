@@ -144,7 +144,7 @@ for (n in 1:length(Bifur_PLoads)){
     bifur_output = append(bifur_output, output_filename)
  }
 
-cat("output of one PLoad scenario ", head(bifur_output), "\n")
+cat("output csv of scenario saved under path", bifur_output, "\n")
 # capturing outputs
 print('Serialization of Bifur_PLoads')
 file <- file(paste0('/tmp/Bifur_PLoads_', id, '.json'))
