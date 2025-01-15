@@ -66,8 +66,6 @@ id <- gsub("\"", "", opt$id)
 print("Running the cell")
 
 
-Bifur_PLoads = list(a=0.0001, b= 0.002)
-
 dest_dir  = "/tmp/data/PCLake_NaaVRE" 
 dir_SCHIL =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/")	# location of PCShell
 dir_DATM = paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/")					# location of DATM implementation (excel)
@@ -106,7 +104,7 @@ colnames(dfSTATES_INIT_T0)=colnames(dfSTATES)
 dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iReport','sMinValue','sMaxValue')),drop=F])
 
 for (n in 1:length(Bifur_PLoads)){
- PLoad = Bifur_PLoads[[n]]
+    PLoad = Bifur_PLoads[[n]]
     nSET = 1                             
     new_pars     =	dfPARAMS_INIT[,nSET]
     names(new_pars) <- rownames(dfPARAMS_INIT) 
@@ -144,11 +142,9 @@ for (n in 1:length(Bifur_PLoads)){
     }
     output_filename = paste0(output_folder,"/PLoad_",PLoad,".csv")                         
 	write.csv(x=dfOUTPUT_FINAL, file= output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
-    dfOUTPUT_FINAL
     bifur_output = append(bifur_output, output_filename)
  }
-
-cat("output csv of scenario saved under path", bifur_output, "\n")
+bifur_output
 # capturing outputs
 print('Serialization of bifur_output')
 file <- file(paste0('/tmp/bifur_output_', id, '.json'))
