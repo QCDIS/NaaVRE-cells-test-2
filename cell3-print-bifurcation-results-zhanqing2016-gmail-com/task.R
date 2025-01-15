@@ -2,6 +2,10 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
+if (!requireNamespace("utils", quietly = TRUE)) {
+	install.packages("utils", repos="http://cran.us.r-project.org")
+}
+library(utils)
 
 
 print('option_list')
@@ -65,9 +69,39 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
+
+
+
+
+comb_df <- NULL
 for (df_output in bifur_output){
     df <- read.csv(df_output)
+    comb_df <- rbind(comb_df, df)
     print(mean(df[,"oChla"]))
     print(unique(df[,"PLoad"]))
 }
+
+unique(comb_df$PLoad)
+head(comb_df)
+
+PLoad_vec <- unique(comb_df$PLoad)
+PLoad_vec
+
+
+fig_PCLake_PLoads = "/tmp/data/PCLake_PLoads.png"
+
+png(fig_PCLake_PLoads)
+par(mfrow=c(3,3))
+plot(comb_df$time[which(comb_df$PLoad==PLoad_vec[1])], comb_df$oChla[which(comb_df$PLoad==PLoad_vec[1])], 
+     ylim= range(comb_df$oChla)*1.15,
+     , col=1, t="l",
+     ylab="oChla [mg/m3]", xlab="time")
+
+for(ii in length(PLoad_vec[-1])){
+    points(comb_df$time[which(comb_df$PLoad==PLoad_vec[ii+1])], comb_df$oChla[which(comb_df$PLoad==PLoad_vec[ii+1])]
+           , col=ii+1, pch=19, cex=0.2)
+}
+
+legend("topleft",legend=paste0("PLoad=",PLoad_vec, " gP/m2/day"), text.col = 1:length(PLoad_vec))
+dev.off()
 
