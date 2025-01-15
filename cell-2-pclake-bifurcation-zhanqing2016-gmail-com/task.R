@@ -65,10 +65,16 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-bifur_output = list()
 
-dest_dir  = "/tmp/data/PCLake_NaaVRE" 
+            
+bifur_output = list()
+for (n in 1:length(Bifur_PLoads)){
+ PLoad = Bifur_PLoads[[n]]
+    
+
+
 dir_SCHIL =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/")	# location of PCShell
+
 dir_DATM = paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/")					# location of DATM implementation (excel)
 
 file_DATM	=	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PL613162.xls") # file name of the DATM implementation
@@ -79,14 +85,7 @@ nCORES	=	4
 
 tGENERATE_INIT	=	FALSE
 
-source(paste(dir_SCHIL,"scripts/R_system/functions.r",sep=""))  					 # Define functions
-cpp_files <- list.files(file.path(dir_DATM,paste("Frameworks/Osiris/3.01/PCLake/",sep="")), full.names = TRUE)[
-					which((lapply(strsplit(x=list.files(file.path(dir_DATM,paste("Frameworks/Osiris/3.01/PCLake/",sep="")), full.names = TRUE), split="[/]"), 
-							function(x) which(x %in% c("pl61316ra.cpp","pl61316rc.cpp","pl61316rd.cpp","pl61316ri.cpp","pl61316rp.cpp","pl61316rs.cpp",
-														"pl61316sa.cpp","pl61316sc.cpp","pl61316sd.cpp","pl61316si.cpp","pl61316sp.cpp","pl61316ss.cpp")))>0)==TRUE)]		
-file.copy(cpp_files, file.path(dir_SCHIL, work_case,"source_cpp"),overwrite=T)
 
-source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))    	 # Initialisation (read user defined input + convert cpp files of model + compile model)
 
 
 
@@ -104,8 +103,6 @@ colnames(dfSTATES_INIT_T0)=colnames(dfSTATES)
 
 dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iReport','sMinValue','sMaxValue')),drop=F])
 
-for (n in 1:length(Bifur_PLoads)){
-    PLoad = Bifur_PLoads[[n]]
     nSET = 1                             
     new_pars     =	dfPARAMS_INIT[,nSET]
     names(new_pars) <- rownames(dfPARAMS_INIT) 
@@ -136,15 +133,18 @@ for (n in 1:length(Bifur_PLoads)){
     
     
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
-    head(dfOUTPUT_FINAL)                                   
+                                       
     output_folder= paste0("/tmp/data/bifurcation_output/Pvalue_",n)
     if (!dir.exists(output_folder)) {
       dir.create(output_folder, recursive = TRUE)
     }
     output_filename = paste0(output_folder,"/PLoad_",PLoad,".csv")                         
 	write.csv(x=dfOUTPUT_FINAL, file= output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
+    dfOUTPUT_FINAL
     bifur_output = append(bifur_output, output_filename)
  }
+
+
 bifur_output
 # capturing outputs
 print('Serialization of bifur_output')
