@@ -66,7 +66,7 @@ id <- gsub("\"", "", opt$id)
 print("Running the cell")
 
 
-            
+dest_dir  = "/tmp/data/PCLake_NaaVRE"             
 bifur_output = list()
 for (n in 1:length(Bifur_PLoads)){
  PLoad = Bifur_PLoads[[n]]
