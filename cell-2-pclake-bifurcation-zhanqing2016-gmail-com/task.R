@@ -66,17 +66,10 @@ id <- gsub("\"", "", opt$id)
 print("Running the cell")
 
 
-            
-
-bifur_output = list()
- for (PLoad in Bifur_PLoads){
-
-    
-
+Bifur_PLoads = list(a=0.0001, b= 0.002)
 
 dest_dir  = "/tmp/data/PCLake_NaaVRE" 
 dir_SCHIL =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/")	# location of PCShell
-
 dir_DATM = paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/")					# location of DATM implementation (excel)
 
 file_DATM	=	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PL613162.xls") # file name of the DATM implementation
@@ -98,7 +91,7 @@ source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))  
 
 
 
-
+WriteLogFile(LogFile,ln="- initialize model")
 dfSTATES_INIT_T0	= 	as.data.frame(dfSTATES[,which(colnames(dfSTATES) %in% c('iReportState','sInitialStateName'))])
 dfSTATES_INIT		=	as.data.frame(dfSTATES[,-which(colnames(dfSTATES) %in% c('iReportState','sInitialStateName'))])
 for (nSET in 1:ncol(dfSTATES_INIT)){
@@ -112,6 +105,8 @@ colnames(dfSTATES_INIT_T0)=colnames(dfSTATES)
 
 dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iReport','sMinValue','sMaxValue')),drop=F])
 
+for (n in 1:length(Bifur_PLoads)){
+ PLoad = Bifur_PLoads[[n]]
     nSET = 1                             
     new_pars     =	dfPARAMS_INIT[,nSET]
     names(new_pars) <- rownames(dfPARAMS_INIT) 
@@ -141,10 +136,9 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     }
     
     
-    
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
-    head(dfOUTPUT_FINAL)               
-        output_folder= paste0("/tmp/data/bifurcation_output/Pvalue_",n)
+                                       
+    output_folder= paste0("/tmp/data/bifurcation_output/Pvalue_",n)
     if (!dir.exists(output_folder)) {
       dir.create(output_folder, recursive = TRUE)
     }
@@ -152,14 +146,9 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
 	write.csv(x=dfOUTPUT_FINAL, file= output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
     dfOUTPUT_FINAL
     bifur_output = append(bifur_output, output_filename)
-                                       
  }
 
-
-
-	
-
-                                       
+cat("output csv of scenario saved under path", bifur_output, "\n")
 # capturing outputs
 print('Serialization of bifur_output')
 file <- file(paste0('/tmp/bifur_output_', id, '.json'))
