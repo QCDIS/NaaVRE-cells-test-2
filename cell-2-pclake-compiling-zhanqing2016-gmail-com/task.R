@@ -80,7 +80,7 @@ nCORES	=	4
 tGENERATE_INIT	=	FALSE
 
 curdir <- getwd()
-
+cat("current working dir before sourcing PClake ", curdir, "\n")
 source(paste(dir_SCHIL,"scripts/R_system/functions.r",sep=""))  					 # Define functions
 cpp_files <- list.files(file.path(dir_DATM,paste("Frameworks/Osiris/3.01/PCLake/",sep="")), full.names = TRUE)[
 					which((lapply(strsplit(x=list.files(file.path(dir_DATM,paste("Frameworks/Osiris/3.01/PCLake/",sep="")), full.names = TRUE), split="[/]"), 
@@ -90,7 +90,13 @@ file.copy(cpp_files, file.path(dir_SCHIL, work_case,"source_cpp"),overwrite=T)
 
 source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))    	 # Initialisation (read user defined input + convert cpp files of model + compile model)
 
+cat("working dir after sourcing PClake ", getwd(), "\n") 
+
+cat("resetting working dir back to ", curdir, "after PClatke compilation", "\n")
 setwd(curdir)
+
+cat("current working dir ", curdir, "\n")
+
 Bifur_PLoads
 # capturing outputs
 print('Serialization of Bifur_PLoads')
