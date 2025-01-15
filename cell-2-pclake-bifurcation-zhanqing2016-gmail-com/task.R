@@ -65,6 +65,7 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
+bifur_output = list()
 
 dest_dir  = "/tmp/data/PCLake_NaaVRE" 
 dir_SCHIL =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/")	# location of PCShell
@@ -135,7 +136,7 @@ for (n in 1:length(Bifur_PLoads)){
     
     
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
-                                       
+    head(dfOUTPUT_FINAL)                                   
     output_folder= paste0("/tmp/data/bifurcation_output/Pvalue_",n)
     if (!dir.exists(output_folder)) {
       dir.create(output_folder, recursive = TRUE)
