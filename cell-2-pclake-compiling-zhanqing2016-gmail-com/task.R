@@ -83,6 +83,7 @@ curdir <- getwd()
 cat("current working dir before sourcing PClake ", curdir, "\n")
 source(paste(dir_SCHIL,"scripts/R_system/functions.r",sep=""))  					 # Define functions
 
+source(paste(dir_SCHIL,"scripts/R_system/201703_initialisationDATM.r",sep=""))    	 # Initialisation (read user defined input + convert cpp files of model + compile model)
 
 cat("working dir after sourcing PClake ", getwd(), "\n") 
 
