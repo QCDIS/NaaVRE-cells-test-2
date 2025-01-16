@@ -10,6 +10,10 @@ if (!requireNamespace("minioclient", quietly = TRUE)) {
 	install.packages("minioclient", repos="http://cran.us.r-project.org")
 }
 library(minioclient)
+if (!requireNamespace("processx", quietly = TRUE)) {
+	install.packages("processx", repos="http://cran.us.r-project.org")
+}
+library(processx)
 
 secret_s3_access_key = Sys.getenv('secret_s3_access_key')
 secret_s3_secret_key = Sys.getenv('secret_s3_secret_key')
@@ -83,6 +87,10 @@ devtools::install_github("cboettig/minioclient")
 
 library(minioclient)
 install_mc()
+
+library(processx)
+processx::run("apt-get", "update", error_on_status=FALSE)
+processx::run("apt-get", c("install", "-y", "ca-certificates"), error_on_status=FALSE)
 
 mc_alias_set(
     "scruffy",
