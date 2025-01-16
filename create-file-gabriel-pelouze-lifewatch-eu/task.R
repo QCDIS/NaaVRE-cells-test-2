@@ -60,6 +60,7 @@ id <- gsub("\"", "", opt$id)
 
 
 print("Running the cell")
+
 filename = '/tmp/data/file.txt'
 writeLines("hello, world!", filename)
 # capturing outputs
