@@ -78,6 +78,7 @@ param_s3_server <- gsub("\"", "", opt$param_s3_server)
 
 
 print("Running the cell")
+
 devtools::install_github("cboettig/minioclient")
 
 library(minioclient)
