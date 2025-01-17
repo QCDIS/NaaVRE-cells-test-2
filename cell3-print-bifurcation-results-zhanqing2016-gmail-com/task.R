@@ -85,7 +85,7 @@ for (df_output in bifur_output){
     combined_df <- rbind(combined_df, df)
 
 }
-print(combined_df)
+print(head(combined_df))
 
 combined_df_filename = "/tmp/data/PCLake_output.csv" 
 write.csv(combined_df, file= combined_df_filename, row.names=FALSE, col.names = TRUE, quote = FALSE)
