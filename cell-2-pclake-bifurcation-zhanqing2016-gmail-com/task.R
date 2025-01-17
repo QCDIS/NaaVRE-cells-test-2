@@ -153,8 +153,9 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
  }
 
 
-filename = "/home/jovyan/PCLake_Naavre/PCLake_output.csv"
-sink(filename)
+output_filename = "/tmp/data/PCLake_output.csv"
+
+sink(output_filename)
 cat("time,PLoad,oChla,aSecchi\n")
 sink()
 # capturing outputs
