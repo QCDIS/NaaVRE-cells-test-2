@@ -19,8 +19,8 @@ id = args.id
 
 
 
-Bifur_PLoads = [0.0001, 0.002,0.005] 
-pclake_dirs = ["/tmp/data/scenario_a","/tmp/data/scenario_b","/tmp/data/scenario_c"]
+Bifur_PLoads = [0.0001, 0.002] 
+pclake_dirs = ["/tmp/data/scenario_a","/tmp/data/scenario_b"]
 pclake_dirs
 for clone_dir in pclake_dirs:
     if not os.path.exists(clone_dir):
