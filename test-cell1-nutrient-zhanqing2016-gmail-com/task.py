@@ -19,8 +19,8 @@ id = args.id
 
 
 df1 = pd.DataFrame({'PLoad': [1, 1, 1], 'Chla': [4, 5, 6]})
-df2 = pd.DataFrame({'PLoad': [7, 8, 9], 'Chla': [10, 11, 12]})
-df3 = pd.DataFrame({'PLoad': [13, 14, 15], 'Chla': [16, 17, 18]})
+df2 = pd.DataFrame({'PLoad': [2, 2, 2], 'Chla': [10, 11, 12]})
+df3 = pd.DataFrame({'PLoad': [3, 3, 3], 'Chla': [16, 17, 18]})
 
 df_list = [df1, df2, df3]
 
