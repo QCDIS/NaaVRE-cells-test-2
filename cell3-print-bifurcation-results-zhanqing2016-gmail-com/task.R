@@ -80,12 +80,6 @@ print("Running the cell")
 
 
 combined_df <- data.frame()
-for (df in processed_df) {
-    combined_df <- rbind(combined_df, df)
-}
-
-
-
 for (df_output in bifur_output){
     df <- read.csv(df_output)
     combined_df <- rbind(combined_df, df)
