@@ -32,6 +32,3 @@ for clone_dir in pclake_dirs:
 file_Bifur_PLoads = open("/tmp/Bifur_PLoads_" + id + ".json", "w")
 file_Bifur_PLoads.write(json.dumps(Bifur_PLoads))
 file_Bifur_PLoads.close()
-file_pclake_dirs = open("/tmp/pclake_dirs_" + id + ".json", "w")
-file_pclake_dirs.write(json.dumps(pclake_dirs))
-file_pclake_dirs.close()
