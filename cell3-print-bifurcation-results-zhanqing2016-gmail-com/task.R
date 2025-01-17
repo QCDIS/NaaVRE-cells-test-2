@@ -15,16 +15,12 @@ if (!requireNamespace("processx", quietly = TRUE)) {
 }
 library(processx)
 
-secret_s3_access_key = Sys.getenv('secret_s3_access_key')
-secret_s3_secret_key = Sys.getenv('secret_s3_secret_key')
 
 print('option_list')
 option_list = list(
 
 make_option(c("--bifur_output"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_s3_server"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_s3_user_prefix"), action="store", default=NA, type="character", help="my description")
+make_option(c("--id"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -77,20 +73,6 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving param_s3_server")
-var = opt$param_s3_server
-print(var)
-var_len = length(var)
-print(paste("Variable param_s3_server has length", var_len))
-
-param_s3_server <- gsub("\"", "", opt$param_s3_server)
-print("Retrieving param_s3_user_prefix")
-var = opt$param_s3_user_prefix
-print(var)
-var_len = length(var)
-print(paste("Variable param_s3_user_prefix has length", var_len))
-
-param_s3_user_prefix <- gsub("\"", "", opt$param_s3_user_prefix)
 
 
 print("Running the cell")
@@ -120,26 +102,9 @@ for (df_output in bifur_output){
     }
 }
 
-devtools::install_github("cboettig/minioclient")
 
-library(minioclient)
-install_mc()
-
-library(processx)
-processx::run("apt-get", "update", error_on_status=FALSE)
-processx::run("apt-get", c("install", "-y", "ca-certificates"), error_on_status=FALSE)
-
-mc_alias_set(
-    alias = "scruffy",
-    endpoint = param_s3_server,
-    access_key = secret_s3_access_key,
-    secret_key = secret_s3_secret_key,
-)
-mc_cp(output_filename, paste0("scruffy/naa-vre-user-data/", param_s3_user_prefix, "/PCLake_output.csv"))
-      
-      
-      
-      
-
-
-
+# capturing outputs
+print('Serialization of output_filename')
+file <- file(paste0('/tmp/output_filename_', id, '.json'))
+writeLines(toJSON(output_filename, auto_unbox=TRUE), file)
+close(file)
