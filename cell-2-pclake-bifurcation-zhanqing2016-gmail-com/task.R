@@ -2,6 +2,18 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
+if (!requireNamespace("devtools", quietly = TRUE)) {
+	install.packages("devtools", repos="http://cran.us.r-project.org")
+}
+library(devtools)
+if (!requireNamespace("minioclient", quietly = TRUE)) {
+	install.packages("minioclient", repos="http://cran.us.r-project.org")
+}
+library(minioclient)
+if (!requireNamespace("processx", quietly = TRUE)) {
+	install.packages("processx", repos="http://cran.us.r-project.org")
+}
+library(processx)
 
 
 print('option_list')
@@ -151,13 +163,6 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     dfOUTPUT_FINAL
     bifur_output = append(bifur_output, output_filename)
  }
-
-
-output_filename = "/tmp/data/PCLake_output.csv"
-
-sink(output_filename)
-cat("time,PLoad,oChla,aSecchi\n")
-sink()
 # capturing outputs
 print('Serialization of bifur_output')
 file <- file(paste0('/tmp/bifur_output_', id, '.json'))
