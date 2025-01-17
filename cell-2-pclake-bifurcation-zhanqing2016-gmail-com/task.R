@@ -67,6 +67,7 @@ print("Running the cell")
 
 
 dest_dir  = "/tmp/data/PCLake_NaaVRE"  
+
 bifur_output = list()
 for (n in 1:length(Bifur_PLoads)){
  PLoad = Bifur_PLoads[[n]]
@@ -152,7 +153,10 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
  }
 
 
-bifur_output
+filename = "/home/jovyan/PCLake_Naavre/PCLake_output.csv"
+sink(filename)
+cat("time,PLoad,oChla,aSecchi\n")
+sink()
 # capturing outputs
 print('Serialization of bifur_output')
 file <- file(paste0('/tmp/bifur_output_', id, '.json'))
