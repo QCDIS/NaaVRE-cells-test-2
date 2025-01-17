@@ -21,8 +21,8 @@ secret_s3_secret_key = Sys.getenv('secret_s3_secret_key')
 print('option_list')
 option_list = list(
 
+make_option(c("--combined_df_filename"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--output_filename"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_server"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_user_prefix"), action="store", default=NA, type="character", help="my description")
 )
@@ -59,6 +59,13 @@ var_serialization <- function(var){
     )
 }
 
+print("Retrieving combined_df_filename")
+var = opt$combined_df_filename
+print(var)
+var_len = length(var)
+print(paste("Variable combined_df_filename has length", var_len))
+
+combined_df_filename <- gsub("\"", "", opt$combined_df_filename)
 print("Retrieving id")
 var = opt$id
 print(var)
@@ -66,13 +73,6 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving output_filename")
-var = opt$output_filename
-print(var)
-var_len = length(var)
-print(paste("Variable output_filename has length", var_len))
-
-output_filename <- gsub("\"", "", opt$output_filename)
 print("Retrieving param_s3_server")
 var = opt$param_s3_server
 print(var)
@@ -106,7 +106,7 @@ mc_alias_set(
     access_key = secret_s3_access_key,
     secret_key = secret_s3_secret_key,
 )
-mc_cp(output_filename, paste0("scruffy/naa-vre-user-data/", param_s3_user_prefix, "/PCLake_output.csv"))
+mc_cp(combined_df_filename, paste0("scruffy/naa-vre-user-data/", param_s3_user_prefix, "/PCLake_output.csv"))
       
       
       
