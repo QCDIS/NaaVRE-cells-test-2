@@ -2,10 +2,18 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
-if (!requireNamespace("dev.tools", quietly = TRUE)) {
-	install.packages("dev.tools", repos="http://cran.us.r-project.org")
+if (!requireNamespace("devtools", quietly = TRUE)) {
+	install.packages("devtools", repos="http://cran.us.r-project.org")
 }
-library(dev.tools)
+library(devtools)
+if (!requireNamespace("minioclient", quietly = TRUE)) {
+	install.packages("minioclient", repos="http://cran.us.r-project.org")
+}
+library(minioclient)
+if (!requireNamespace("processx", quietly = TRUE)) {
+	install.packages("processx", repos="http://cran.us.r-project.org")
+}
+library(processx)
 
 secret_s3_access_key = Sys.getenv('secret_s3_access_key')
 secret_s3_secret_key = Sys.getenv('secret_s3_secret_key')
@@ -15,7 +23,8 @@ option_list = list(
 
 make_option(c("--bifur_output"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_s3_server"), action="store", default=NA, type="character", help="my description")
+make_option(c("--param_s3_server"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_user_prefix"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -75,46 +84,42 @@ var_len = length(var)
 print(paste("Variable param_s3_server has length", var_len))
 
 param_s3_server <- gsub("\"", "", opt$param_s3_server)
+print("Retrieving param_s3_user_prefix")
+var = opt$param_s3_user_prefix
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_user_prefix has length", var_len))
+
+param_s3_user_prefix <- gsub("\"", "", opt$param_s3_user_prefix)
 
 
 print("Running the cell")
 
 
 
-
-
-
-
-
-comb_df <- NULL
 for (df_output in bifur_output){
     df <- read.csv(df_output)
-    comb_df <- rbind(comb_df, df)
-    print(mean(df[,"oChla"]))
-    print(unique(df[,"PLoad"]))
+    
+    for (i in 1:nrow(df)){
+    data_time = df[i,"time"]
+    data_PLoad = df[i,"PLoad"]
+    data_oChla = df[i,"oChla"]
+    data_Secchi = df[i,"aSecchi"]
+    
+    sink(filename, append = T)
+    cat(data_time)
+    cat(",")
+    cat(data_PLoad)
+    cat(",")
+    cat(data_oChla)
+    cat(",")
+    cat(data_Secchi)
+    cat("\n")
+    sink()
+    }
 }
 
-unique(comb_df$PLoad)
-head(comb_df)
-
-PLoad_vec <- unique(comb_df$PLoad)
-PLoad_vec
-
-
-figname_PCLake_PLoads = "/tmp/data/PCLake_PLoads.png" 
-
-png(figname_PCLake_PLoads)
-plot(comb_df$time[which(comb_df$PLoad==PLoad_vec[1])], comb_df$oChla[which(comb_df$PLoad==PLoad_vec[1])], 
-     ylim= range(comb_df$oChla)*1.15,
-     , col=1, t="l",
-     ylab="oChla [mg/m3]", xlab="time")
-
-for(ii in length(PLoad_vec[-1])){
-    points(comb_df$time[which(comb_df$PLoad==PLoad_vec[ii+1])], comb_df$oChla[which(comb_df$PLoad==PLoad_vec[ii+1])]
-           , col=ii+1, pch=19, cex=0.2)
-}
-legend("topleft",legend=paste0("PLoad=",PLoad_vec, " gP/m2/day"), text.col = 1:length(PLoad_vec))
-dev.off()
+output_filename = "/home/jovyan/PCLake_Naavre/PCLake_output.csv"
 
 devtools::install_github("cboettig/minioclient")
 
@@ -126,10 +131,16 @@ processx::run("apt-get", "update", error_on_status=FALSE)
 processx::run("apt-get", c("install", "-y", "ca-certificates"), error_on_status=FALSE)
 
 mc_alias_set(
-    "scruffy",
-    param_s3_server,
-    access_key=secret_s3_access_key,
-    secret_key=secret_s3_secret_key,
+    alias = "scruffy",
+    endpoint = param_s3_server,
+    access_key = secret_s3_access_key,
+    secret_key = secret_s3_secret_key,
 )
+mc_cp(output_filename, paste0("scruffy/naa-vre-user-data/", param_s3_user_prefix, "/PCLake_output.csv"))
+      
+      
+      
+      
 
-mc_cp(figname_PCLake_PLoads, "scruffy/naa-vre-waddenzee-shared/PCLake_PLoads.png")
+
+
