@@ -20,8 +20,7 @@ print('option_list')
 option_list = list(
 
 make_option(c("--Bifur_PLoads"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--pclake_dirs"), action="store", default=NA, type="character", help="my description")
+make_option(c("--id"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -74,21 +73,11 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving pclake_dirs")
-var = opt$pclake_dirs
-print(var)
-var_len = length(var)
-print(paste("Variable pclake_dirs has length", var_len))
-
-print("------------------------Running var_serialization for pclake_dirs-----------------------")
-print(opt$pclake_dirs)
-pclake_dirs = var_serialization(opt$pclake_dirs)
-print("---------------------------------------------------------------------------------")
-
 
 
 print("Running the cell")
 
+pclake_dirs = list("/tmp/data/scenario_a","/tmp/data/scenario_b","/tmp/data/scenario_c")
 
 bifur_output = list()
 for (n in 1:length(Bifur_PLoads)){
