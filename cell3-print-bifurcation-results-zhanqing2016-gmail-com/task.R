@@ -96,6 +96,7 @@ param_s3_user_prefix <- gsub("\"", "", opt$param_s3_user_prefix)
 print("Running the cell")
 
 
+output_filename = "/tmp/data/PCLake_output.csv"
 
 for (df_output in bifur_output){
     df <- read.csv(df_output)
@@ -106,7 +107,7 @@ for (df_output in bifur_output){
     data_oChla = df[i,"oChla"]
     data_Secchi = df[i,"aSecchi"]
     
-    sink(filename, append = T)
+    sink(output_filename, append = T)
     cat(data_time)
     cat(",")
     cat(data_PLoad)
@@ -118,8 +119,6 @@ for (df_output in bifur_output){
     sink()
     }
 }
-
-output_filename = "/home/jovyan/PCLake_Naavre/PCLake_output.csv"
 
 devtools::install_github("cboettig/minioclient")
 
