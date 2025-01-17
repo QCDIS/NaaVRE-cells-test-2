@@ -91,6 +91,24 @@ param_s3_user_prefix <- gsub("\"", "", opt$param_s3_user_prefix)
 
 print("Running the cell")
 
+comb_df = read.csv(combined_df_filename)
+PLoad_vec = unique(comb_df$PLoad)
+
+figname_PCLake_PLoads = "/tmp/data/PCLake_PLoads.png" 
+
+png(figname_PCLake_PLoads)
+plot(comb_df$time[which(comb_df$PLoad==PLoad_vec[1])], comb_df$oChla[which(comb_df$PLoad==PLoad_vec[1])], 
+     ylim= range(comb_df$oChla)*1.15,
+     , col=1, t="l",
+     ylab="oChla [mg/m3]", xlab="time")
+
+for(ii in length(PLoad_vec[-1])){
+    points(comb_df$time[which(comb_df$PLoad==PLoad_vec[ii+1])], comb_df$oChla[which(comb_df$PLoad==PLoad_vec[ii+1])]
+           , col=ii+1, pch=19, cex=0.2)
+}
+legend("topleft",legend=paste0("PLoad=",PLoad_vec, " gP/m2/day"), text.col = 1:length(PLoad_vec))
+dev.off()
+
 devtools::install_github("cboettig/minioclient")
 
 library(minioclient)
@@ -106,10 +124,6 @@ mc_alias_set(
     access_key = secret_s3_access_key,
     secret_key = secret_s3_secret_key,
 )
-mc_cp(combined_df_filename, paste0("scruffy/naa-vre-user-data/", param_s3_user_prefix, "/PCLake_output.csv"))
-      
-      
-      
-      
-
-
+  
+mc_cp(combined_df_filename, paste0("scruffy/naa-vre-user-data/", param_s3_user_prefix, "/PCLake_output.csv"))     
+mc_cp(figname_PCLake_PLoads, paste0("scruffy/naa-vre-user-data/", param_s3_user_prefix, "/PCLake_PLoads.png"))
