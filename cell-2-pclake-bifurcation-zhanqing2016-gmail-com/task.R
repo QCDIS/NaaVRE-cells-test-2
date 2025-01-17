@@ -77,7 +77,7 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-pclake_dirs = list("/tmp/data/scenario_a","/tmp/data/scenario_b","/tmp/data/scenario_c")
+pclake_dirs = list("/tmp/data/scenario_a","/tmp/data/scenario_b")
 
 bifur_output = list()
 for (n in 1:length(Bifur_PLoads)){
