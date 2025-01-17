@@ -77,12 +77,12 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-
-dest_dir  = "/tmp/data/PCLake_NaaVRE"  
+pclake_dirs = list("/tmp/data/scenario_a","/tmp/data/scenario_b","/tmp/data/scenario_c")
 
 bifur_output = list()
 for (n in 1:length(Bifur_PLoads)){
  PLoad = Bifur_PLoads[[n]]
+ dest_dir = paste0(pclake_dirs[[n]],"/PCLake_NaaVRE")
     
 
 
@@ -154,7 +154,7 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
                                        
-    output_folder= paste0("/tmp/data/bifurcation_output/Pvalue_",n)
+    output_folder= paste0(dest_dir,"/bifurcation_output")
     if (!dir.exists(output_folder)) {
       dir.create(output_folder, recursive = TRUE)
     }
@@ -163,6 +163,8 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     dfOUTPUT_FINAL
     bifur_output = append(bifur_output, output_filename)
  }
+
+bifur_output
 # capturing outputs
 print('Serialization of bifur_output')
 file <- file(paste0('/tmp/bifur_output_', id, '.json'))
