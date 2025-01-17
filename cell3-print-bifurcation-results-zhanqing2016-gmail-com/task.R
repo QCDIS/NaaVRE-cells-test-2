@@ -78,33 +78,25 @@ id <- gsub("\"", "", opt$id)
 print("Running the cell")
 
 
-output_filename = "/tmp/data/PCLake_output.csv"
 
-for (df_output in bifur_output){
-    df <- read.csv(df_output)
-    
-    for (i in 1:nrow(df)){
-    data_time = df[i,"time"]
-    data_PLoad = df[i,"PLoad"]
-    data_oChla = df[i,"oChla"]
-    data_Secchi = df[i,"aSecchi"]
-    
-    sink(output_filename, append = T)
-    cat(data_time)
-    cat(",")
-    cat(data_PLoad)
-    cat(",")
-    cat(data_oChla)
-    cat(",")
-    cat(data_Secchi)
-    cat("\n")
-    sink()
-    }
+combined_df <- data.frame()
+for (df in processed_df) {
+    combined_df <- rbind(combined_df, df)
 }
 
 
+
+for (df_output in bifur_output){
+    df <- read.csv(df_output)
+    combined_df <- rbind(combined_df, df)
+
+}
+print(combined_df)
+
+combined_df_filename = "/tmp/data/PCLake_output.csv" 
+write.csv(combined_df, file= combined_df_filename, row.names=FALSE, col.names = TRUE, quote = FALSE)
 # capturing outputs
-print('Serialization of output_filename')
-file <- file(paste0('/tmp/output_filename_', id, '.json'))
-writeLines(toJSON(output_filename, auto_unbox=TRUE), file)
+print('Serialization of combined_df_filename')
+file <- file(paste0('/tmp/combined_df_filename_', id, '.json'))
+writeLines(toJSON(combined_df_filename, auto_unbox=TRUE), file)
 close(file)
