@@ -2,17 +2,20 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
-if (!requireNamespace("utils", quietly = TRUE)) {
-	install.packages("utils", repos="http://cran.us.r-project.org")
+if (!requireNamespace("dev.tools", quietly = TRUE)) {
+	install.packages("dev.tools", repos="http://cran.us.r-project.org")
 }
-library(utils)
+library(dev.tools)
 
+secret_s3_access_key = Sys.getenv('secret_s3_access_key')
+secret_s3_secret_key = Sys.getenv('secret_s3_secret_key')
 
 print('option_list')
 option_list = list(
 
 make_option(c("--bifur_output"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--id"), action="store", default=NA, type="character", help="my description")
+make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_server"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -65,9 +68,19 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
+print("Retrieving param_s3_server")
+var = opt$param_s3_server
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_server has length", var_len))
+
+param_s3_server <- gsub("\"", "", opt$param_s3_server)
 
 
 print("Running the cell")
+
+
+
 
 
 
@@ -88,7 +101,35 @@ PLoad_vec <- unique(comb_df$PLoad)
 PLoad_vec
 
 
+figname_PCLake_PLoads = "/tmp/data/PCLake_PLoads.png" 
 
+png(figname_PCLake_PLoads)
+plot(comb_df$time[which(comb_df$PLoad==PLoad_vec[1])], comb_df$oChla[which(comb_df$PLoad==PLoad_vec[1])], 
+     ylim= range(comb_df$oChla)*1.15,
+     , col=1, t="l",
+     ylab="oChla [mg/m3]", xlab="time")
 
+for(ii in length(PLoad_vec[-1])){
+    points(comb_df$time[which(comb_df$PLoad==PLoad_vec[ii+1])], comb_df$oChla[which(comb_df$PLoad==PLoad_vec[ii+1])]
+           , col=ii+1, pch=19, cex=0.2)
+}
+legend("topleft",legend=paste0("PLoad=",PLoad_vec, " gP/m2/day"), text.col = 1:length(PLoad_vec))
+dev.off()
 
+devtools::install_github("cboettig/minioclient")
 
+library(minioclient)
+install_mc()
+
+library(processx)
+processx::run("apt-get", "update", error_on_status=FALSE)
+processx::run("apt-get", c("install", "-y", "ca-certificates"), error_on_status=FALSE)
+
+mc_alias_set(
+    "scruffy",
+    param_s3_server,
+    access_key=secret_s3_access_key,
+    secret_key=secret_s3_secret_key,
+)
+
+mc_cp(figname_PCLake_PLoads, "scruffy/naa-vre-waddenzee-shared/PCLake_PLoads.png")
