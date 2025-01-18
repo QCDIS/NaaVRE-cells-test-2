@@ -81,7 +81,10 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-pclake_dirs = list("/tmp/data/scenario_1", "/tmp/data/scenario_2", "/tmp/data/scenario_3", "/tmp/data/scenario_4")
+pclake_dirs = list("/tmp/data/scenario_1", "/tmp/data/scenario_2", "/tmp/data/scenario_3",
+              "/tmp/data/scenario_4", "/tmp/data/scenario_5", "/tmp/data/scenario_6",
+              "/tmp/data/scenario_7", "/tmp/data/scenario_8", "/tmp/data/scenario_9",
+              "/tmp/data/scenario_10")
 
 
 PCLake_naavre_function = function(PLoad, dest_dir){
