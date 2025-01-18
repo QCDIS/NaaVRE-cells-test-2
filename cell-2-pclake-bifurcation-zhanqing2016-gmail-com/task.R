@@ -65,13 +65,7 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-
-dest_dir  = "/tmp/data/PCLake_NaaVRE"  
-
-bifur_output = list()
-for (n in 1:length(Bifur_PLoads)){
- PLoad = Bifur_PLoads[[n]]
-    
+PCLake_naavre_function = function(PLoad){
 
 
 dir_SCHIL =	paste0(dest_dir,"/PCModel/Licence_agreement/I_accept/PCModel1350/PCModel/3.00/Models/PCLake/6.13.16/PCShell/")	# location of PCShell
@@ -141,14 +135,29 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     
     
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
+    return(dfOUTPUT_FINAL)  
+}
                                        
+                                       
+                                       
+dest_dir  = "/tmp/data/PCLake_NaaVRE"  
+
+
+                                       
+                                       
+bifur_output = list()
+for (n in 1:length(Bifur_PLoads)){
+ PLoad = Bifur_PLoads[[n]]
+    
+    dfOUTPUT_FINAL = PCLake_naavre_function(PLoad)
+                                 
     output_folder= paste0("/tmp/data/bifurcation_output/Pvalue_",n)
     if (!dir.exists(output_folder)) {
       dir.create(output_folder, recursive = TRUE)
     }
     output_filename = paste0(output_folder,"/PLoad_",PLoad,".csv")                         
 	write.csv(x=dfOUTPUT_FINAL, file= output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
-    dfOUTPUT_FINAL
+    head(dfOUTPUT_FINAL)
     bifur_output = append(bifur_output, output_filename)
  }
 
