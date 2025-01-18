@@ -168,8 +168,7 @@ for (n in 1:length(Bifur_PLoads)){
     bifur_output = append(bifur_output, output_filename)
     
     variables <- ls(envir = .GlobalEnv)
-
-    rm(list = variables[-which(variables%in%c("dest_dir","Bifur_PLoads","bifur_output","n","dfOUTPUT_FINAL","PCLake_naavre_function"))])
+    print(variables)
 }
 
 
