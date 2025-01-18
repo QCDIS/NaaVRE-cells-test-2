@@ -2,6 +2,22 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
+if (!requireNamespace("devtools", quietly = TRUE)) {
+	install.packages("devtools", repos="http://cran.us.r-project.org")
+}
+library(devtools)
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+	install.packages("ggplot2", repos="http://cran.us.r-project.org")
+}
+library(ggplot2)
+if (!requireNamespace("minioclient", quietly = TRUE)) {
+	install.packages("minioclient", repos="http://cran.us.r-project.org")
+}
+library(minioclient)
+if (!requireNamespace("processx", quietly = TRUE)) {
+	install.packages("processx", repos="http://cran.us.r-project.org")
+}
+library(processx)
 
 
 print('option_list')
@@ -65,10 +81,7 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-                                  
-                                     
-                                    
-dest_dir  = "/tmp/data/PCLake_NaaVRE"   
+pclake_dirs = list("/tmp/data/scenario_a", "/tmp/data/scenario_b", "/tmp/data/scenario_c", "/tmp/data/scenario_d")
 
 PCLake_naavre_function = function(PLoad, dest_dir){
  local({
@@ -149,28 +162,23 @@ PCLake_naavre_function = function(PLoad, dest_dir){
    return(dfOUTPUT_FINAL) 
  })
 }
-                             
-
 bifur_output = list()
-Bifur_PLoads = list(0.0001,0.002) # P loading in gP/m2/day
 for (n in 1:length(Bifur_PLoads)){
- PLoad = Bifur_PLoads[[n]]
-    
+     PLoad = Bifur_PLoads[[n]]
+     dest_dir = paste0(pclake_dirs[[n]],"/PCLake_NaaVRE")
+      
     dfOUTPUT_FINAL = PCLake_naavre_function(PLoad=PLoad, dest_dir=dest_dir)
     
-    output_folder= paste0("/tmp/data/bifurcation_output/Pvalue_",n)
+    
+    output_folder= paste0(dest_dir,"/bifurcation_output")
     if (!dir.exists(output_folder)) {
       dir.create(output_folder, recursive = TRUE)
     }
     output_filename = paste0(output_folder,"/PLoad_",PLoad,".csv")                         
 	write.csv(x=dfOUTPUT_FINAL, file= output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
-    head(dfOUTPUT_FINAL)
+    dfOUTPUT_FINAL
     bifur_output = append(bifur_output, output_filename)
-    
-    variables <- ls(envir = .GlobalEnv)
-    print(variables)
-}
-
+ }
 
 bifur_output
 # capturing outputs
