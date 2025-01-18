@@ -2,18 +2,6 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
-if (!requireNamespace("devtools", quietly = TRUE)) {
-	install.packages("devtools", repos="http://cran.us.r-project.org")
-}
-library(devtools)
-if (!requireNamespace("minioclient", quietly = TRUE)) {
-	install.packages("minioclient", repos="http://cran.us.r-project.org")
-}
-library(minioclient)
-if (!requireNamespace("processx", quietly = TRUE)) {
-	install.packages("processx", repos="http://cran.us.r-project.org")
-}
-library(processx)
 
 
 print('option_list')
@@ -77,12 +65,12 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-pclake_dirs = list("/tmp/data/scenario_a","/tmp/data/scenario_b")
+
+dest_dir  = "/tmp/data/PCLake_NaaVRE"  
 
 bifur_output = list()
 for (n in 1:length(Bifur_PLoads)){
  PLoad = Bifur_PLoads[[n]]
- dest_dir = paste0(pclake_dirs[[n]],"/PCLake_NaaVRE")
     
 
 
@@ -154,7 +142,7 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     
     dfOUTPUT_FINAL	=	cbind.data.frame(PLoad = PLoad, nParamSet=nSET, nStateSet=nSET, output)
                                        
-    output_folder= paste0(dest_dir,"/bifurcation_output")
+    output_folder= paste0("/tmp/data/bifurcation_output/Pvalue_",n)
     if (!dir.exists(output_folder)) {
       dir.create(output_folder, recursive = TRUE)
     }
@@ -163,6 +151,7 @@ dfPARAMS_INIT	=	as.data.frame(dfPARAMS[,-which(colnames(dfPARAMS) %in% c('iRepor
     dfOUTPUT_FINAL
     bifur_output = append(bifur_output, output_filename)
  }
+
 
 bifur_output
 # capturing outputs
