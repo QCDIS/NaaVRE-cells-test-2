@@ -32,9 +32,7 @@ else:
     
     
 pclake_dirs = ["/tmp/data/scenario_1", "/tmp/data/scenario_2", "/tmp/data/scenario_3",
-              "/tmp/data/scenario_4", "/tmp/data/scenario_5", "/tmp/data/scenario_6",
-              "/tmp/data/scenario_7", "/tmp/data/scenario_8", "/tmp/data/scenario_9",
-              "/tmp/data/scenario_10"]
+              "/tmp/data/scenario_4"]
 
 for clone_dir in pclake_dirs:
     if not os.path.exists(clone_dir):
@@ -42,7 +40,7 @@ for clone_dir in pclake_dirs:
     shutil.copytree(temp_clone_dir, clone_dir, dirs_exist_ok=True)  # Copy the contents
     print("Repository copied to all specified directories where it didn't already exist.")
     
-Bifur_PLoads = [0.0001, 0.001, 0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009]     
+Bifur_PLoads = [0.0001, 0.001,0.003,0.005]     
 
 file_Bifur_PLoads = open("/tmp/Bifur_PLoads_" + id + ".json", "w")
 file_Bifur_PLoads.write(json.dumps(Bifur_PLoads))
