@@ -86,6 +86,7 @@ pclake_dirs = list("/tmp/data/scenario_1", "/tmp/data/scenario_2", "/tmp/data/sc
               "/tmp/data/scenario_7", "/tmp/data/scenario_8", "/tmp/data/scenario_9",
               "/tmp/data/scenario_10")
 
+Bifur_PLoads = list(0.0001, 0.001, 0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009) # P loading in gP/m2/day
 
 PCLake_naavre_function = function(PLoad, dest_dir){
  local({
@@ -180,7 +181,7 @@ for (n in 1:length(Bifur_PLoads)){
     }
     output_filename = paste0(output_folder,"/PLoad_",PLoad,".csv")                         
 	write.csv(x=dfOUTPUT_FINAL, file= output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
-    dfOUTPUT_FINAL
+    head(dfOUTPUT_FINAL)
     bifur_output = append(bifur_output, output_filename)
  }
 
