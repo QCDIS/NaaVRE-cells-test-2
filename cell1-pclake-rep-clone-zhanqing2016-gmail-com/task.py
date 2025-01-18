@@ -18,38 +18,16 @@ id = args.id
 
 
 
-clone_dir  = "/tmp/data" 
 
-if os.path.exists(clone_dir):
-    print(f"message:\n Positive. The dir ( {clone_dir} ) exist\n")
-    if os.listdir(clone_dir):
-        print(f"message:\n !WARNING! The dir ( {clone_dir} ) is not empty!\n Contents:\n")
-        for filename in os.listdir(clone_dir): 
-            print(filename)
-        file_path = os.path.join(clone_dir, filename)
-        try: 
-            if os.path.isfile(file_path): 
-                os.remove(file_path) # remove file
-                print(f"{file_path} has been removed successfully\n")
-            elif os.path.isdir(file_path): 
-                shutil.rmtree(file_path) # remove directory
-                print(f"{file_path} has been removed successfully\n")
-        except Exception as e:
-            print(f"Failed to remove {file_path}: {e}\n")
-    else:
-        print(f"message:\n The dir ( {clone_dir} ) is empty.\n")
-else:
-    print(f"message:\n Negative. The dir ( {clone_dir} ) does not exist, and is created\n")
-    os.makedirs(clone_dir)
-
-   
-clone = "git clone https://github.com/NIOZ-QingZ/PCLake_NaaVRE.git"
-
-
-os.chdir(clone_dir) # Specifying the path where the cloned project needs to be copied
-os.system(clone) # Cloning
-
-Bifur_PLoads = [0.0001, 0.001, 0.003, 0.005] # P loading in gP/m2/day
+Bifur_PLoads = [0.0001, 0.002] 
+pclake_dirs = ["/tmp/data/scenario_a","/tmp/data/scenario_b"]
+pclake_dirs
+for clone_dir in pclake_dirs:
+    if not os.path.exists(clone_dir):
+        os.makedirs(clone_dir) # Create the directory if it doesn't exist
+    clone = "git clone https://github.com/NIOZ-QingZ/PCLake_NaaVRE.git"
+    os.chdir(clone_dir) # Specifying the path where the cloned project needs to be copied
+    os.system(clone) # Cloning
 
 file_Bifur_PLoads = open("/tmp/Bifur_PLoads_" + id + ".json", "w")
 file_Bifur_PLoads.write(json.dumps(Bifur_PLoads))
