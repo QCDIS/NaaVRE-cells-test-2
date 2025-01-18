@@ -25,10 +25,10 @@ temp_clone_dir = "/tmp/data/temp_clone"
 
 if not os.path.exists(temp_clone_dir):
     os.makedirs(temp_clone_dir)
-else:
-    clone = "git clone https://github.com/NIOZ-QingZ/PCLake_NaaVRE.git " 
-    os.chdir(temp_clone_dir) # Specifying the path where the cloned project needs to be copied
-    os.system(clone) # Cloning
+
+clone = "git clone https://github.com/NIOZ-QingZ/PCLake_NaaVRE.git " 
+os.chdir(temp_clone_dir) # Specifying the path where the cloned project needs to be copied
+os.system(clone) # Cloning
     
     
 pclake_dirs = ["/tmp/data/scenario_1", "/tmp/data/scenario_2", "/tmp/data/scenario_3",
