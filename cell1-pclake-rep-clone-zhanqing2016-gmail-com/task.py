@@ -18,16 +18,18 @@ id = args.id
 
 
 
+clone_dir  = "/tmp/data" 
 
-Bifur_PLoads = [0.0001, 0.002] 
-pclake_dirs = ["/tmp/data/scenario_a","/tmp/data/scenario_b"]
-pclake_dirs
-for clone_dir in pclake_dirs:
-    if not os.path.exists(clone_dir):
-        os.makedirs(clone_dir) # Create the directory if it doesn't exist
-    clone = "git clone https://github.com/NIOZ-QingZ/PCLake_NaaVRE.git"
-    os.chdir(clone_dir) # Specifying the path where the cloned project needs to be copied
-    os.system(clone) # Cloning
+if not os.path.exists(clone_dir):
+    os.makedirs(clone_dir)
+    
+clone = "git clone https://github.com/NIOZ-QingZ/PCLake_NaaVRE.git"
+
+
+os.chdir(clone_dir) # Specifying the path where the cloned project needs to be copied
+os.system(clone) # Cloning
+
+Bifur_PLoads = [0.0001, 0.001, 0.003, 0.005] # P loading in gP/m2/day
 
 file_Bifur_PLoads = open("/tmp/Bifur_PLoads_" + id + ".json", "w")
 file_Bifur_PLoads.write(json.dumps(Bifur_PLoads))
