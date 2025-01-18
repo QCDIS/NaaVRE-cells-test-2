@@ -19,7 +19,7 @@ id = args.id
 
 
 
-Bifur_PLoads = [0.0001, 0.001, 0.003] 
+Bifur_PLoads = [0.0001, 0.001, 0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009] 
 pclake_dirs = ["/tmp/data/scenario_1", "/tmp/data/scenario_2", "/tmp/data/scenario_3",
               "/tmp/data/scenario_4", "/tmp/data/scenario_5", "/tmp/data/scenario_6",
               "/tmp/data/scenario_7", "/tmp/data/scenario_8", "/tmp/data/scenario_9",
