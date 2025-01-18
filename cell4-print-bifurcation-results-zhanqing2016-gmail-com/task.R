@@ -6,6 +6,10 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 	install.packages("devtools", repos="http://cran.us.r-project.org")
 }
 library(devtools)
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+	install.packages("ggplot2", repos="http://cran.us.r-project.org")
+}
+library(ggplot2)
 if (!requireNamespace("minioclient", quietly = TRUE)) {
 	install.packages("minioclient", repos="http://cran.us.r-project.org")
 }
@@ -94,19 +98,20 @@ print("Running the cell")
 comb_df = read.csv(combined_df_filename)
 PLoad_vec = unique(comb_df$PLoad)
 
-figname_PCLake_PLoads = "/tmp/data/PCLake_PLoads.png" 
+figname_PCLake_PLoads = "/home/jovyan/PCLake_Naavre/PCLake_PLoads.png" # save your plot in the current folder within virtual lab
 
-png(figname_PCLake_PLoads)
-plot(comb_df$time[which(comb_df$PLoad==PLoad_vec[1])], comb_df$oChla[which(comb_df$PLoad==PLoad_vec[1])], 
-     ylim= range(comb_df$oChla)*1.15,
-     , col=1, t="l",
-     ylab="oChla [mg/m3]", xlab="time")
+png(figname_PCLake_PLoads, width=900, height=600)
+library(ggplot2)
 
-for(ii in length(PLoad_vec[-1])){
-    points(comb_df$time[which(comb_df$PLoad==PLoad_vec[ii+1])], comb_df$oChla[which(comb_df$PLoad==PLoad_vec[ii+1])]
-           , col=ii+1, pch=19, cex=0.2)
-}
-legend("topleft",legend=paste0("PLoad=",PLoad_vec, " gP/m2/day"), text.col = 1:length(PLoad_vec))
+
+ggplot(comb_df, aes(x = time, y = oChla, color = factor(PLoad))) +
+  geom_line() +
+  geom_point(size = 0.2) +
+  scale_color_manual(values = 1:length(PLoad_vec), 
+                     labels = paste0("PLoad=", PLoad_vec, " gP/m2/day")) +
+  labs(y = "oChla [mg/m3]", x = "time", color = "PLoad")  +
+  theme_minimal() +
+  theme(legend.position = "right", aspect.ratio=1/2, plot.margin=unit(c(0.1, 0.1, 0.1, 0.1),"cm"))
 dev.off()
 
 devtools::install_github("cboettig/minioclient")
