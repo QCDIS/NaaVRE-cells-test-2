@@ -34,10 +34,10 @@ if os.path.exists(clone_dir):
             elif os.path.isdir(file_path): 
                 shutil.rmtree(file_path) # remove directory
                 print(f"{file_path} has been removed successfully\n")
-            else:
-                print(f"message:\n The dir ( {clone_dir} ) is empty.\n")
         except Exception as e:
             print(f"Failed to remove {file_path}: {e}\n")
+    else:
+        print(f"message:\n The dir ( {clone_dir} ) is empty.\n")
 else:
     print(f"message:\n Negative. The dir ( {clone_dir} ) does not exist, and is created\n")
     os.makedirs(clone_dir)
