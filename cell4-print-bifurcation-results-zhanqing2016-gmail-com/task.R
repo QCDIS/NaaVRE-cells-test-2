@@ -98,7 +98,7 @@ print("Running the cell")
 comb_df = read.csv(combined_df_filename)
 PLoad_vec = unique(comb_df$PLoad)
 
-figname_PCLake_PLoads = "/home/jovyan/PCLake_Naavre/PCLake_PLoads.png" # save your plot in the current folder within virtual lab
+figname_PCLake_PLoads = "/tmp/data/PCLake_PLoads.png" 
 
 png(figname_PCLake_PLoads, width=900, height=600)
 library(ggplot2)
