@@ -6,6 +6,10 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 	install.packages("devtools", repos="http://cran.us.r-project.org")
 }
 library(devtools)
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+	install.packages("ggplot2", repos="http://cran.us.r-project.org")
+}
+library(ggplot2)
 if (!requireNamespace("minioclient", quietly = TRUE)) {
 	install.packages("minioclient", repos="http://cran.us.r-project.org")
 }
