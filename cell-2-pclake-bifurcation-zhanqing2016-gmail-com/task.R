@@ -2,22 +2,6 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
-if (!requireNamespace("devtools", quietly = TRUE)) {
-	install.packages("devtools", repos="http://cran.us.r-project.org")
-}
-library(devtools)
-if (!requireNamespace("ggplot2", quietly = TRUE)) {
-	install.packages("ggplot2", repos="http://cran.us.r-project.org")
-}
-library(ggplot2)
-if (!requireNamespace("minioclient", quietly = TRUE)) {
-	install.packages("minioclient", repos="http://cran.us.r-project.org")
-}
-library(minioclient)
-if (!requireNamespace("processx", quietly = TRUE)) {
-	install.packages("processx", repos="http://cran.us.r-project.org")
-}
-library(processx)
 
 
 print('option_list')
@@ -81,11 +65,10 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-pclake_dirs = list("/tmp/data/scenario_1", "/tmp/data/scenario_2", "/tmp/data/scenario_3",
-              "/tmp/data/scenario_4", "/tmp/data/scenario_5", "/tmp/data/scenario_6",
-              "/tmp/data/scenario_7", "/tmp/data/scenario_8", "/tmp/data/scenario_9",
-              "/tmp/data/scenario_10")
-
+                                  
+                                     
+                                    
+dest_dir  = "/tmp/data/PCLake_NaaVRE"   
 
 PCLake_naavre_function = function(PLoad, dest_dir){
  local({
@@ -166,15 +149,16 @@ PCLake_naavre_function = function(PLoad, dest_dir){
    return(dfOUTPUT_FINAL) 
  })
 }
+                             
+
 bifur_output = list()
+Bifur_PLoads = list(0.0001,0.002) # P loading in gP/m2/day
 for (n in 1:length(Bifur_PLoads)){
-     PLoad = Bifur_PLoads[[n]]
-     dest_dir = paste0(pclake_dirs[[n]],"/PCLake_NaaVRE")
-      
+ PLoad = Bifur_PLoads[[n]]
+    
     dfOUTPUT_FINAL = PCLake_naavre_function(PLoad=PLoad, dest_dir=dest_dir)
     
-    
-    output_folder= paste0(dest_dir,"/bifurcation_output")
+    output_folder= paste0("/tmp/data/bifurcation_output/Pvalue_",n)
     if (!dir.exists(output_folder)) {
       dir.create(output_folder, recursive = TRUE)
     }
@@ -182,7 +166,11 @@ for (n in 1:length(Bifur_PLoads)){
 	write.csv(x=dfOUTPUT_FINAL, file= output_filename,sep=',',row.names=FALSE, col.names = TRUE, quote = FALSE) 
     head(dfOUTPUT_FINAL)
     bifur_output = append(bifur_output, output_filename)
- }
+    
+    variables <- ls(envir = .GlobalEnv)
+    print(variables)
+}
+
 
 bifur_output
 # capturing outputs
