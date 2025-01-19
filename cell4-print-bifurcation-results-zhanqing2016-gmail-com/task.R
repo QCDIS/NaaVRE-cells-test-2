@@ -104,6 +104,7 @@ png(figname_PCLake_PLoads, width=900, height=600)
 library(ggplot2)
 
 
+comb_df$PLoad = round(comb_df$PLoad, digits=4)
 ggplot(comb_df, aes(x = time, y = oChla, color = factor(PLoad))) +
   geom_line() +
   geom_point(size = 0.2) +
