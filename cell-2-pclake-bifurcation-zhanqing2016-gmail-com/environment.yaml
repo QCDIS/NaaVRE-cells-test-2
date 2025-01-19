@@ -5,8 +5,5 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - r-processx
-  - r-ggplot2
-  - r-devtools
   - papermill
   - ipykernel
