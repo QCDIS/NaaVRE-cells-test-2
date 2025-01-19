@@ -65,8 +65,7 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-                                  
-                                     
+                         
                                     
 dest_dir  = "/tmp/data/PCLake_NaaVRE"   
 
@@ -152,7 +151,6 @@ PCLake_naavre_function = function(PLoad, dest_dir){
                              
 
 bifur_output = list()
-Bifur_PLoads = list(0.0001,0.002) # P loading in gP/m2/day
 for (n in 1:length(Bifur_PLoads)){
  PLoad = Bifur_PLoads[[n]]
     
