@@ -65,9 +65,12 @@ id <- gsub("\"", "", opt$id)
 
 print("Running the cell")
 
-                         
-                                    
-dest_dir  = "/tmp/data/PCLake_NaaVRE"   
+source_dir <- "/tmp/data/PCLake_NaaVRE"
+dest_dir <- "/tmp/PCLake_DT"
+
+files <- list.files(source_dir, full.names = TRUE)
+
+file.copy(files, dest_dir, recursive = TRUE)
 
 PCLake_naavre_function = function(PLoad, dest_dir){
  local({
