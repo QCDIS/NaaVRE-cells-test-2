@@ -68,6 +68,13 @@ print("Running the cell")
 source_dir <- "/tmp/data/PCLake_NaaVRE"
 dest_dir <- "/tmp/PCLake_DT"
 
+if (!dir.exists(dest_dir)) {
+  dir.create(dest_dir)
+  cat("Directory created:", dest_dir, "\n")
+} else {
+  cat("Directory already exists:", dest_dir, "\n")
+}
+
 files <- list.files(source_dir, full.names = TRUE)
 
 file.copy(files, dest_dir, recursive = TRUE)
