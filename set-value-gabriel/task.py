@@ -17,8 +17,8 @@ id = args.id
 
 
 
-a = 1
+b = 1
 
-file_a = open("/tmp/a_" + id + ".json", "w")
-file_a.write(json.dumps(a))
-file_a.close()
+file_b = open("/tmp/b_" + id + ".json", "w")
+file_b.write(json.dumps(b))
+file_b.close()
