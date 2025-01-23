@@ -4,7 +4,7 @@ import json
 import os
 arg_parser = argparse.ArgumentParser()
 
-secret_a = os.getenv('secret_a')
+secret_b = os.getenv('secret_b')
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
@@ -18,5 +18,5 @@ id = args.id
 
 
 
-print(secret_a)
+print(secret_b)
 
