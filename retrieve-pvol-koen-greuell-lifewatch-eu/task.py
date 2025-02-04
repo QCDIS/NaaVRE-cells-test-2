@@ -16,8 +16,7 @@ arg_parser.add_argument('--id', action='store', type=str, required=True, dest='i
 arg_parser.add_argument('--param_country', action='store', type=str, required=True, dest='param_country')
 arg_parser.add_argument('--param_day', action='store', type=str, required=True, dest='param_day')
 arg_parser.add_argument('--param_dtype', action='store', type=str, required=True, dest='param_dtype')
-arg_parser.add_argument('--param_minio_user_pvol_output_prefix', action='store', type=str, required=True, dest='param_minio_user_pvol_output_prefix')
-arg_parser.add_argument('--param_minio_user_vp_output_prefix', action='store', type=str, required=True, dest='param_minio_user_vp_output_prefix')
+arg_parser.add_argument('--param_jupyterhub_user', action='store', type=str, required=True, dest='param_jupyterhub_user')
 arg_parser.add_argument('--param_month', action='store', type=str, required=True, dest='param_month')
 arg_parser.add_argument('--param_radar', action='store', type=str, required=True, dest='param_radar')
 arg_parser.add_argument('--param_year', action='store', type=str, required=True, dest='param_year')
@@ -31,13 +30,16 @@ id = args.id
 param_country = args.param_country.replace('"','')
 param_day = args.param_day.replace('"','')
 param_dtype = args.param_dtype.replace('"','')
-param_minio_user_pvol_output_prefix = args.param_minio_user_pvol_output_prefix.replace('"','')
-param_minio_user_vp_output_prefix = args.param_minio_user_vp_output_prefix.replace('"','')
+param_jupyterhub_user = args.param_jupyterhub_user.replace('"','')
 param_month = args.param_month.replace('"','')
 param_radar = args.param_radar.replace('"','')
 param_year = args.param_year.replace('"','')
 
 conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
+
+conf_pvol_output_prefix = 'pvol'
+
+conf_vp_output_prefix = 'vp'
 
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 
@@ -45,6 +47,8 @@ conf_local_visualization_input = '/tmp/data/visualizations/input'
 
 
 conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
+conf_pvol_output_prefix = 'pvol'
+conf_vp_output_prefix = 'vp'
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 conf_local_visualization_input = '/tmp/data/visualizations/input'
 
@@ -58,9 +62,9 @@ minioClient = Minio(
 recursive = True
 
 if param_dtype.lower() in ["pvol", "polar volume", "polarvolume"]:
-    search_prefix = f"{param_minio_user_pvol_output_prefix}/{param_country}/{param_radar}/{param_year}/{param_month}/{param_day}"
+    search_prefix = f"{param_jupyterhub_user}/{conf_pvol_output_prefix}/{param_country}/{param_radar}/{param_year}/{param_month}/{param_day}"
 elif param_dtype.lower() in ["vp", "vertical profile", "verticalprofile"]:
-    search_prefix = f"{param_minio_user_vp_output_prefix}/{param_country}/{param_radar}/{param_year}/{param_month}/{param_day}"
+    search_prefix = f"{param_jupyterhub_user}/{conf_vp_output_prefix}/{param_country}/{param_radar}/{param_year}/{param_month}/{param_day}"
 else:
     print(f"{param_dtype} not understood")
     sys.exit(1)
