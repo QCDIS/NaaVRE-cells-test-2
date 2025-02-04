@@ -4,6 +4,7 @@ import json
 import os
 arg_parser = argparse.ArgumentParser()
 
+secret_a = os.getenv('secret_a')
 secret_jupyterhub_user = os.getenv('secret_jupyterhub_user')
 secret_key_knmi_api = os.getenv('secret_key_knmi_api')
 
@@ -25,4 +26,5 @@ var_io = args.var_io.replace('"','')
 print(secret_jupyterhub_user)
 print(var_io)
 print(secret_key_knmi_api)
+print(secret_a)
 
