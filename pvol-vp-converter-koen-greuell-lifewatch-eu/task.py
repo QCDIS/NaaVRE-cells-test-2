@@ -23,7 +23,7 @@ arg_parser.add_argument('--odim_pvol_paths', action='store', type=str, required=
 
 arg_parser.add_argument('--param_clean_pvol_output', action='store', type=str, required=True, dest='param_clean_pvol_output')
 arg_parser.add_argument('--param_clean_vp_output', action='store', type=str, required=True, dest='param_clean_vp_output')
-arg_parser.add_argument('--param_minio_user_vp_output_prefix', action='store', type=str, required=True, dest='param_minio_user_vp_output_prefix')
+arg_parser.add_argument('--param_jupyterhub_user', action='store', type=str, required=True, dest='param_jupyterhub_user')
 arg_parser.add_argument('--param_upload_results', action='store', type=str, required=True, dest='param_upload_results')
 
 args = arg_parser.parse_args()
@@ -35,7 +35,7 @@ odim_pvol_paths = json.loads(args.odim_pvol_paths)
 
 param_clean_pvol_output = args.param_clean_pvol_output.replace('"','')
 param_clean_vp_output = args.param_clean_vp_output.replace('"','')
-param_minio_user_vp_output_prefix = args.param_minio_user_vp_output_prefix.replace('"','')
+param_jupyterhub_user = args.param_jupyterhub_user.replace('"','')
 param_upload_results = args.param_upload_results.replace('"','')
 
 conf_local_radar_db = '/tmp/data/conf/OPERA_RADARS_DB.json'
@@ -44,12 +44,15 @@ conf_local_vp = '/tmp/data/vp'
 
 conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
 
+conf_vp_output_prefix = 'vp'
+
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 
 
 conf_local_radar_db = '/tmp/data/conf/OPERA_RADARS_DB.json'
 conf_local_vp = '/tmp/data/vp'
 conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
+conf_vp_output_prefix = 'vp'
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 
 
@@ -197,14 +200,12 @@ if str2bool(param_upload_results):
         secret_key=secret_minio_secret_key,
         secure=True,
     )
-    print(f"Uploading results to {param_minio_user_vp_output_prefix}")
+    print(f"Uploading results to {param_jupyterhub_user}/{conf_vp_output_prefix}")
     for vp_path in vertical_profile_paths:
         vp_path = pathlib.Path(vp_path)
         local_vp_storage = pathlib.Path(conf_local_vp)
         relative_path = vp_path.relative_to(local_vp_storage)
-        remote_vp_path = pathlib.Path(
-            param_minio_user_vp_output_prefix
-        ).joinpath(relative_path)
+        remote_vp_path = pathlib.Path(param_jupyterhub_user).joinpath(conf_vp_output_prefix).joinpath(relative_path)
         exists = False
         try:
             _ = minioClient.stat_object(
