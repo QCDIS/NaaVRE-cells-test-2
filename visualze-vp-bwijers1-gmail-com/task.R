@@ -15,6 +15,7 @@ library(tools)
 print('option_list')
 option_list = list(
 
+make_option(c("--conf_local_visualization_output"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--local_vp_paths"), action="store", default=NA, type="character", help="my description")
 )
@@ -51,6 +52,13 @@ var_serialization <- function(var){
     )
 }
 
+print("Retrieving conf_local_visualization_output")
+var = opt$conf_local_visualization_output
+print(var)
+var_len = length(var)
+print(paste("Variable conf_local_visualization_output has length", var_len))
+
+conf_local_visualization_output <- gsub("\"", "", opt$conf_local_visualization_output)
 print("Retrieving id")
 var = opt$id
 print(var)
@@ -70,11 +78,8 @@ local_vp_paths = var_serialization(opt$local_vp_paths)
 print("---------------------------------------------------------------------------------")
 
 
-conf_local_visualization_output="/tmp/data/visualizatons/output"
 
 print("Running the cell")
-conf_local_visualization_output="/tmp/data/visualizatons/output"
-
 library('bioRad')
 
 
@@ -92,10 +97,23 @@ im_fname_from_vpts <- function(regvpts){
   im_fname <- paste0(fname_noext,".png")
   return (im_fname)
 
+prefix_from_vpts <- function(vpts){
+    date_prefix <- strftime(vpts$datetime,format="%Y/%m/%d") 
+    corad <- vpts$radar
+    co <- substring(corad,1,2)
+    rad <- substring(corad,3,5)
+    corad_prefix <- paste0(c(co,rad),collapse="/")
+    corad_prefix <- toupper(corad_prefix)
+    prefix <- paste0(c(corad_prefix,date_prefix),collapse="/")
+    return (prefix)
+}
+
+    
 vpts <- bioRad:::read_vpfiles(local_vp_paths)
 reg_vpts <- bioRad:::regularize_vpts(vpts)
 image_filename = im_fname_from_vpts(reg_vpts)
-local_image_path <- paste(conf_local_visualization_output,image_filename,collapse="",sep="/")
+local_prefix <- prefix_from_vpts(vpts)
+local_image_path <- paste(conf_local_visualization_output,local_prefix,image_filename,collapse="",sep="/")
 # capturing outputs
 print('Serialization of local_image_path')
 file <- file(paste0('/tmp/local_image_path_', id, '.json'))
