@@ -5,7 +5,7 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - r-bioRad
   - r-tools
+  - r-bioRad
   - papermill
   - ipykernel
