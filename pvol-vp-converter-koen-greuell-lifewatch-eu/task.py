@@ -234,9 +234,4 @@ if str2bool(param_clean_vp_output):
         pathlib.Path(vp_path).unlink()
         if not any(pathlib.Path(vp_path).parent.iterdir()):
             pathlib.Path(vp_path).parent.rmdir()
-            
-PVOL_VP_converter_complete = 1
 
-file_PVOL_VP_converter_complete = open("/tmp/PVOL_VP_converter_complete_" + id + ".json", "w")
-file_PVOL_VP_converter_complete.write(json.dumps(PVOL_VP_converter_complete))
-file_PVOL_VP_converter_complete.close()
