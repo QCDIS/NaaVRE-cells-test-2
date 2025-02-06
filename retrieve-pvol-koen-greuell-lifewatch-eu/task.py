@@ -13,8 +13,6 @@ secret_minio_secret_key = os.getenv('secret_minio_secret_key')
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--PVOL_VP_converter_complete', action='store', type=int, required=True, dest='PVOL_VP_converter_complete')
-
 arg_parser.add_argument('--param_country', action='store', type=str, required=True, dest='param_country')
 arg_parser.add_argument('--param_day', action='store', type=str, required=True, dest='param_day')
 arg_parser.add_argument('--param_dtype', action='store', type=str, required=True, dest='param_dtype')
@@ -28,7 +26,6 @@ print(args)
 
 id = args.id
 
-PVOL_VP_converter_complete = args.PVOL_VP_converter_complete
 
 param_country = args.param_country.replace('"','')
 param_day = args.param_day.replace('"','')
@@ -54,13 +51,6 @@ conf_pvol_output_prefix = 'pvol'
 conf_vp_output_prefix = 'vp'
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 conf_local_visualization_input = '/tmp/data/visualizations/input'
-
-if PVOL_VP_converter_complete :
-    print("PVOL-VP-converter successfull")
-else:
-    print("PVOL-VP-converter was not complete, exitting")
-
-    sys.exit(1)
 
 minioClient = Minio(
     endpoint=conf_minio_endpoint,
