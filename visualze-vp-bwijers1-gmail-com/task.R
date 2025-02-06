@@ -98,7 +98,7 @@ im_fname_from_vpts <- function(regvpts){
   return (im_fname)
 
 prefix_from_vpts <- function(vpts){
-    date_prefix <- strftime(vpts$datetime,format="%Y/%m/%d") 
+    date_prefix <- strftime(vpts$datetime[[1]],format="%Y/%m") 
     corad <- vpts$radar
     co <- substring(corad,1,2)
     rad <- substring(corad,3,5)
