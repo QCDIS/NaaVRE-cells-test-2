@@ -140,6 +140,7 @@ for (pvol_path in local_pvol_paths) {
                                          )
     local_prefix <- prefix_from_pvol(my_pvol)
     local_image_path <- paste(conf_local_visualization_output,local_prefix,image_filename,collapse="",sep="/")
+    print(local_image_path)
     png(local_image_path)
     plot(x=my_ppi,
          param=param_param)
