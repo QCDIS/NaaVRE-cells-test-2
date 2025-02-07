@@ -91,7 +91,7 @@ im_fname_from_vpts <- function(regvpts){
   fname_noext <- paste0(c(radar,imtype,dr_str),collapse="_")
   im_fname <- paste0(fname_noext,".png")
   return (im_fname)
-
+}
 prefix_from_vpts <- function(vpts){
     date_prefix <- strftime(vpts$datetime[[1]],format="%Y/%m") 
     corad <- vpts$radar
@@ -109,8 +109,9 @@ reg_vpts <- bioRad:::regularize_vpts(vpts)
 image_filename = im_fname_from_vpts(reg_vpts)
 local_prefix <- prefix_from_vpts(vpts)
 local_image_path <- paste(conf_local_visualization_output,local_prefix,image_filename,collapse="",sep="/")
+local_vpts_paths <- list(local_image_path)
 # capturing outputs
-print('Serialization of local_image_path')
-file <- file(paste0('/tmp/local_image_path_', id, '.json'))
-writeLines(toJSON(local_image_path, auto_unbox=TRUE), file)
+print('Serialization of local_vpts_paths')
+file <- file(paste0('/tmp/local_vpts_paths_', id, '.json'))
+writeLines(toJSON(local_vpts_paths, auto_unbox=TRUE), file)
 close(file)
