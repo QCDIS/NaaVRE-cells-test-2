@@ -16,8 +16,9 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--local_pvol_paths"), action="store", default=NA, type="character", help="my description")
+make_option(c("--local_pvol_paths"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_elev"), action="store", default=NA, type="numeric", help="my description"), 
+make_option(c("--param_param"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -59,13 +60,6 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving id")
-var = opt$id
-print(var)
-var_len = length(var)
-print(paste("Variable id has length", var_len))
-
-id <- gsub("\"", "", opt$id)
 print("Retrieving local_pvol_paths")
 var = opt$local_pvol_paths
 print(var)
@@ -77,6 +71,20 @@ print(opt$local_pvol_paths)
 local_pvol_paths = var_serialization(opt$local_pvol_paths)
 print("---------------------------------------------------------------------------------")
 
+print("Retrieving param_elev")
+var = opt$param_elev
+print(var)
+var_len = length(var)
+print(paste("Variable param_elev has length", var_len))
+
+param_elev = opt$param_elev
+print("Retrieving param_param")
+var = opt$param_param
+print(var)
+var_len = length(var)
+print(paste("Variable param_param has length", var_len))
+
+param_param <- gsub("\"", "", opt$param_param)
 
 
 print("Running the cell")
