@@ -109,6 +109,7 @@ reg_vpts <- bioRad:::regularize_vpts(vpts)
 image_filename = im_fname_from_vpts(reg_vpts)
 local_prefix <- prefix_from_vpts(vpts)
 local_image_path <- paste(conf_local_visualization_output,local_prefix,image_filename,collapse="",sep="/")
+print(local_image_path)
 local_vpts_paths <- list(local_image_path)
 # capturing outputs
 print('Serialization of local_vpts_paths')
