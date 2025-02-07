@@ -107,6 +107,8 @@ filename_noext_parts = ""
 filename = ""
 local_image_path = ""
 
+print(conf_local_visualization_output)
+
 library('bioRad')
 library('tools')
 im_fname_from_path <- function(path,elev,param,imtype = 'ppi',im_ext="png"){
