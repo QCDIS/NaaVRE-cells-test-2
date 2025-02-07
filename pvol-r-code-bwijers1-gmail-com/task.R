@@ -17,7 +17,7 @@ option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--local_pvol_paths"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_elev"), action="store", default=NA, type="numeric", help="my description"), 
+make_option(c("--param_elevation"), action="store", default=NA, type="numeric", help="my description"), 
 make_option(c("--param_param"), action="store", default=NA, type="character", help="my description")
 )
 
@@ -71,13 +71,13 @@ print(opt$local_pvol_paths)
 local_pvol_paths = var_serialization(opt$local_pvol_paths)
 print("---------------------------------------------------------------------------------")
 
-print("Retrieving param_elev")
-var = opt$param_elev
+print("Retrieving param_elevation")
+var = opt$param_elevation
 print(var)
 var_len = length(var)
-print(paste("Variable param_elev has length", var_len))
+print(paste("Variable param_elevation has length", var_len))
 
-param_elev = opt$param_elev
+param_elevation = opt$param_elevation
 print("Retrieving param_param")
 var = opt$param_param
 print(var)
@@ -90,6 +90,7 @@ conf_local_visualization_output="/tmp/data/visualizatons/output"
 
 print("Running the cell")
 conf_local_visualization_output="/tmp/data/visualizatons/output"
+
 
 
 
