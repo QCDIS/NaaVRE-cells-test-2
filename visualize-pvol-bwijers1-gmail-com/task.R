@@ -86,8 +86,11 @@ print(paste("Variable param_param has length", var_len))
 
 param_param <- gsub("\"", "", opt$param_param)
 
+conf_local_visualization_output: = '/tmp/data/visualizatons/output'
 
 print("Running the cell")
+conf_local_visualization_output: = '/tmp/data/visualizatons/output'
+
 
 
 pvol_path = ""
