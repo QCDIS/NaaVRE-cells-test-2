@@ -62,6 +62,7 @@ id <- gsub("\"", "", opt$id)
 print("Running the cell")
 
 print(conf_a)
+print(input_1)
 
 b = 1 + 2 
 # capturing outputs
