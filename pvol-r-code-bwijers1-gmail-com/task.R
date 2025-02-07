@@ -144,7 +144,7 @@ for (pvol_path in local_pvol_paths) {
     plot(x=my_ppi,
          param=param_param)
     dev.off()
-    append(ppi_image_paths,local_image_path)
+    ppi_image_paths <- append(ppi_image_paths,local_image_path)
 }
 # capturing outputs
 print('Serialization of ppi_image_paths')
