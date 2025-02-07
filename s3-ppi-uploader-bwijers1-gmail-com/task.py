@@ -42,8 +42,9 @@ minioClient = Minio(
 )
 
 for path in local_ppi_paths:
+    print(path)
     obj_key = pathlib.Path(*pathlib.Path(path).parts[3:])
-    obj_name = f"{conf_minio_user_bucket_name}{param_jupyterhub_user}/{obj_key}"
+    obj_name = f"{conf_minio_user_bucket_name}/{param_jupyterhub_user}/{obj_key}"
     print(obj_name)
     minioClient.fput_object(bucket_name = conf_minio_user_bucket_name,
                             object_name = obj_name,
