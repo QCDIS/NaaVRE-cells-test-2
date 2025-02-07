@@ -128,7 +128,7 @@ prefix_from_pvol <- function(pvol){
 
 dir.create(file.path(conf_local_visualization_output), showWarnings = FALSE)
 idx=1
-ppi_image_paths <- list()
+local_ppi_paths <- list()
 for (pvol_path in local_pvol_paths) {
     my_pvol <- bioRad:::read_pvolfile(pvol_path)
     my_scan <- bioRad:::get_scan(x=my_pvol,
@@ -144,10 +144,10 @@ for (pvol_path in local_pvol_paths) {
     plot(x=my_ppi,
          param=param_param)
     dev.off()
-    ppi_image_paths <- append(ppi_image_paths,local_image_path)
+    local_ppi_paths <- append(local_ppi_paths,local_image_path)
 }
 # capturing outputs
-print('Serialization of ppi_image_paths')
-file <- file(paste0('/tmp/ppi_image_paths_', id, '.json'))
-writeLines(toJSON(ppi_image_paths, auto_unbox=TRUE), file)
+print('Serialization of local_ppi_paths')
+file <- file(paste0('/tmp/local_ppi_paths_', id, '.json'))
+writeLines(toJSON(local_ppi_paths, auto_unbox=TRUE), file)
 close(file)
