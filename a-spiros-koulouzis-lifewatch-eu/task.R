@@ -7,6 +7,7 @@ library(jsonlite)
 print('option_list')
 option_list = list(
 
+make_option(c("--avar"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description")
 )
 
@@ -42,6 +43,13 @@ var_serialization <- function(var){
     )
 }
 
+print("Retrieving avar")
+var = opt$avar
+print(var)
+var_len = length(var)
+print(paste("Variable avar has length", var_len))
+
+avar <- gsub("\"", "", opt$avar)
 print("Retrieving id")
 var = opt$id
 print(var)
@@ -50,10 +58,8 @@ print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
 
-conf_a='a'
 
 print("Running the cell")
-conf_a='a'
 
 print(conf_a)
 
