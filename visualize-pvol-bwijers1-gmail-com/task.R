@@ -86,10 +86,8 @@ print(paste("Variable param_param has length", var_len))
 
 param_param <- gsub("\"", "", opt$param_param)
 
-conf_local_visualization_output="/tmp/data/visualizatons/output"
 
 print("Running the cell")
-conf_local_visualization_output="/tmp/data/visualizatons/output"
 
 
 
@@ -143,7 +141,6 @@ for (pvol_path in local_pvol_paths) {
     dev.off()
     append(ppi_image_paths,local_image_path)
 }
-print(conf_local_visualization_output)
 # capturing outputs
 print('Serialization of ppi_image_paths')
 file <- file(paste0('/tmp/ppi_image_paths_', id, '.json'))
