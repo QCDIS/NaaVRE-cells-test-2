@@ -104,6 +104,7 @@ prefix_from_vpts <- function(vpts){
 }
 
     
+print(local_vp_paths)
 vpts <- bioRad:::read_vpfiles(local_vp_paths)
 reg_vpts <- bioRad:::regularize_vpts(vpts)
 image_filename = im_fname_from_vpts(reg_vpts)
