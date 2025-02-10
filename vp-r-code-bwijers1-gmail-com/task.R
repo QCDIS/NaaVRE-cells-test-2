@@ -131,7 +131,7 @@ local_image_dir <- paste(conf_local_visualization_output,local_prefix,collapse="
 dir.create(local_image_dir,showWarnings=F,recursive=T)
 local_image_path <- paste(local_image_dir,image_filename,collapse="",sep="/")
 print(local_image_path)
-title_str <- title_from_pvol(my_pvol) 
+title_str <- title_str_from_regvpts(reg_vpts)
 png(local_image_path,width=1024,height=1024,units="px") 
 p <- plot(reg_vpts) 
 title(title_str,line=3)
