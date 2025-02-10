@@ -6,6 +6,10 @@ if (!requireNamespace("bioRad", quietly = TRUE)) {
 	install.packages("bioRad", repos="http://cran.us.r-project.org")
 }
 library(bioRad)
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+	install.packages("ggplot2", repos="http://cran.us.r-project.org")
+}
+library(ggplot2)
 if (!requireNamespace("tools", quietly = TRUE)) {
 	install.packages("tools", repos="http://cran.us.r-project.org")
 }
