@@ -16,7 +16,7 @@ print(args)
 
 id = args.id
 
-greetings = args.greetings.replace('"','')
+greetings = json.loads(args.greetings)
 
 
 
