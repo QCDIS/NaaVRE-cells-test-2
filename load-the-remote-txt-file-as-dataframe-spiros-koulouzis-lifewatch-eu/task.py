@@ -64,7 +64,7 @@ species_name_dropdown = widgets.Dropdown(
     disabled=False,
 ) 
 
-
+param_habitat_name = ''
 param_habitat_name =  df_mod["hab_name"].unique()[0]
 param_climate_model = 'Current'
 param_climate_scenario = 'Current'
