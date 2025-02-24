@@ -13,20 +13,10 @@ arg_parser.add_argument('--id', action='store', type=str, required=True, dest='i
 
 arg_parser.add_argument('--anomaly_url', action='store', type=str, required=True, dest='anomaly_url')
 
-arg_parser.add_argument('--arrow_length', action='store', type=float, required=True, dest='arrow_length')
-
-arg_parser.add_argument('--clim_mod', action='store', type=str, required=True, dest='clim_mod')
-
-arg_parser.add_argument('--clim_sce', action='store', type=str, required=True, dest='clim_sce')
-
-arg_parser.add_argument('--species', action='store', type=str, required=True, dest='species')
-
-arg_parser.add_argument('--time_per', action='store', type=str, required=True, dest='time_per')
-
-arg_parser.add_argument('--x', action='store', type=float, required=True, dest='x')
-
-arg_parser.add_argument('--y', action='store', type=float, required=True, dest='y')
-
+arg_parser.add_argument('--param_climate_model', action='store', type=str, required=True, dest='param_climate_model')
+arg_parser.add_argument('--param_climate_scenario', action='store', type=str, required=True, dest='param_climate_scenario')
+arg_parser.add_argument('--param_species_name', action='store', type=str, required=True, dest='param_species_name')
+arg_parser.add_argument('--param_time_period', action='store', type=str, required=True, dest='param_time_period')
 
 args = arg_parser.parse_args()
 print(args)
@@ -34,24 +24,30 @@ print(args)
 id = args.id
 
 anomaly_url = args.anomaly_url.replace('"','')
-arrow_length = args.arrow_length
-clim_mod = args.clim_mod.replace('"','')
-clim_sce = args.clim_sce.replace('"','')
-species = args.species.replace('"','')
-time_per = args.time_per.replace('"','')
-x = args.x
-y = args.y
 
+param_climate_model = args.param_climate_model.replace('"','')
+param_climate_scenario = args.param_climate_scenario.replace('"','')
+param_species_name = args.param_species_name.replace('"','')
+param_time_period = args.param_time_period.replace('"','')
+
+conf_x = 0.95
+
+conf_y = 0.95
+
+conf_arrow_length = 0.1
 
 conf_data_path = '/tmp/data/'
 
 
+conf_x = 0.95
+conf_y = 0.95
+conf_arrow_length = 0.1
 conf_data_path = '/tmp/data/'
 if "nan" not in anomaly_url:
     data_anomaly = rioxarray.open_rasterio(anomaly_url)
     fig, ax = plt.subplots(figsize=(10, 8))
     data_anomaly.plot(ax=ax, cmap="Spectral")
-    image_name = f"Anomaly of {species} distribution for {clim_mod} {clim_sce} {time_per}"
+    image_name = f"Anomaly of {param_species_name} distribution for {param_climate_model} {param_climate_scenario} {param_time_period}"
     plt.title(image_name)
 
     ax.grid(True, linestyle='--', linewidth=0.5)
@@ -59,7 +55,7 @@ if "nan" not in anomaly_url:
     scalebar = ScaleBar(1, location='upper right')  # 1 pixel = 1 unit
     ax.add_artist(scalebar)
 
-    ax.annotate('N', xy=(x, y), xytext=(x, y-arrow_length),
+    ax.annotate('N', xy=(conf_x, conf_y), xytext=(conf_x, conf_y-conf_arrow_length),
                 arrowprops=dict(facecolor='black', width=5, headwidth=15),
                 ha='center', va='center', fontsize=12,
                 xycoords=ax.transAxes)
