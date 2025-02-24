@@ -5,8 +5,8 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - matplotlib_scalebar
   - matplotlib
   - rioxarray
+  - matplotlib_scalebar
   - papermill
   - ipykernel
