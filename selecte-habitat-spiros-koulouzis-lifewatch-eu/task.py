@@ -28,7 +28,7 @@ print("Select a habitat type from the dropdown list:")
 selected_hab_abb = '1'
 param_habitat_type = 'human_maintained_grasslands'
 conf_data_path = '/tmp/data/'
-selected_hab_abb = df_hab[df_hab["hab_name"] == param_habitat_type]["hab_abb"].values[0]
+selected_hab_abb = str(df_hab[df_hab["hab_name"] == param_habitat_type]["hab_abb"].values[0])
 
 print(f"Selected Habitat Abbreviation: {selected_hab_abb}")
 
