@@ -35,42 +35,36 @@ url_txt = f"http://opendap.biodt.eu/ias-pdt/0/outputs/hab{selected_hab_abb}/pred
 df_mod = pd.read_csv(url_txt, sep="\t")
 
 hab_num = df_mod[df_mod["hab_name"] == param_habitat_name]["hab_abb"].values[0]
-
-clim_mod = param_climate_model
-clim_sce = param_climate_scenario
-time_per = param_time_period
-species = param_species_name
-
 tif_path_mean = df_mod[
     (df_mod["hab_abb"] == hab_num) &
-    (df_mod["climate_model"] == clim_mod) &
-    (df_mod["climate_scenario"] == clim_sce) &
-    (df_mod["time_period"] == time_per) &
-    (df_mod["species_name"] == species)
+    (df_mod["climate_model"] == param_climate_model) &
+    (df_mod["climate_scenario"] == param_climate_scenario) &
+    (df_mod["time_period"] == param_time_period) &
+    (df_mod["species_name"] == param_species_name)
 ]["tif_path_mean"].values[0]
 
 tif_path_sd = df_mod[
     (df_mod["hab_abb"] == hab_num)
-    & (df_mod["climate_model"] == clim_mod)
-    & (df_mod["climate_scenario"] == clim_sce)
-    & (df_mod["time_period"] == time_per)
-    & (df_mod["species_name"] == species)
+    & (df_mod["climate_model"] == param_climate_model)
+    & (df_mod["climate_scenario"] == param_climate_scenario)
+    & (df_mod["time_period"] == param_time_period)
+    & (df_mod["species_name"] == param_species_name)
 ]["tif_path_sd"].values[0]
 
 tif_path_cov = df_mod[
     (df_mod["hab_abb"] == hab_num)
-    & (df_mod["climate_model"] == clim_mod)
-    & (df_mod["climate_scenario"] == clim_sce)
-    & (df_mod["time_period"] == time_per)
-    & (df_mod["species_name"] == species)
+    & (df_mod["climate_model"] == param_climate_model)
+    & (df_mod["climate_scenario"] == param_climate_scenario)
+    & (df_mod["time_period"] == param_time_period)
+    & (df_mod["species_name"] == param_species_name)
 ]["tif_path_cov"].values[0]
 
 tif_path_anomaly = df_mod[
     (df_mod["hab_abb"] == hab_num)
-    & (df_mod["climate_model"] == clim_mod)
-    & (df_mod["climate_scenario"] == clim_sce)
-    & (df_mod["time_period"] == time_per)
-    & (df_mod["species_name"] == species)
+    & (df_mod["climate_model"] == param_climate_model)
+    & (df_mod["climate_scenario"] == param_climate_scenario)
+    & (df_mod["time_period"] == param_time_period)
+    & (df_mod["species_name"] == param_species_name)
 ]["tif_path_anomaly"].values[0]
 
 mean_url = f"http://opendap.biodt.eu/ias-pdt/0/outputs/hab{hab_num}/predictions/{tif_path_mean}"
@@ -78,18 +72,6 @@ sd_url = f"http://opendap.biodt.eu/ias-pdt/0/outputs/hab{hab_num}/predictions/{t
 cov_url = f"http://opendap.biodt.eu/ias-pdt/0/outputs/hab{hab_num}/predictions/{tif_path_cov}"
 anomaly_url = f"http://opendap.biodt.eu/ias-pdt/0/outputs/hab{hab_num}/predictions/{tif_path_anomaly}"
 
-file_clim_mod = open("/tmp/clim_mod_" + id + ".json", "w")
-file_clim_mod.write(json.dumps(clim_mod))
-file_clim_mod.close()
-file_clim_sce = open("/tmp/clim_sce_" + id + ".json", "w")
-file_clim_sce.write(json.dumps(clim_sce))
-file_clim_sce.close()
-file_time_per = open("/tmp/time_per_" + id + ".json", "w")
-file_time_per.write(json.dumps(time_per))
-file_time_per.close()
-file_species = open("/tmp/species_" + id + ".json", "w")
-file_species.write(json.dumps(species))
-file_species.close()
 file_mean_url = open("/tmp/mean_url_" + id + ".json", "w")
 file_mean_url.write(json.dumps(mean_url))
 file_mean_url.close()
