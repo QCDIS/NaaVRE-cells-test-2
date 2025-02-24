@@ -65,7 +65,8 @@ species_name_dropdown = widgets.Dropdown(
 ) 
 
 
-param_habitat_name =  str(df_mod["hab_name"].unique()[0])
+param_habitat_name =  'Human maintained grasslands'
+print(param_habitat_name)
 param_climate_model = 'Current'
 param_climate_scenario = 'Current'
 param_time_period = '1981-2010'
