@@ -64,14 +64,3 @@ species_name_dropdown = widgets.Dropdown(
     disabled=False,
 ) 
 
-param_habitat_name =  'Human maintained grasslands'
-param_climate_model = 'Current'
-param_climate_scenario = 'Current'
-param_time_period = '1981-2010'
-param_species_name = 'Agave americana' 
-
-
-conf_x =  0.95
-conf_y =  0.95
-conf_arrow_length = 0.1
-
