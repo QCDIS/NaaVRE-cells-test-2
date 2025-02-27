@@ -50,7 +50,7 @@ grouped_tif_paths = filtered_df.groupby("time_period")["tif_path_mean"].agg(list
 
 
 base_dir = conf_data_path+"output_tif_groups"
-shutil.rmtree(base_dir)
+shutil.rmtree(base_dir,ignore_errors=True)
 os.makedirs(base_dir, exist_ok=True)
 
 year_paths = []
