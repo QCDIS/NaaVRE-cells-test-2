@@ -1,4 +1,5 @@
 import acolite as ac
+from datetime import datetime
 from dtAcolite import dtAcolite
 import glob
 
@@ -13,6 +14,8 @@ arg_parser.add_argument('--id', action='store', type=str, required=True, dest='i
 
 arg_parser.add_argument('--path_id_batches', action='store', type=str, required=True, dest='path_id_batches')
 
+arg_parser.add_argument('--param_end_date', action='store', type=str, required=True, dest='param_end_date')
+arg_parser.add_argument('--param_start_date', action='store', type=str, required=True, dest='param_start_date')
 
 args = arg_parser.parse_args()
 print(args)
@@ -21,15 +24,16 @@ id = args.id
 
 path_id_batches = json.loads(args.path_id_batches)
 
+param_end_date = args.param_end_date.replace('"','')
+param_start_date = args.param_start_date.replace('"','')
 
 
 
-year = 2016
-start_date = f"{year}-01-01"
-end_date   = f"{year}-12-31"
-data_collection = "SENTINEL-2"
-product_type = "S2MSI1C"
-aoi = "POLYGON((4.6 53.1, 4.9 53.1, 4.9 52.8, 4.6 52.8, 4.6 53.1))'"
+start_year = datetime.strptime(param_start_date, "%Y-%m-%d").year
+end_year = datetime.strptime(param_end_date, "%Y-%m-%d").year
+if (start_year != end_year):
+    raise ValueError("param_start_date and param_end_date must be in the same year")
+year = start_year
 collection = "sentinel"
 
 app_configuration = dtAcolite.configure_acolite_directory(base_dir = "/tmp/data", year = year, collection = collection)
