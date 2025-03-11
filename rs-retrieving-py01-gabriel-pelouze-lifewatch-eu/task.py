@@ -1,4 +1,5 @@
 from minio import Minio
+from datetime import datetime
 from dtAcolite import dtAcolite
 from dtSat import dtSat
 import glob
@@ -38,18 +39,17 @@ param_s3_server = args.param_s3_server.replace('"','')
 
 
 
-year = 2016 
-start_date = f"{year}-01-01"
-end_date   = f"{year}-12-31"
-data_collection = "SENTINEL-2"
-product_type = "S2MSI1C"
-aoi = "POLYGON((4.6 53.1, 4.9 53.1, 4.9 52.8, 4.6 52.8, 4.6 53.1))'"
+start_year = datetime.strptime(param_start_date, "%Y-%m-%d").year
+end_year = datetime.strptime(param_end_date, "%Y-%m-%d").year
+if (start_year != end_year):
+    raise ValueError("param_start_date and param_end_date must be in the same year")
+year = start_year
 collection = "sentinel"
 
 app_configuration = dtAcolite.configure_acolite_directory(base_dir = "/tmp/data", year = year, collection = collection)
 print(app_configuration)
 
-catalogue_response = dtSat.get_sentinel_catalogue(start_date, end_date, data_collection = data_collection, aoi= aoi, product_type=product_type, cloudcover=10.0, max_results=1000)
+catalogue_response = dtSat.get_sentinel_catalogue(param_start_date, param_end_date, data_collection=param_data_collection, aoi=param_aoi, product_type=param_product_type, cloudcover=10.0, max_results=1000)
 catalogue_sub = dtSat.filter_by_orbit_and_tile(catalogue_response, orbit = "R051", tile = "T31UFU", name_only = False)
 
 
