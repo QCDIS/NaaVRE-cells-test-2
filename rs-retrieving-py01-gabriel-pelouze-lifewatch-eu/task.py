@@ -18,11 +18,16 @@ secret_s3_secret_key = os.getenv('secret_s3_secret_key')
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
+arg_parser.add_argument('--param_aoi', action='store', type=str, required=True, dest='param_aoi')
 arg_parser.add_argument('--param_copernicus_api_username', action='store', type=str, required=True, dest='param_copernicus_api_username')
+arg_parser.add_argument('--param_data_collection', action='store', type=str, required=True, dest='param_data_collection')
+arg_parser.add_argument('--param_end_date', action='store', type=str, required=True, dest='param_end_date')
 arg_parser.add_argument('--param_max_batch_count', action='store', type=int, required=True, dest='param_max_batch_count')
+arg_parser.add_argument('--param_product_type', action='store', type=str, required=True, dest='param_product_type')
 arg_parser.add_argument('--param_s3_base_path', action='store', type=str, required=True, dest='param_s3_base_path')
 arg_parser.add_argument('--param_s3_bucket', action='store', type=str, required=True, dest='param_s3_bucket')
 arg_parser.add_argument('--param_s3_server', action='store', type=str, required=True, dest='param_s3_server')
+arg_parser.add_argument('--param_start_date', action='store', type=str, required=True, dest='param_start_date')
 
 args = arg_parser.parse_args()
 print(args)
@@ -30,11 +35,16 @@ print(args)
 id = args.id
 
 
+param_aoi = args.param_aoi.replace('"','')
 param_copernicus_api_username = args.param_copernicus_api_username.replace('"','')
+param_data_collection = args.param_data_collection.replace('"','')
+param_end_date = args.param_end_date.replace('"','')
 param_max_batch_count = args.param_max_batch_count
+param_product_type = args.param_product_type.replace('"','')
 param_s3_base_path = args.param_s3_base_path.replace('"','')
 param_s3_bucket = args.param_s3_bucket.replace('"','')
 param_s3_server = args.param_s3_server.replace('"','')
+param_start_date = args.param_start_date.replace('"','')
 
 
 
