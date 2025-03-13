@@ -22,7 +22,16 @@ names = json.loads(args.names)
 
 param_greeting = args.param_greeting.replace('"','')
 
+conf_secret_phrase = 'This is the secret word:'
 
+
+conf_secret_phrase = 'This is the secret word:'
+sentences = []
 for name in names:
-  print(f"{param_greeting}, {name}! This is the secret word: {secret_word}")
+    sentence = f"{param_greeting}, {name}! {conf_secret_phrase}: {secret_word}"
+    sentences.append(sentence)
+    print(sentence)
 
+file_sentences = open("/tmp/sentences_" + id + ".json", "w")
+file_sentences.write(json.dumps(sentences))
+file_sentences.close()
