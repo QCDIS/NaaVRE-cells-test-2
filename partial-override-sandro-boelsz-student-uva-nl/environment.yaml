@@ -5,5 +5,40 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
+  - r-bit64
+  - r-units
+  - r-optparse
+  - r-lubridate
+  - r-readr
+  - r-DBI
+  - r-tidyselect
+  - r-clipr
+  - r-abind
+  - r-wk
+  - r-s2
+  - r-cpp11
+  - r-progress
+  - r-generics
+  - r-vroom
+  - r-pbapply
+  - r-hms
+  - r-stats
+  - r-jsonlite
+  - r-timechange
+  - r-Rcpp
+  - r-bit
+  - r-stringi
+  - r-classInt
+  - r-rdwd
+  - r-terra
+  - r-raster
+  - r-proxy
+  - r-dplyr
+  - r-sf
+  - r-tzdb
+  - r-purrr
+  - r-berryFunctions
+  - r-e1071
+  - r-stringr
   - papermill
   - ipykernel
