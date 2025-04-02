@@ -234,6 +234,33 @@ lookup_table <- read.csv(locations_output$nectar_pollen_lookup_path)
 extract_list <- function(x) {
   x[[1]]
 }
+SplitPolygonsEqual <- function(polygon, polygon_size, density = 1000, RefCRS) {
+
+  polygon <- st_as_sf(polygon, crs = RefCRS)
+
+  nPoints <- floor(polygon$size_sqm/density)
+  points <- st_sample(polygon, size = nPoints, type = "regular") |>
+    st_sf()
+
+  nPolys <- ceiling(polygon$size_sqm/polygon_size)
+  pointClusters <- st_coordinates(points) |>
+    kmeans(nPolys)
+
+  centroids <- data.frame(pointClusters$centers) |>
+    vect(geom = c("X", "Y"), crs = RefCRS)
+
+  voronoiPoly <- voronoi(centroids, polygon) |>
+    st_as_sf(crs = RefCRS)
+
+  if (st_is_valid(polygon) == FALSE) {
+    polygon <- st_make_valid(polygon)
+  }
+
+  polyFinal <- st_intersection(polygon, voronoiPoly) |>
+    vect()
+
+  return(polyFinal)
+}
 
 beehave_input <- function(input_map,
                           bee_location,
