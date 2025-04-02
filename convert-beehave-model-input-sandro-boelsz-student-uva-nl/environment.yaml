@@ -6,7 +6,10 @@ dependencies:
   - python>=3.8
   - nbconvert
   - r-Rcpp
+  - r-dplyr
   - r-terra
+  - r-lubridate
   - r-raster
+  - r-sf
   - papermill
   - ipykernel
