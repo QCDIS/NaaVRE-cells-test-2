@@ -21,6 +21,7 @@ make_option(c("--param_map"), action="store", default=NA, type="character", help
 make_option(c("--param_map_aux"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_model"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_parameters"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_bucket"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_region"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_user_prefix"), action="store", default=NA, type="character", help="my description"), 
@@ -115,6 +116,13 @@ var_len = length(var)
 print(paste("Variable param_parameters has length", var_len))
 
 param_parameters <- gsub("\"", "", opt$param_parameters)
+print("Retrieving param_s3_bucket")
+var = opt$param_s3_bucket
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_bucket has length", var_len))
+
+param_s3_bucket <- gsub("\"", "", opt$param_s3_bucket)
 print("Retrieving param_s3_endpoint")
 var = opt$param_s3_endpoint
 print(var)
@@ -159,10 +167,10 @@ filenames <- c(param_map, param_map_aux, param_lookup_table, param_locations, pa
 s3_locations <- paste0(param_s3_user_prefix, "/input/", filenames)
 download_locations <- paste0(param_input_dir, filenames)
 
-download_file <- function(s3_path, local_path) {
+download_file <- function(s3_path, local_path, bucket) {
   tryCatch({
     save_object(object = s3_path, 
-                bucket = param_s3_bucket, 
+                bucket = bucket, 
                 file = local_path)
     
     if (file.exists(local_path)) {
@@ -175,4 +183,4 @@ download_file <- function(s3_path, local_path) {
   })
 }
 
-mapply(download_file, s3_locations, download_locations)
+mapply(download_file, s3_locations, download_locations, param_s3_bucket)
