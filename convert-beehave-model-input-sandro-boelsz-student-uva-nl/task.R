@@ -33,9 +33,7 @@ secret_s3_secret_key = Sys.getenv('secret_s3_secret_key')
 print('option_list')
 option_list = list(
 
-make_option(c("--bee_location_list"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--input_map_list"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--locations_output"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_buffer"), action="store", default=NA, type="integer", help="my description"), 
 make_option(c("--param_input_dir"), action="store", default=NA, type="character", help="my description"), 
@@ -85,17 +83,6 @@ var_serialization <- function(var){
     )
 }
 
-print("Retrieving bee_location_list")
-var = opt$bee_location_list
-print(var)
-var_len = length(var)
-print(paste("Variable bee_location_list has length", var_len))
-
-print("------------------------Running var_serialization for bee_location_list-----------------------")
-print(opt$bee_location_list)
-bee_location_list = var_serialization(opt$bee_location_list)
-print("---------------------------------------------------------------------------------")
-
 print("Retrieving id")
 var = opt$id
 print(var)
@@ -103,17 +90,6 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving input_map_list")
-var = opt$input_map_list
-print(var)
-var_len = length(var)
-print(paste("Variable input_map_list has length", var_len))
-
-print("------------------------Running var_serialization for input_map_list-----------------------")
-print(opt$input_map_list)
-input_map_list = var_serialization(opt$input_map_list)
-print("---------------------------------------------------------------------------------")
-
 print("Retrieving locations_output")
 var = opt$locations_output
 print(var)
@@ -231,6 +207,27 @@ library(terra)
 library(sf)
 library(dplyr)
 library(lubridate)
+
+if (!dir.exists(locations_output$location_path)) {
+  dir.create(locations_output$location_path)
+}
+
+stopifnot(file.exists(locations_output$input_tif_path))
+stopifnot(file.exists(paste0(locations_output$input_tif_path, ".aux.xml")))
+
+input_map <-
+  rast(locations_output$input_tif_path)
+
+bee_location <- vect(
+  data.frame(
+    id = locations_output$id,
+    lon = locations_output$lon,
+    lat = locations_output$lat
+  ),
+  geom = c("lon", "lat"),
+  crs = "EPSG:4326"
+) |>
+  project(input_map)
 
 lookup_table <- read.csv(locations_output$nectar_pollen_lookup_path)
 
@@ -402,9 +399,6 @@ modify_input_file <- function(input, lookup_table) {
   
   return(input)
 }
-
-input_map <- input_map_list$input_map
-bee_location <- bee_location_list$bee_location
 
 input_patches <-
   beehave_input(input_map = input_map,
