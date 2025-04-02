@@ -154,6 +154,7 @@ param_simulation <- gsub("\"", "", opt$param_simulation)
 
 
 print("Running the cell")
+
 library(aws.s3)
 Sys.setenv(
   "AWS_ACCESS_KEY_ID" = secret_s3_access_id,
@@ -175,12 +176,27 @@ download_file <- function(s3_path, local_path, bucket) {
     
     if (file.exists(local_path)) {
       message(paste("Downloaded:", s3_path, "to", local_path))
+      return(TRUE)
     } else {
       warning(paste("File not found after download attempt:", s3_path))
+      return(FALSE)
     }
   }, error = function(e) {
     warning(paste("Failed to download:", s3_path, "Error:", e$message))
+      return(FALSE)
   })
 }
 
-mapply(download_file, s3_locations, download_locations, param_s3_bucket)
+results <- mapply(download_file, s3_locations, download_locations, param_s3_bucket)
+
+isFileDownloadSuccessful <- as.integer(all(results))
+if (isFileDownloadSuccessful == 1) {
+  message("All files downloaded successfully!")
+} else {
+  warning("Some files failed to download.")
+}
+# capturing outputs
+print('Serialization of isFileDownloadSuccessful')
+file <- file(paste0('/tmp/isFileDownloadSuccessful_', id, '.json'))
+writeLines(toJSON(isFileDownloadSuccessful, auto_unbox=TRUE), file)
+close(file)
