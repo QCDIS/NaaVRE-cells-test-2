@@ -335,7 +335,7 @@ beehave_input <- function(input_map,
       xcor = round(coordsPolys[, 1] - coordsBees[, 1]),
       ycor = round(coordsPolys[, 2] - coordsBees[, 2])
     ) |>
-    select(c("id", "oldPatchID", "PatchType", "distance_m", "xcor", "ycor", "size_sqm"))
+    dplyr::select(c("id", "oldPatchID", "PatchType", "distance_m", "xcor", "ycor", "size_sqm"))
 
   values(location_area_poly) <- LocationAttributes
 
