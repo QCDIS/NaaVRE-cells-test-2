@@ -231,6 +231,10 @@ bee_location <- vect(
 
 lookup_table <- read.csv(locations_output$nectar_pollen_lookup_path)
 
+extract_list <- function(x) {
+  x[[1]]
+}
+
 beehave_input <- function(input_map,
                           bee_location,
                           lookup_table,
