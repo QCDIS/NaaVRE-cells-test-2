@@ -14,12 +14,14 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_buffer"), action="store", default=NA, type="integer", help="my description"), 
 make_option(c("--param_input_dir"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_locations"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_lookup_table"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_map"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_map_aux"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_model"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_output_dir"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_parameters"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_bucket"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
@@ -67,6 +69,13 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
+print("Retrieving param_buffer")
+var = opt$param_buffer
+print(var)
+var_len = length(var)
+print(paste("Variable param_buffer has length", var_len))
+
+param_buffer = opt$param_buffer
 print("Retrieving param_input_dir")
 var = opt$param_input_dir
 print(var)
@@ -109,6 +118,13 @@ var_len = length(var)
 print(paste("Variable param_model has length", var_len))
 
 param_model <- gsub("\"", "", opt$param_model)
+print("Retrieving param_output_dir")
+var = opt$param_output_dir
+print(var)
+var_len = length(var)
+print(paste("Variable param_output_dir has length", var_len))
+
+param_output_dir <- gsub("\"", "", opt$param_output_dir)
 print("Retrieving param_parameters")
 var = opt$param_parameters
 print(var)
