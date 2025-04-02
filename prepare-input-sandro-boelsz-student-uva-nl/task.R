@@ -15,6 +15,8 @@ if (!requireNamespace("readr", quietly = TRUE)) {
 }
 library(readr)
 
+secret_s3_access_id = Sys.getenv('secret_s3_access_id')
+secret_s3_secret_key = Sys.getenv('secret_s3_secret_key')
 
 print('option_list')
 option_list = list(
@@ -26,8 +28,14 @@ make_option(c("--param_input_dir"), action="store", default=NA, type="character"
 make_option(c("--param_locations"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_lookup_table"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_map"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_map_aux"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_model"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_output_dir"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_parameters"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_bucket"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_endpoint"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_region"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_s3_user_prefix"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_simulation"), action="store", default=NA, type="character", help="my description")
 )
 
@@ -112,6 +120,20 @@ var_len = length(var)
 print(paste("Variable param_map has length", var_len))
 
 param_map <- gsub("\"", "", opt$param_map)
+print("Retrieving param_map_aux")
+var = opt$param_map_aux
+print(var)
+var_len = length(var)
+print(paste("Variable param_map_aux has length", var_len))
+
+param_map_aux <- gsub("\"", "", opt$param_map_aux)
+print("Retrieving param_model")
+var = opt$param_model
+print(var)
+var_len = length(var)
+print(paste("Variable param_model has length", var_len))
+
+param_model <- gsub("\"", "", opt$param_model)
 print("Retrieving param_output_dir")
 var = opt$param_output_dir
 print(var)
@@ -126,6 +148,34 @@ var_len = length(var)
 print(paste("Variable param_parameters has length", var_len))
 
 param_parameters <- gsub("\"", "", opt$param_parameters)
+print("Retrieving param_s3_bucket")
+var = opt$param_s3_bucket
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_bucket has length", var_len))
+
+param_s3_bucket <- gsub("\"", "", opt$param_s3_bucket)
+print("Retrieving param_s3_endpoint")
+var = opt$param_s3_endpoint
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_endpoint has length", var_len))
+
+param_s3_endpoint <- gsub("\"", "", opt$param_s3_endpoint)
+print("Retrieving param_s3_region")
+var = opt$param_s3_region
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_region has length", var_len))
+
+param_s3_region <- gsub("\"", "", opt$param_s3_region)
+print("Retrieving param_s3_user_prefix")
+var = opt$param_s3_user_prefix
+print(var)
+var_len = length(var)
+print(paste("Variable param_s3_user_prefix has length", var_len))
+
+param_s3_user_prefix <- gsub("\"", "", opt$param_s3_user_prefix)
 print("Retrieving param_simulation")
 var = opt$param_simulation
 print(var)
