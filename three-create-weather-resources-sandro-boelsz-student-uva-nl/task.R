@@ -14,6 +14,10 @@ if (!requireNamespace("lubridate", quietly = TRUE)) {
 	install.packages("lubridate", repos="http://cran.us.r-project.org")
 }
 library(lubridate)
+if (!requireNamespace("purrr", quietly = TRUE)) {
+	install.packages("purrr", repos="http://cran.us.r-project.org")
+}
+library(purrr)
 if (!requireNamespace("raster", quietly = TRUE)) {
 	install.packages("raster", repos="http://cran.us.r-project.org")
 }
