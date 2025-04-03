@@ -9,6 +9,7 @@ dependencies:
   - r-lubridate
   - r-terra
   - r-Rcpp
+  - r-purrr
   - r-raster
   - r-stringr
   - r-rdwd
