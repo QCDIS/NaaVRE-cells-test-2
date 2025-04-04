@@ -1,4 +1,3 @@
-import requests
 
 import argparse
 import json
@@ -36,11 +35,7 @@ params = {
 }
 dataset_files2 = []
 while True:
-    list_files_response = requests.get(
-        url=api_url,
-        headers={"Authorization": ""},
-        params=params,
-    )
+    list_files_response = "no dep"
     list_files = list_files_response.json()
     dset_files = list_files.get("files")
     dset_files = [list(dset_file.values()) for dset_file in dset_files]
