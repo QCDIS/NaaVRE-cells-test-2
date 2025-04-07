@@ -5,10 +5,10 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
+  - r-glmmTMB
   - r-purrr
   - r-aws.s3
-  - r-tidyr
   - r-dplyr
-  - r-glmmTMB
+  - r-tidyr
   - papermill
   - ipykernel
