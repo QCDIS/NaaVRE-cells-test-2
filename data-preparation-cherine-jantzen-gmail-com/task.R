@@ -186,8 +186,10 @@ ls_by_window <- by_window %>%
   dplyr::rowwise() %>% 
   dplyr::pull(data, name = windowID)
 
+ls_by_window_sub <- ls_by_window[1:10]
+
 # capturing outputs
-print('Serialization of ls_by_window')
-file <- file(paste0('/tmp/ls_by_window_', id, '.json'))
-writeLines(toJSON(ls_by_window, auto_unbox=TRUE), file)
+print('Serialization of ls_by_window_sub')
+file <- file(paste0('/tmp/ls_by_window_sub_', id, '.json'))
+writeLines(toJSON(ls_by_window_sub, auto_unbox=TRUE), file)
 close(file)
