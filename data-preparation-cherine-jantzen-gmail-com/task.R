@@ -186,7 +186,7 @@ ls_by_window <- by_window %>%
   dplyr::rowwise() %>% 
   dplyr::pull(data, name = windowID)
 
-ls_by_window_sub <- ls_by_window[1]
+ls_by_window_sub <- ls_by_window[1:2]
 
 # capturing outputs
 print('Serialization of ls_by_window_sub')
