@@ -28,7 +28,7 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--ls_by_window"), action="store", default=NA, type="character", help="my description")
+make_option(c("--ls_by_window_sub"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -70,15 +70,15 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving ls_by_window")
-var = opt$ls_by_window
+print("Retrieving ls_by_window_sub")
+var = opt$ls_by_window_sub
 print(var)
 var_len = length(var)
-print(paste("Variable ls_by_window has length", var_len))
+print(paste("Variable ls_by_window_sub has length", var_len))
 
-print("------------------------Running var_serialization for ls_by_window-----------------------")
-print(opt$ls_by_window)
-ls_by_window = var_serialization(opt$ls_by_window)
+print("------------------------Running var_serialization for ls_by_window_sub-----------------------")
+print(opt$ls_by_window_sub)
+ls_by_window_sub = var_serialization(opt$ls_by_window_sub)
 print("---------------------------------------------------------------------------------")
 
 
