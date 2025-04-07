@@ -99,8 +99,10 @@ param_minio_user_prefix <- gsub("\"", "", opt$param_minio_user_prefix)
 
 print("Running the cell")
 
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
 install.packages("aws.s3")
-install.packages("glmmTMB", type = "source")
+install.packages("glmmTMB")
 install.packages("dplyr")
 install.packages("purrr")
 install.packages("tidyr")
