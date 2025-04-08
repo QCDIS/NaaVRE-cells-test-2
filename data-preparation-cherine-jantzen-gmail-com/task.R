@@ -204,9 +204,9 @@ batch_filenames <- purrr::map(.x = c(0 : (no_batches - 1)),
                                   
                                 }
                                 
-                                save(batch, file = paste0("data/list_batch_", (.x + 1), ".rda"))
+                                save(batch, file = paste0("/tmp/data/list_batch_", (.x + 1), ".rda"))
                                 
-                                output <- paste0("data/list_batch_", (.x + 1), ".rda")
+                                output <- paste0("/tmp/data/list_batch_", (.x + 1), ".rda")
                                 
            })
 # capturing outputs
