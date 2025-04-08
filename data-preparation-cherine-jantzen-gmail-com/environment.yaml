@@ -6,9 +6,9 @@ dependencies:
   - python>=3.8
   - nbconvert
   - r-glmmTMB
-  - r-tidyr
-  - r-purrr
   - r-dplyr
+  - r-purrr
+  - r-tidyr
   - r-aws.s3
   - papermill
   - ipykernel
