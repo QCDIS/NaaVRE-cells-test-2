@@ -27,8 +27,8 @@ library(tidyr)
 print('option_list')
 option_list = list(
 
-make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--ls_by_window_file"), action="store", default=NA, type="character", help="my description")
+make_option(c("--batch_filenames"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--id"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -63,6 +63,17 @@ var_serialization <- function(var){
     )
 }
 
+print("Retrieving batch_filenames")
+var = opt$batch_filenames
+print(var)
+var_len = length(var)
+print(paste("Variable batch_filenames has length", var_len))
+
+print("------------------------Running var_serialization for batch_filenames-----------------------")
+print(opt$batch_filenames)
+batch_filenames = var_serialization(opt$batch_filenames)
+print("---------------------------------------------------------------------------------")
+
 print("Retrieving id")
 var = opt$id
 print(var)
@@ -70,18 +81,12 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving ls_by_window_file")
-var = opt$ls_by_window_file
-print(var)
-var_len = length(var)
-print(paste("Variable ls_by_window_file has length", var_len))
-
-ls_by_window_file <- gsub("\"", "", opt$ls_by_window_file)
 
 
 print("Running the cell")
 
-load(ls_by_window_file)
+
+load(batch_filenamesoutput)
 
 model_maxTempT1 <- function(datfr) {
   
