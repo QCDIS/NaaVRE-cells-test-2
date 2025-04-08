@@ -23,11 +23,12 @@ id = args.id
 
     
 
-occ_taxa = "BioDT-demo-biotope/data/input/Cimpal_resources/occurrence.txt"#f"{conf_data_dir}/input/Cimpal_resources"
-biotope_shp_path_file = "BioDT-demo-biotope/data/input/Cimpal_resources/shapefiles_cimpal.zip"#f"{conf_data_dir}/input/Cimpal_resources"
-weight_file = "BioDT-demo-biotope/data/input/Cimpal_resources/weight_wp.csv"#f"{conf_data_dir}/input/Cimpal_resources/weight_wp.csv"
-pathway_file = "BioDT-demo-biotope/data/input/Cimpal_resources/CIMPAL_paths.csv"#f"{conf_data_dir}/input/Cimpal_resources/CIMPAL_paths.csv"
-zones_file = "BioDT-demo-biotope/data/input/zones" #f"{conf_data_dir}/input/zones"
+    
+occ_taxa = "BioDT-demo-biotope/data/input/Cimpal_resources/"
+biotope_shp_path_file = "BioDT-demo-biotope/data/input/Cimpal_resources"
+weight_file = "BioDT-demo-biotope/data/input/Cimpal_resources/weight_wp.csv"
+pathway_file = "BioDT-demo-biotope/data/input/Cimpal_resources/CIMPAL_paths.csv"
+zones_file = "BioDT-demo-biotope/data/input/zones"
 
 print("occ_taxa:", occ_taxa)
 print("biotope_shp_path_file:", biotope_shp_path_file)
