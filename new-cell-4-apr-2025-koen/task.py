@@ -1,9 +1,11 @@
+import requests
 
 import argparse
 import json
 import os
 arg_parser = argparse.ArgumentParser()
 
+secret_key_knmi_api = os.getenv('secret_key_knmi_api')
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
@@ -19,11 +21,10 @@ id = args.id
 init_complete = args.init_complete.replace('"','')
 
 
-conf_radars = conf_radars = {'HRW': ['radar_volume_full_herwijnen', 1.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files', 'NL/HRW'], 'DHL': ['radar_volume_full_denhelder', 2.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_denhelder/versions/2.0/files', 'NL/DHL']}
 
 start_ts = "2019-12-31T23:00+00:00" 
 end_ts = "2019-12-31T23:00+00:00" 
-datasetName, datasetVersion, api_url, _ = conf_radars.get("")
+datasetName, datasetVersion, api_url, _ = "naka", "laka", "url1", "se"
 params = {
     "datasetName": datasetName,
     "datasetVersion": datasetVersion,
@@ -35,7 +36,11 @@ params = {
 }
 dataset_files2 = []
 while True:
-    list_files_response = "no dep"
+    list_files_response = requests.get(
+        url=api_url,
+        headers={"Authorization": secret_key_knmi_api},
+        params=params,
+    )
     list_files = list_files_response.json()
     dset_files = list_files.get("files")
     dset_files = [list(dset_file.values()) for dset_file in dset_files]
