@@ -28,10 +28,10 @@ param_s3_prefix_input = args.param_s3_prefix_input.replace('"','')
 param_s3_secret_key = args.param_s3_secret_key.replace('"','')
 param_s3_server = args.param_s3_server.replace('"','')
 
-conf_data_dir = 'BioDT-demo-biotope/data'
+conf_data_dir = '/BioDT-demo-biotope/data'
 
 
-conf_data_dir = 'BioDT-demo-biotope/data'
+conf_data_dir = '/BioDT-demo-biotope/data'
 
 
 
