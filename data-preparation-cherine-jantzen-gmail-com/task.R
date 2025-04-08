@@ -188,8 +188,12 @@ ls_by_window <- by_window %>%
 
 ls_by_window_sub <- ls_by_window[1:2]
 
+dir.create("/tmp/data")
+
+ls_by_window_file <- "/tmp/data/ls_by_window.rda"
+save(ls_by_window_sub, file = ls_by_window_file)
 # capturing outputs
-print('Serialization of ls_by_window_sub')
-file <- file(paste0('/tmp/ls_by_window_sub_', id, '.json'))
-writeLines(toJSON(ls_by_window_sub, auto_unbox=TRUE), file)
+print('Serialization of ls_by_window_file')
+file <- file(paste0('/tmp/ls_by_window_file_', id, '.json'))
+writeLines(toJSON(ls_by_window_file, auto_unbox=TRUE), file)
 close(file)
