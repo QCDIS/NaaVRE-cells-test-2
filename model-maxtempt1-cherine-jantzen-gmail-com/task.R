@@ -23,12 +23,10 @@ if (!requireNamespace("tidyr", quietly = TRUE)) {
 }
 library(tidyr)
 
-batch_filenames = Sys.getenv('batch_filenames')
 
 print('option_list')
 option_list = list(
 
-make_option(c("--batch_filenames"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--batch_filenames"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description")
 )
@@ -64,17 +62,6 @@ var_serialization <- function(var){
         }
     )
 }
-
-print("Retrieving batch_filenames")
-var = opt$batch_filenames
-print(var)
-var_len = length(var)
-print(paste("Variable batch_filenames has length", var_len))
-
-print("------------------------Running var_serialization for batch_filenames-----------------------")
-print(opt$batch_filenames)
-batch_filenames = var_serialization(opt$batch_filenames)
-print("---------------------------------------------------------------------------------")
 
 print("Retrieving batch_filenames")
 var = opt$batch_filenames
