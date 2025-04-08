@@ -101,6 +101,8 @@ print("Running the cell")
 
 options(repos = c(CRAN = "https://cloud.r-project.org"))
 
+dir.create("/tmp/data")
+
 install.packages("aws.s3")
 install.packages("glmmTMB")
 install.packages("dplyr")
@@ -171,7 +173,7 @@ di_sub <- di %>%
                 prec_sumGrow, prec_sumSummer_T1, prec_sumSummer_T2)
 
 summer_windows <- all_windows %>% 
-  dplyr::filter(Start_DOY > 119)
+  dplyr::filter(Start_DOY > 119 , End_DOY < 130)
 
 di_win <- di_sub %>% 
   dplyr::left_join(summer_windows %>%
@@ -186,14 +188,27 @@ ls_by_window <- by_window %>%
   dplyr::rowwise() %>% 
   dplyr::pull(data, name = windowID)
 
-ls_by_window_sub <- ls_by_window[1:2]
+no_batches <- 16
 
-dir.create("/tmp/data")
+batch_size <- floor(length(ls_by_window) / no_batches)
 
-ls_by_window_file <- "/tmp/data/ls_by_window.rda"
-save(ls_by_window_sub, file = ls_by_window_file)
 
-batch_filenames <- list(ls_by_window_file)
+batch_filenames <- purrr::map(.x = c(0 : (no_batches - 1)),
+                              .f = ~ {
+                                
+                                batch <- ls_by_window[(.x * batch_size + 1) : ((.x + 1) * batch_size)]
+                                
+                                if (.x == (no_batches - 1)) {
+                                  
+                                  batch <- ls_by_window[(.x * batch_size + 1) : length(ls_by_window)]
+                                  
+                                }
+                                
+                                save(batch, file = paste0("data/list_batch_", (.x + 1), ".rda"))
+                                
+                                output <- paste0("data/list_batch_", (.x + 1), ".rda")
+                                
+           })
 # capturing outputs
 print('Serialization of batch_filenames')
 file <- file(paste0('/tmp/batch_filenames_', id, '.json'))
