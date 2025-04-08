@@ -28,8 +28,7 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_minio_user_prefix"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--summary_maxTempT1_file"), action="store", default=NA, type="character", help="my description")
+make_option(c("--model_output"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -71,25 +70,22 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving param_minio_user_prefix")
-var = opt$param_minio_user_prefix
+print("Retrieving model_output")
+var = opt$model_output
 print(var)
 var_len = length(var)
-print(paste("Variable param_minio_user_prefix has length", var_len))
+print(paste("Variable model_output has length", var_len))
 
-param_minio_user_prefix <- gsub("\"", "", opt$param_minio_user_prefix)
-print("Retrieving summary_maxTempT1_file")
-var = opt$summary_maxTempT1_file
-print(var)
-var_len = length(var)
-print(paste("Variable summary_maxTempT1_file has length", var_len))
+print("------------------------Running var_serialization for model_output-----------------------")
+print(opt$model_output)
+model_output = var_serialization(opt$model_output)
+print("---------------------------------------------------------------------------------")
 
-summary_maxTempT1_file <- gsub("\"", "", opt$summary_maxTempT1_file)
 
 
 print("Running the cell")
 
-load(summary_maxTempT1_file)
+load(model_output)
 
 put_object(
     bucket = "naa-vre-user-data",
