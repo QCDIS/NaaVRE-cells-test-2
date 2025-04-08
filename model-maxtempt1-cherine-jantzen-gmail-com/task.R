@@ -97,7 +97,7 @@ model_maxTempT1 <- function(datfr) {
 }
 
 
-summary_maxTempT1 <- lapply(ls_by_window, model_maxTempT1)
+summary_maxTempT1 <- lapply(ls_by_window_sub, model_maxTempT1)
 
 summary_maxTempT1_file <- "/tmp/data/summary_maxTempT1.rda"
 save(summary_maxTempT1, file = summary_maxTempT1_file)
