@@ -28,10 +28,10 @@ param_s3_prefix_input = args.param_s3_prefix_input.replace('"','')
 param_s3_secret_key = args.param_s3_secret_key.replace('"','')
 param_s3_server = args.param_s3_server.replace('"','')
 
-conf_data_dir = '/tmp/data'
+conf_data_dir = '/BioDT-demo-biotope/data'
 
 
-conf_data_dir = '/tmp/data'
+conf_data_dir = '/BioDT-demo-biotope/data'
 
 
 
@@ -49,6 +49,12 @@ biotope_shp_path_file = f"{conf_data_dir}/input/Cimpal_resources"
 weight_file = f"{conf_data_dir}/input/Cimpal_resources/weight_wp.csv"
 pathway_file = f"{conf_data_dir}/input/Cimpal_resources/CIMPAL_paths.csv"
 zones_file = f"{conf_data_dir}/input/zones"
+
+print("occ_taxa:", occ_taxa)
+print("biotope_shp_path_file:", biotope_shp_path_file)
+print("weight_file:", weight_file)
+print("pathway_file:", pathway_file)
+print("zones_file:", zones_file)
 
 file_occ_taxa = open("/tmp/occ_taxa_" + id + ".json", "w")
 file_occ_taxa.write(json.dumps(occ_taxa))
