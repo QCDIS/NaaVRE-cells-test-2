@@ -28,7 +28,7 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--ls_by_window_sub"), action="store", default=NA, type="character", help="my description")
+make_option(c("--ls_by_window_file"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -70,21 +70,18 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving ls_by_window_sub")
-var = opt$ls_by_window_sub
+print("Retrieving ls_by_window_file")
+var = opt$ls_by_window_file
 print(var)
 var_len = length(var)
-print(paste("Variable ls_by_window_sub has length", var_len))
+print(paste("Variable ls_by_window_file has length", var_len))
 
-print("------------------------Running var_serialization for ls_by_window_sub-----------------------")
-print(opt$ls_by_window_sub)
-ls_by_window_sub = var_serialization(opt$ls_by_window_sub)
-print("---------------------------------------------------------------------------------")
-
+ls_by_window_file <- gsub("\"", "", opt$ls_by_window_file)
 
 
 print("Running the cell")
 
+load(ls_by_window_file)
 
 model_maxTempT1 <- function(datfr) {
   
@@ -101,8 +98,11 @@ model_maxTempT1 <- function(datfr) {
 
 
 summary_maxTempT1 <- lapply(ls_by_window, model_maxTempT1)
+
+summary_maxTempT1_file <- "/tmp/data/summary_maxTempT1.rda"
+save(summary_maxTempT1, file = summary_maxTempT1_file)
 # capturing outputs
-print('Serialization of summary_maxTempT1')
-file <- file(paste0('/tmp/summary_maxTempT1_', id, '.json'))
-writeLines(toJSON(summary_maxTempT1, auto_unbox=TRUE), file)
+print('Serialization of summary_maxTempT1_file')
+file <- file(paste0('/tmp/summary_maxTempT1_file_', id, '.json'))
+writeLines(toJSON(summary_maxTempT1_file, auto_unbox=TRUE), file)
 close(file)
