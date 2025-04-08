@@ -102,12 +102,17 @@ model_maxTempT1 <- function(datfr) {
 }
 
 
-summary_maxTempT1 <- lapply(batch, model_maxTempT1)
+summary_maxTempT1 <- purrr::map(.x = batch,
+                                .f = ~ {
+                                    
+                                    model_per_batch <- lapply(.x, model_maxTempT1)
+                                    
+                                    save(model_per_batch, file = paste0("/tmp/data/model-summary_batch_", (.x), ".rda"))
+                                
+                                    output <- paste0("/tmp/data/model-summary_batch_", (.x + 1), ".rda")
+                                    })
 
-summary_maxTempT1_file <- "/tmp/data/summary_maxTempT1.rda"
-save(summary_maxTempT1, file = summary_maxTempT1_file)
-
-model_output <- list(summary_maxTempT1_file)
+model_output <- list(summary_maxTempT1)
 # capturing outputs
 print('Serialization of model_output')
 file <- file(paste0('/tmp/model_output_', id, '.json'))
