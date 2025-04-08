@@ -192,8 +192,10 @@ dir.create("/tmp/data")
 
 ls_by_window_file <- "/tmp/data/ls_by_window.rda"
 save(ls_by_window_sub, file = ls_by_window_file)
+
+batch_filenames <- list(ls_by_window_file)
 # capturing outputs
-print('Serialization of ls_by_window_file')
-file <- file(paste0('/tmp/ls_by_window_file_', id, '.json'))
-writeLines(toJSON(ls_by_window_file, auto_unbox=TRUE), file)
+print('Serialization of batch_filenames')
+file <- file(paste0('/tmp/batch_filenames_', id, '.json'))
+writeLines(toJSON(batch_filenames, auto_unbox=TRUE), file)
 close(file)
