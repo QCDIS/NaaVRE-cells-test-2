@@ -1,5 +1,3 @@
-from minio import Minio
-import os
 
 import argparse
 import json
@@ -10,11 +8,6 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--param_s3_access_key', action='store', type=str, required=True, dest='param_s3_access_key')
-arg_parser.add_argument('--param_s3_bucket_input', action='store', type=str, required=True, dest='param_s3_bucket_input')
-arg_parser.add_argument('--param_s3_prefix_input', action='store', type=str, required=True, dest='param_s3_prefix_input')
-arg_parser.add_argument('--param_s3_secret_key', action='store', type=str, required=True, dest='param_s3_secret_key')
-arg_parser.add_argument('--param_s3_server', action='store', type=str, required=True, dest='param_s3_server')
 
 args = arg_parser.parse_args()
 print(args)
@@ -22,33 +15,19 @@ print(args)
 id = args.id
 
 
-param_s3_access_key = args.param_s3_access_key.replace('"','')
-param_s3_bucket_input = args.param_s3_bucket_input.replace('"','')
-param_s3_prefix_input = args.param_s3_prefix_input.replace('"','')
-param_s3_secret_key = args.param_s3_secret_key.replace('"','')
-param_s3_server = args.param_s3_server.replace('"','')
-
-conf_data_dir = '/BioDT-demo-biotope/data'
-
-
-conf_data_dir = '/BioDT-demo-biotope/data'
 
 
 
-minio_client = Minio(param_s3_server, access_key=param_s3_access_key, secret_key=param_s3_secret_key, secure=True)
 
-for item in minio_client.list_objects(param_s3_bucket_input, prefix=f"{param_s3_prefix_input}", recursive=True):
-    target_file = f"{conf_data_dir}/input/{item.object_name.removeprefix(param_s3_prefix_input)}"
-    if not os.path.exists(target_file):
-        print("Downloading", item.object_name)
-        minio_client.fget_object(param_s3_bucket_input, item.object_name, target_file)
+
+
     
 
-occ_taxa = f"{conf_data_dir}/input/Cimpal_resources"
-biotope_shp_path_file = f"{conf_data_dir}/input/Cimpal_resources"
-weight_file = f"{conf_data_dir}/input/Cimpal_resources/weight_wp.csv"
-pathway_file = f"{conf_data_dir}/input/Cimpal_resources/CIMPAL_paths.csv"
-zones_file = f"{conf_data_dir}/input/zones"
+occ_taxa = "BioDT-demo-biotope/data/input/Cimpal_resources/occurrence.txt"#f"{conf_data_dir}/input/Cimpal_resources"
+biotope_shp_path_file = "BioDT-demo-biotope/data/input/Cimpal_resources/shapefiles_cimpal.zip"#f"{conf_data_dir}/input/Cimpal_resources"
+weight_file = "BioDT-demo-biotope/data/input/Cimpal_resources/weight_wp.csv"#f"{conf_data_dir}/input/Cimpal_resources/weight_wp.csv"
+pathway_file = "BioDT-demo-biotope/data/input/Cimpal_resources/CIMPAL_paths.csv"#f"{conf_data_dir}/input/Cimpal_resources/CIMPAL_paths.csv"
+zones_file = "BioDT-demo-biotope/data/input/zones" #f"{conf_data_dir}/input/zones"
 
 print("occ_taxa:", occ_taxa)
 print("biotope_shp_path_file:", biotope_shp_path_file)
