@@ -96,7 +96,7 @@ print("Running the cell")
 purrr::map(.x = model_output,
            .f = ~{
                
-               load()
+               load(.x)
                
                put_object(
                 bucket = "naa-vre-user-data",
