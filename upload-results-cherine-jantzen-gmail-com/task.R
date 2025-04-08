@@ -28,7 +28,8 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--model_output"), action="store", default=NA, type="character", help="my description")
+make_option(c("--model_output"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_minio_user_prefix"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -81,13 +82,29 @@ print(opt$model_output)
 model_output = var_serialization(opt$model_output)
 print("---------------------------------------------------------------------------------")
 
+print("Retrieving param_minio_user_prefix")
+var = opt$param_minio_user_prefix
+print(var)
+var_len = length(var)
+print(paste("Variable param_minio_user_prefix has length", var_len))
+
+param_minio_user_prefix <- gsub("\"", "", opt$param_minio_user_prefix)
 
 
 print("Running the cell")
 
-load(model_output)
+purrr::map(.x = model_output,
+           .f = ~{
+               
+               load()
+               
+               put_object(
+                bucket = "naa-vre-user-data",
+                file = "summary_maxTempT1.rda",
+                object = paste0(param_minio_user_prefix, "/model_output_maxTempT1.rda"))
+               }
+          )
 
-put_object(
-    bucket = "naa-vre-user-data",
-    file = "summary_maxTempT1.rda",
-    object = paste0(param_minio_user_prefix, "/model_output_maxTempT1.rda"))
+               
+               
+
