@@ -42,6 +42,7 @@ for item in minio_client.list_objects(param_s3_bucket_input, prefix=f"{param_s3_
     if not os.path.exists(target_file):
         print("Downloading", item.object_name)
         minio_client.fget_object(param_s3_bucket_input, item.object_name, target_file)
+    
 
 occ_taxa = f"{conf_data_dir}/input/Cimpal_resources"
 biotope_shp_path_file = f"{conf_data_dir}/input/Cimpal_resources"
