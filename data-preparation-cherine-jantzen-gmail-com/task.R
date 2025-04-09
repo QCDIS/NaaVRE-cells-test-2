@@ -173,7 +173,7 @@ di_sub <- di %>%
                 prec_sumGrow, prec_sumSummer_T1, prec_sumSummer_T2)
 
 summer_windows <- all_windows %>% 
-  dplyr::filter(Start_DOY > 119 , End_DOY < 130)
+  dplyr::filter(Start_DOY > 119)
 
 di_win <- di_sub %>% 
   dplyr::left_join(summer_windows %>%
