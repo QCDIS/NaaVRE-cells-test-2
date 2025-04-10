@@ -46,14 +46,8 @@ var_serialization <- function(var){
 
 print("Running the cell")
 names = list("Alice", "Bob")
-value = max(c(1, 2))
-value
 # capturing outputs
 print('Serialization of names')
 file <- file(paste0('/tmp/names_', id, '.json'))
 writeLines(toJSON(names, auto_unbox=TRUE), file)
-close(file)
-print('Serialization of value')
-file <- file(paste0('/tmp/value_', id, '.json'))
-writeLines(toJSON(value, auto_unbox=TRUE), file)
 close(file)
