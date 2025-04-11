@@ -22,7 +22,7 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--isFileDownloadSuccessful"), action="store", default=NA, type="integer", help="my description"), 
+make_option(c("--is_file_download_succesful"), action="store", default=NA, type="integer", help="my description"), 
 make_option(c("--param_buffer"), action="store", default=NA, type="integer", help="my description"), 
 make_option(c("--param_input_dir"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_locations"), action="store", default=NA, type="character", help="my description"), 
@@ -79,13 +79,13 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving isFileDownloadSuccessful")
-var = opt$isFileDownloadSuccessful
+print("Retrieving is_file_download_succesful")
+var = opt$is_file_download_succesful
 print(var)
 var_len = length(var)
-print(paste("Variable isFileDownloadSuccessful has length", var_len))
+print(paste("Variable is_file_download_succesful has length", var_len))
 
-isFileDownloadSuccessful = opt$isFileDownloadSuccessful
+is_file_download_succesful = opt$is_file_download_succesful
 print("Retrieving param_buffer")
 var = opt$param_buffer
 print(var)
@@ -199,7 +199,7 @@ library(readr)
 library(purrr)
 library(dplyr)
 
-if (!isFileDownloadSuccessful) {
+if (!is_file_download_succesful) {
   stop("File download failed! Stopping workflow.")
 } else {
   message("All files downloaded successfully. Proceeding with input preparation.")
@@ -254,7 +254,7 @@ simulation_df <- read_csv(
     start_day = col_character()
   )
 )
-locations_output <- list(
+locations_input <- list(
   id = location$id,
   lat = location$lat,
   lon = location$lon,
@@ -266,7 +266,7 @@ locations_output <- list(
   nectar_pollen_lookup_path = input_lookup_path
 )
     
-netlogo_output <- list(
+netlogo_input <- list(
   outpath = file.path(
     param_output_dir,
     paste0("output.csv")
@@ -281,11 +281,11 @@ netlogo_output <- list(
   start_day = simulation_df$start_day[1]
 )
 # capturing outputs
-print('Serialization of locations_output')
-file <- file(paste0('/tmp/locations_output_', id, '.json'))
-writeLines(toJSON(locations_output, auto_unbox=TRUE), file)
+print('Serialization of locations_input')
+file <- file(paste0('/tmp/locations_input_', id, '.json'))
+writeLines(toJSON(locations_input, auto_unbox=TRUE), file)
 close(file)
-print('Serialization of netlogo_output')
-file <- file(paste0('/tmp/netlogo_output_', id, '.json'))
-writeLines(toJSON(netlogo_output, auto_unbox=TRUE), file)
+print('Serialization of netlogo_input')
+file <- file(paste0('/tmp/netlogo_input_', id, '.json'))
+writeLines(toJSON(netlogo_input, auto_unbox=TRUE), file)
 close(file)
