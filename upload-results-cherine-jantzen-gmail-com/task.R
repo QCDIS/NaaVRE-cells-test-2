@@ -108,7 +108,7 @@ purrr::map(.x = model_output,
                put_object(
                 bucket = "naa-vre-user-data",
                 file = "summary_maxTempT1.rda",
-                object = paste0(param_minio_user_prefix, "/model_output_maxTempT1.rda"))
+                object = paste0(param_minio_user_prefix, "/model_output_maxTempT1_", .x, ".rda""/model_output_maxTempT1.rda"))
                }
           )
 
