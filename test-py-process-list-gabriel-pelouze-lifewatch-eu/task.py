@@ -22,10 +22,8 @@ names = json.loads(args.names)
 
 param_greeting = args.param_greeting.replace('"','')
 
-conf_secret_phrase = 'This is the secret word:'
+conf_secret_phrase = conf_secret_phrase = 'This is the secret word:'
 
-
-conf_secret_phrase = 'This is the secret word:'
 sentences = []
 for name in names:
     sentence = f"{param_greeting}, {name}! {conf_secret_phrase}: {secret_word}"
