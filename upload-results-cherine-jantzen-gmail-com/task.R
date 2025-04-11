@@ -23,12 +23,16 @@ if (!requireNamespace("tidyr", quietly = TRUE)) {
 }
 library(tidyr)
 
+secret_minio_access_key = Sys.getenv('secret_minio_access_key')
+secret_minio_secret_key = Sys.getenv('secret_minio_secret_key')
 
 print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--model_output"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_minio_endpoint"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--param_minio_region"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_minio_user_prefix"), action="store", default=NA, type="character", help="my description")
 )
 
@@ -82,6 +86,20 @@ print(opt$model_output)
 model_output = var_serialization(opt$model_output)
 print("---------------------------------------------------------------------------------")
 
+print("Retrieving param_minio_endpoint")
+var = opt$param_minio_endpoint
+print(var)
+var_len = length(var)
+print(paste("Variable param_minio_endpoint has length", var_len))
+
+param_minio_endpoint <- gsub("\"", "", opt$param_minio_endpoint)
+print("Retrieving param_minio_region")
+var = opt$param_minio_region
+print(var)
+var_len = length(var)
+print(paste("Variable param_minio_region has length", var_len))
+
+param_minio_region <- gsub("\"", "", opt$param_minio_region)
 print("Retrieving param_minio_user_prefix")
 var = opt$param_minio_user_prefix
 print(var)
@@ -92,13 +110,6 @@ param_minio_user_prefix <- gsub("\"", "", opt$param_minio_user_prefix)
 
 
 print("Running the cell")
-
-Sys.setenv(
-  "AWS_S3_ENDPOINT"  = param_minio_endpoint,
-  "AWS_DEFAULT_REGION" = param_minio_region,
-  "AWS_ACCESS_KEY_ID" = secret_minio_access_key,
-  "AWS_SECRET_ACCESS_KEY" = secret_minio_secret_key
-)
 
 purrr::map(.x = model_output,
            .f = ~{
