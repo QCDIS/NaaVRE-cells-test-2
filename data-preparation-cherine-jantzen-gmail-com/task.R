@@ -137,32 +137,14 @@ save_object(
 di <- read.csv("di.csv")
 df_climate <- read.csv("df_climate.csv")
 
-all_windows <- purrr::map(.x = c(7:214), # minimum window length 7 days, maximum length 214 days
-                          .f = ~{
-                            
-                            window_length <- .x
-                            
-                            
-                            temp_windows <- purrr::map(.x = (60:((274 + 1) - window_length)), 
-                                                       .f = ~{
-                                                         
-                                                         df_climate %>% 
-                                                           dplyr::group_by(year) %>% 
-                                                           dplyr::slice(.x:(.x + (window_length - 1))) %>% 
-                                                           dplyr::summarise(meanMeanWinTemp = mean(meanDayTemp, na.rm = TRUE), 
-                                                                            meanMaxWinTemp = mean(maxDayTemp, na.rm = TRUE),
-                                                                            meanMinWinTemp = mean(minDayTemp, na.rm = TRUE),
-                                                                            sumWinPrec = sum(sumDayPrec, na.rm = TRUE),
-                                                                            sumWinSunDuration = sum(sunDuration, na.rm = TRUE)) %>% 
-                                                           dplyr::mutate(Start_DOY = .x,
-                                                                         End_DOY = .x + (window_length - 1),
-                                                                         windowID = paste(Start_DOY, End_DOY, sep = "_"))
-                                                         
-                                                       }
-                            ) %>%  dplyr::bind_rows()
-                          }, .progress = TRUE) %>% 
-  dplyr::bind_rows()
 
+save_object(
+  bucket = "naa-vre-user-data",
+  object = paste0(param_minio_user_prefix, "/all_windows_climate_data.csv"),
+  file = "all_windows.csv"
+)
+
+all_windows <- read.csv("all_windows.csv")
 
 di_sub <- di %>% 
   dplyr::arrange(WinterYear) %>% 
