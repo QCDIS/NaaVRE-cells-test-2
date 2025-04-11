@@ -213,14 +213,15 @@ download_file <- function(s3_path, local_path, bucket) {
 
 results <- mapply(download_file, s3_locations, download_locations, param_s3_bucket)
 
-isFileDownloadSuccessful <- as.integer(all(results))
-if (isFileDownloadSuccessful == 1) {
+is_file_download_succesful <- as.integer(all(results))
+if (is_file_download_succesful == 1) {
   message("All files downloaded successfully!")
 } else {
   warning("Some files failed to download.")
+  stop("Some files failed to download.")
 }
 # capturing outputs
-print('Serialization of isFileDownloadSuccessful')
-file <- file(paste0('/tmp/isFileDownloadSuccessful_', id, '.json'))
-writeLines(toJSON(isFileDownloadSuccessful, auto_unbox=TRUE), file)
+print('Serialization of is_file_download_succesful')
+file <- file(paste0('/tmp/is_file_download_succesful_', id, '.json'))
+writeLines(toJSON(is_file_download_succesful, auto_unbox=TRUE), file)
 close(file)
