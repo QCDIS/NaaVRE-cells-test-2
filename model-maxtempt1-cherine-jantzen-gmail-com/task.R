@@ -104,16 +104,11 @@ model_maxTempT1 <- function(datfr) {
 
 summary_maxTempT1 <- lapply(batch, model_maxTempT1)
 
-model_output <- purrr::imap(.x = summary_maxTempT1,
-            .f = ~{
-                
-                file_name <- paste0("/tmp/data/summary_maxTempT1", .y, ".rda")
-                save(.x, file = file_name)
-                
-                file_name
-            })
 
+summary_maxTempT1_file <- paste0("/tmp/data/summary_maxTempT1_", stringr::str_extract(batch_filenames, pattern = "(?<=_)[^_]+(?=\\.rda)"), ".rda")
+save(summary_maxTempT1, file = summary_maxTempT1_file)
 
+model_output <- list(summary_maxTempT1_file)
 # capturing outputs
 print('Serialization of model_output')
 file <- file(paste0('/tmp/model_output_', id, '.json'))
