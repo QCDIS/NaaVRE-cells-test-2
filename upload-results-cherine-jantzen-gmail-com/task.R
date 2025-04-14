@@ -111,6 +111,13 @@ param_minio_user_prefix <- gsub("\"", "", opt$param_minio_user_prefix)
 
 print("Running the cell")
 
+Sys.setenv(
+  "AWS_S3_ENDPOINT"  = param_minio_endpoint,
+  "AWS_DEFAULT_REGION" = param_minio_region,
+  "AWS_ACCESS_KEY_ID" = secret_minio_access_key,
+  "AWS_SECRET_ACCESS_KEY" = secret_minio_secret_key
+)
+
 purrr::map(.x = model_output,
            .f = ~{
                
