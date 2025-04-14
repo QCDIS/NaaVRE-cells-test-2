@@ -129,7 +129,7 @@ purrr::map(.x = model_output,
                put_object(
                 bucket = "naa-vre-user-data",
                 file = .x,
-                object = paste0(param_minio_user_prefix, stringr::str_extract(.x, pattern = "(?<=_)[^_]+(?=\\.rda)"), ".rda")
+                object = paste0(param_minio_user_prefix, "/", stringr::str_extract(.x, pattern = "(?<=_)[^_]+(?=\\.rda)"), ".rda")
                )
                }
           )
