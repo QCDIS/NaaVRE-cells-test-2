@@ -114,11 +114,10 @@ print("Running the cell")
 purrr::map(.x = model_output,
            .f = ~{
                
-               load(.x)
                
                put_object(
                 bucket = "naa-vre-user-data",
-                file = paste0("summary_maxTempT1", .x, ".rda"),
+                file = paste0("/tmp/data/summary_maxTempT1", .x, ".rda"),
                 object = paste0(param_minio_user_prefix, "/model_output_maxTempT1_", .x, ".rda")
                )
                }
