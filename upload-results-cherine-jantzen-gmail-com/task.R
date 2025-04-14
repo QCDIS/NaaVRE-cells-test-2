@@ -18,6 +18,10 @@ if (!requireNamespace("purrr", quietly = TRUE)) {
 	install.packages("purrr", repos="http://cran.us.r-project.org")
 }
 library(purrr)
+if (!requireNamespace("stringr", quietly = TRUE)) {
+	install.packages("stringr", repos="http://cran.us.r-project.org")
+}
+library(stringr)
 if (!requireNamespace("tidyr", quietly = TRUE)) {
 	install.packages("tidyr", repos="http://cran.us.r-project.org")
 }
@@ -121,11 +125,11 @@ Sys.setenv(
 purrr::map(.x = model_output,
            .f = ~{
                
-               
+                          
                put_object(
                 bucket = "naa-vre-user-data",
-                file = paste0("/tmp/data/summary_maxTempT1", .x, ".rda"),
-                object = paste0(param_minio_user_prefix, "/model_output_maxTempT1_", .x, ".rda")
+                file = .x,
+                object = paste0(param_minio_user_prefix, stringr::str_extract(.x, pattern = "(?<=_)[^_]+(?=\\.rda)"), ".rda")
                )
                }
           )
