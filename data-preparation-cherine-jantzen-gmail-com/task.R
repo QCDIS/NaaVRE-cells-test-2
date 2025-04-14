@@ -108,12 +108,14 @@ install.packages("glmmTMB")
 install.packages("dplyr")
 install.packages("purrr")
 install.packages("tidyr")
+install.packages("stringr")
 
 library(dplyr)
 library(purrr)
 library(tidyr)
 library(glmmTMB)
 library(aws.s3)
+library(stringr)
                  
 Sys.setenv(
   "AWS_S3_ENDPOINT"  = param_minio_endpoint,
@@ -155,7 +157,7 @@ di_sub <- di %>%
                 prec_sumGrow, prec_sumSummer_T1, prec_sumSummer_T2)
 
 summer_windows <- all_windows %>% 
-  dplyr::filter(Start_DOY > 119, End_DOY < 135)
+  dplyr::filter(Start_DOY > 119)
 
 di_win <- di_sub %>% 
   dplyr::left_join(summer_windows %>%
