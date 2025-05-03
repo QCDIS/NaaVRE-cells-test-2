@@ -5,13 +5,13 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - r-stringr
-  - r-httr
-  - r-jsonlite
-  - r-purrr
-  - r-taxize
-  - r-lubridate
-  - r-tidyr
   - r-dplyr
+  - r-purrr
+  - r-httr
+  - r-lubridate
+  - r-taxize
+  - r-tidyr
+  - r-jsonlite
+  - r-stringr
   - papermill
   - ipykernel
