@@ -10,6 +10,10 @@ if (!requireNamespace("getRad", quietly = TRUE)) {
 	install.packages("getRad", repos="http://cran.us.r-project.org")
 }
 library(getRad)
+if (!requireNamespace("purrr", quietly = TRUE)) {
+	install.packages("purrr", repos="http://cran.us.r-project.org")
+}
+library(purrr)
 if (!requireNamespace("tidyr", quietly = TRUE)) {
 	install.packages("tidyr", repos="http://cran.us.r-project.org")
 }
@@ -69,7 +73,7 @@ print(var)
 var_len = length(var)
 print(paste("Variable odimcode has length", var_len))
 
-odimcode <- gsub("\"", "", opt$odimcode)
+odimcode = opt$odimcode
 print("Retrieving param_country")
 var = opt$param_country
 print(var)
@@ -90,13 +94,12 @@ library("getRad")
 library("tidyr")
 
 
-res <- getRad::weather_radars() |>
+odim_codes <- getRad::weather_radars() |>
     dplyr::filter(
         country == param_country, status == 1
     ) |>
     dplyr::select(odimcode)
-
-odim_codes <- list(res)
+odim_codes = list(odim_codes)
 # capturing outputs
 print('Serialization of odim_codes')
 file <- file(paste0('/tmp/odim_codes_', id, '.json'))
