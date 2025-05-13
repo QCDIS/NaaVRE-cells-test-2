@@ -5,9 +5,9 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - r-getRad
   - r-dplyr
   - r-purrr
   - r-tidyr
+  - r-getRad
   - papermill
   - ipykernel
