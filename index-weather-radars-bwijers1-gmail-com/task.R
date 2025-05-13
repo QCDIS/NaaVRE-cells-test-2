@@ -73,7 +73,7 @@ print(var)
 var_len = length(var)
 print(paste("Variable odimcode has length", var_len))
 
-odimcode = opt$odimcode
+odimcode <- gsub("\"", "", opt$odimcode)
 print("Retrieving param_country")
 var = opt$param_country
 print(var)
@@ -84,7 +84,6 @@ param_country <- gsub("\"", "", opt$param_country)
 
 
 print("Running the cell")
-
 
 
 
