@@ -80,6 +80,7 @@ param_number = opt$param_number
 
 
 print("Running the cell")
+param_filename = "default_filename"
 package_version <- as.character(packageVersion("bioRad"))
 file_content <- paste("version of biorad:", package_version, "param_number:", as.character(param_number), sep=" ")
-writeLines(file_content, con = "package_version_file.txt")
+writeLines(file_content, con = paste(param_filename,".txt"))
