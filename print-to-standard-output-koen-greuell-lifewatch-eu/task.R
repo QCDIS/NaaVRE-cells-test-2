@@ -28,7 +28,7 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--param_number"), action="store", default=NA, type="integer", help="my description")
+make_option(c("--param_package"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -70,15 +70,15 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving param_number")
-var = opt$param_number
+print("Retrieving param_package")
+var = opt$param_package
 print(var)
 var_len = length(var)
-print(paste("Variable param_number has length", var_len))
+print(paste("Variable param_package has length", var_len))
 
-param_number = opt$param_number
+param_package <- gsub("\"", "", opt$param_package)
 
 
 print("Running the cell")
-package_version <- as.character(packageVersion("bioRad"))
-print(paste("version of biorad:", package_version, "param_number:", as.character(param_number), sep=" "))
+package_version <- as.character(packageVersion(param_package))
+print(paste("version of", param_package,":", package_version, sep=" "))
