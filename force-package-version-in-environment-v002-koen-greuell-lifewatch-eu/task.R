@@ -89,6 +89,8 @@ param_version <- gsub("\"", "", opt$param_version)
 
 print("Running the cell")
 remotes::install_version(package = param_package, version=param_version, repos = "https://cloud.r-project.org/")
+package_version <- as.character(packageVersion(package_name))
+print(paste("version of", package_name,":", package_version, sep=" "))
 package_name <- param_package
 # capturing outputs
 print('Serialization of package_name')
