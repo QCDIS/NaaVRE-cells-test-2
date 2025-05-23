@@ -6,10 +6,18 @@ if (!requireNamespace("bioRad", quietly = TRUE)) {
 	install.packages("bioRad", repos="http://cran.us.r-project.org")
 }
 library(bioRad)
+if (!requireNamespace("devtools", quietly = TRUE)) {
+	install.packages("devtools", repos="http://cran.us.r-project.org")
+}
+library(devtools)
 if (!requireNamespace("getRad", quietly = TRUE)) {
 	install.packages("getRad", repos="http://cran.us.r-project.org")
 }
 library(getRad)
+if (!requireNamespace("remotes", quietly = TRUE)) {
+	install.packages("remotes", repos="http://cran.us.r-project.org")
+}
+library(remotes)
 if (!requireNamespace("vol2birdR", quietly = TRUE)) {
 	install.packages("vol2birdR", repos="http://cran.us.r-project.org")
 }
