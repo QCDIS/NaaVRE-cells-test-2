@@ -1,0 +1,17 @@
+name: venv
+channels:
+  - conda-forge
+dependencies:
+  - pip
+  - python>=3.8
+  - nbconvert
+  - r-lubridate
+  - r-purrr
+  - r-dplyr
+  - r-tidyr
+  - r-stringr
+  - r-jsonlite
+  - r-httr
+  - r-readr
+  - papermill
+  - ipykernel
