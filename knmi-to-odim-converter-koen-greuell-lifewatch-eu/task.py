@@ -21,7 +21,6 @@ arg_parser.add_argument('--id', action='store', type=str, required=True, dest='i
 arg_parser.add_argument('--knmi_pvol_paths', action='store', type=str, required=True, dest='knmi_pvol_paths')
 
 arg_parser.add_argument('--param_clean_knmi_input', action='store', type=str, required=True, dest='param_clean_knmi_input')
-arg_parser.add_argument('--param_jupyterhub_user', action='store', type=str, required=True, dest='param_jupyterhub_user')
 arg_parser.add_argument('--param_upload_results', action='store', type=str, required=True, dest='param_upload_results')
 
 args = arg_parser.parse_args()
@@ -32,12 +31,13 @@ id = args.id
 knmi_pvol_paths = json.loads(args.knmi_pvol_paths)
 
 param_clean_knmi_input = args.param_clean_knmi_input.replace('"','')
-param_jupyterhub_user = args.param_jupyterhub_user.replace('"','')
 param_upload_results = args.param_upload_results.replace('"','')
 
 conf_local_radar_db = '/tmp/data/conf/OPERA_RADARS_DB.json'
 
 conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
+
+conf_minio_tutorial_prefix = 'ravl-tutorial'
 
 conf_pvol_output_prefix = 'pvol'
 
@@ -48,6 +48,7 @@ conf_minio_user_bucket_name = 'naa-vre-user-data'
 
 conf_local_radar_db = '/tmp/data/conf/OPERA_RADARS_DB.json'
 conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
+conf_minio_tutorial_prefix = 'ravl-tutorial'
 conf_pvol_output_prefix = 'pvol'
 conf_local_odim = '/tmp/data/odim'
 conf_minio_user_bucket_name = 'naa-vre-user-data'
@@ -215,12 +216,12 @@ if str2bool(param_upload_results):
         secret_key=secret_minio_secret_key,
         secure=True,
     )
-    print(f"Uploading results to {param_jupyterhub_user}/{conf_pvol_output_prefix}")
+    print(f"Uploading results to {conf_minio_tutorial_prefix}/{conf_pvol_output_prefix}")
     for odim_pvol_path in odim_pvol_paths:
         odim_pvol_path = pathlib.Path(odim_pvol_path)
         local_pvol_storage = pathlib.Path(conf_local_odim)
         relative_path = odim_pvol_path.relative_to(local_pvol_storage)
-        remote_odim_pvol_path = pathlib.Path(param_jupyterhub_user).joinpath(conf_pvol_output_prefix).joinpath(relative_path)
+        remote_odim_pvol_path = pathlib.Path(conf_minio_tutorial_prefix).joinpath(conf_pvol_output_prefix).joinpath(relative_path)
         exists = False
         try:
             _ = minioClient.stat_object(
