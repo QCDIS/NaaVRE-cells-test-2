@@ -1,3 +1,4 @@
+import numpy as np
 
 import argparse
 import json
@@ -17,8 +18,8 @@ id = args.id
 
 
 
-c = 1
+n = int(np.random.random())
 
-file_c = open("/tmp/c_" + id + ".json", "w")
-file_c.write(json.dumps(c))
-file_c.close()
+file_n = open("/tmp/n_" + id + ".json", "w")
+file_n.write(json.dumps(n))
+file_n.close()
