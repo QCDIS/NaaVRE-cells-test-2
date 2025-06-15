@@ -56,6 +56,7 @@ print(
 
 
 df = pd.read_csv('/app/data/discharge.csv')
+df = df.head(30)
 df  = df.to_dict(orient="records")           # list[dict]
 
 file_df = open("/tmp/df_" + id + ".json", "w")
