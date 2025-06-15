@@ -18,7 +18,7 @@ id = args.id
 
 
 
-df = pd.read_csv('discharge.csv')
+df = pd.read_csv('/tmp/data/discharge.csv')
 
 file_df = open("/tmp/df_" + id + ".json", "w")
 file_df.write(json.dumps(df))
