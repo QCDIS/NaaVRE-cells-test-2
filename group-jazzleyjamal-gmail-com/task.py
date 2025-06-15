@@ -25,6 +25,7 @@ df = df[df['Battery'] == 'B0005']
 df = df[df['Temperature_measured'] > 36] #choose battery B0005
 dfb = df.groupby(['id_cycle']).max()
 dfb['Cumulated_T'] = dfb['Time'].cumsum()
+dfbrecords  = dfb.to_dict(orient="records")           # list[dict]
 
 file_dfb = open("/tmp/dfb_" + id + ".json", "w")
 file_dfb.write(json.dumps(dfb))
