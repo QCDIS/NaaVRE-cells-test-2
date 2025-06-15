@@ -55,7 +55,7 @@ print(
 )
 
 
-df = pd.read_csv('/tmp/data/discharge.csv')
+df = pd.read_csv('/app/data/discharge.csv')
 
 file_df = open("/tmp/df_" + id + ".json", "w")
 file_df.write(json.dumps(df))
