@@ -77,7 +77,7 @@ print(var)
 var_len = length(var)
 print(paste("Variable filename has length", var_len))
 
-filename <- gsub("\"", "", opt$filename)
+filename = opt$filename
 print("Retrieving id")
 var = opt$id
 print(var)
