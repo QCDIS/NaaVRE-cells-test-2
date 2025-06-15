@@ -1,3 +1,4 @@
+import plotly.express as px
 
 import argparse
 import json
@@ -8,7 +9,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--df', action='store', type=str, required=True, dest='df')
+arg_parser.add_argument('--dfb', action='store', type=str, required=True, dest='dfb')
 
 
 args = arg_parser.parse_args()
@@ -16,15 +17,27 @@ print(args)
 
 id = args.id
 
-df = json.loads(args.df)
+dfb = json.loads(args.dfb)
 
 
 
-df = df[df['Battery'] == 'B0005']
-df = df[df['Temperature_measured'] > 36] #choose battery B0005
-dfb = df.groupby(['id_cycle']).max()
-dfb['Cumulated_T'] = dfb['Time'].cumsum()
+fig = px.scatter_matrix(dfb.drop(columns=['Time','type', 'ambient_temperature', 
+                                          'time', 'Battery']), 
+                                )
+fig.update_traces(marker=dict(size=2,
+                              color='crimson',
+                              symbol='square')),
+fig.update_traces(diagonal_visible=False)
+fig.update_layout(
+    title='Battery dataset',
+    width=900,
+    height=1200,
+)
+fig.update_layout({'plot_bgcolor': '#f2f8fd',
+                   'paper_bgcolor': 'white',}, 
+                    template='plotly_white',
+                    font=dict(size=7)
+                    )
 
-file_dfb = open("/tmp/dfb_" + id + ".json", "w")
-file_dfb.write(json.dumps(dfb))
-file_dfb.close()
+fig.show()
+
