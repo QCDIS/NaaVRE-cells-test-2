@@ -30,10 +30,10 @@ param_interval = args.param_interval
 param_radar = args.param_radar.replace('"','')
 param_start_date = args.param_start_date.replace('"','')
 
-conf_radars = {'HRW': ['radar_volume_full_herwijnen', 1.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files', 'NL/HRW'], 'herwijnen': ['radar_volume_full_herwijnen', 1.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files', 'NL/HRW'], 'DHL': ['radar_volume_full_denhelder', 2.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_denhelder/versions/2.0/files', 'NL/DHL'], 'den helder': ['radar_volume_full_denhelder', 2.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_denhelder/versions/2.0/files', 'NL/DHL']}
+conf_radars = {'hrw': ['radar_volume_full_herwijnen', 1.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files', 'NL/HRW'], 'herwijnen': ['radar_volume_full_herwijnen', 1.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files', 'NL/HRW'], 'dhl': ['radar_volume_full_denhelder', 2.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_denhelder/versions/2.0/files', 'NL/DHL'], 'den helder': ['radar_volume_full_denhelder', 2.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_denhelder/versions/2.0/files', 'NL/DHL']}
 
 
-conf_radars = {'HRW': ['radar_volume_full_herwijnen', 1.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files', 'NL/HRW'], 'herwijnen': ['radar_volume_full_herwijnen', 1.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files', 'NL/HRW'], 'DHL': ['radar_volume_full_denhelder', 2.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_denhelder/versions/2.0/files', 'NL/DHL'], 'den helder': ['radar_volume_full_denhelder', 2.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_denhelder/versions/2.0/files', 'NL/DHL']}
+conf_radars = {'hrw': ['radar_volume_full_herwijnen', 1.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files', 'NL/HRW'], 'herwijnen': ['radar_volume_full_herwijnen', 1.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files', 'NL/HRW'], 'dhl': ['radar_volume_full_denhelder', 2.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_denhelder/versions/2.0/files', 'NL/DHL'], 'den helder': ['radar_volume_full_denhelder', 2.0, 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_denhelder/versions/2.0/files', 'NL/DHL']}
 """
 consume dummy var from config to signal workflow start
 There is something dodgy going on with how
@@ -57,7 +57,7 @@ else:
 
 start_ts = param_start_date
 end_ts = param_end_date
-datasetName, datasetVersion, api_url, _ = conf_radars.get(param_radar)
+datasetName, datasetVersion, api_url, _ = conf_radars.get(param_radar.lower())
 params = {
     "datasetName": datasetName,
     "datasetVersion": datasetVersion,
