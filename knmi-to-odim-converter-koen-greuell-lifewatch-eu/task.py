@@ -35,26 +35,32 @@ param_clean_knmi_input = args.param_clean_knmi_input.replace('"','')
 param_upload_results = args.param_upload_results.replace('"','')
 param_user_number = args.param_user_number.replace('"','')
 
-conf_local_radar_db = '/tmp/data/conf/OPERA_RADARS_DB.json'
-
-conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
-
 conf_minio_tutorial_prefix = 'ravl-tutorial'
+
+conf_public_data = 1
+
+conf_minio_shared_data_directory = 'shared_data'
 
 conf_user_directory = 'user'
 
 conf_pvol_output_prefix = 'pvol'
+
+conf_local_radar_db = '/tmp/data/conf/OPERA_RADARS_DB.json'
+
+conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
 
 conf_local_odim = '/tmp/data/odim'
 
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 
 
-conf_local_radar_db = '/tmp/data/conf/OPERA_RADARS_DB.json'
-conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
 conf_minio_tutorial_prefix = 'ravl-tutorial'
+conf_public_data = 1
+conf_minio_shared_data_directory = 'shared_data'
 conf_user_directory = 'user'
 conf_pvol_output_prefix = 'pvol'
+conf_local_radar_db = '/tmp/data/conf/OPERA_RADARS_DB.json'
+conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
 conf_local_odim = '/tmp/data/odim'
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 """
@@ -187,6 +193,12 @@ def knmi_to_odim(in_fpath, out_fpath):
     returncode = int(proc.returncode)
     return (out_fpath, returncode, output)
 
+def get_pvol_storage_path(relative_path: str = "") -> str:
+    return pathlib.Path(
+        conf_minio_tutorial_prefix).joinpath(
+        conf_minio_shared_data_directory if conf_public_data else conf_user_directory+param_user_number).joinpath(
+        conf_pvol_output_prefix).joinpath(
+        relative_path)
 
 print(f"{knmi_pvol_paths=}")
 odim_pvol_paths = []
@@ -221,12 +233,12 @@ if str2bool(param_upload_results):
         secret_key=secret_minio_secret_key,
         secure=True,
     )
-    print(f"Uploading results to {conf_minio_tutorial_prefix}/{conf_user_directory+param_user_number}/{conf_pvol_output_prefix}")
+    print(f"Uploading results to {get_pvol_storage_path()}")
     for odim_pvol_path in odim_pvol_paths:
         odim_pvol_path = pathlib.Path(odim_pvol_path)
         local_pvol_storage = pathlib.Path(conf_local_odim)
         relative_path = odim_pvol_path.relative_to(local_pvol_storage)
-        remote_odim_pvol_path = pathlib.Path(conf_minio_tutorial_prefix).joinpath(conf_user_directory+param_user_number).joinpath(conf_pvol_output_prefix).joinpath(relative_path)
+        remote_odim_pvol_path = get_pvol_storage_path(relative_path)
         exists = False
         try:
             _ = minioClient.stat_object(
