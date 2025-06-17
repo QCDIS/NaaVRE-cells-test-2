@@ -38,27 +38,33 @@ param_clean_vp_output = args.param_clean_vp_output.replace('"','')
 param_upload_results = args.param_upload_results.replace('"','')
 param_user_number = args.param_user_number.replace('"','')
 
+conf_minio_tutorial_prefix = 'ravl-tutorial'
+
+conf_public_data = 1
+
+conf_minio_shared_data_directory = 'shared_data'
+
+conf_user_directory = 'user'
+
+conf_vp_output_prefix = 'vp'
+
 conf_local_radar_db = '/tmp/data/conf/OPERA_RADARS_DB.json'
 
 conf_local_vp = '/tmp/data/vp'
 
 conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
-
-conf_minio_tutorial_prefix = 'ravl-tutorial'
-
-conf_user_directory = 'user'
-
-conf_vp_output_prefix = 'vp'
 
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 
 
+conf_minio_tutorial_prefix = 'ravl-tutorial'
+conf_public_data = 1
+conf_minio_shared_data_directory = 'shared_data'
+conf_user_directory = 'user'
+conf_vp_output_prefix = 'vp'
 conf_local_radar_db = '/tmp/data/conf/OPERA_RADARS_DB.json'
 conf_local_vp = '/tmp/data/vp'
 conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
-conf_minio_tutorial_prefix = 'ravl-tutorial'
-conf_user_directory = 'user'
-conf_vp_output_prefix = 'vp'
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 
 
@@ -180,6 +186,12 @@ def vol2bird(
         )
     return [in_file, out_file]
 
+def get_vp_storage_path(relative_path: str = "") -> str:
+    return pathlib.Path(
+        conf_minio_tutorial_prefix).joinpath(
+        conf_minio_shared_data_directory if conf_public_data else conf_user_directory+param_user_number).joinpath(
+        conf_vp_output_prefix).joinpath(
+        relative_path)
 
 vertical_profile_paths = []
 radar_db = load_radar_db(conf_local_radar_db)
@@ -206,12 +218,12 @@ if str2bool(param_upload_results):
         secret_key=secret_minio_secret_key,
         secure=True,
     )
-    print(f"Uploading results to {conf_minio_tutorial_prefix}/{conf_user_directory+param_user_number}/{conf_vp_output_prefix}")
+    print(f"Uploading results to {get_vp_storage_path()}")
     for vp_path in vertical_profile_paths:
         vp_path = pathlib.Path(vp_path)
         local_vp_storage = pathlib.Path(conf_local_vp)
         relative_path = vp_path.relative_to(local_vp_storage)
-        remote_vp_path = pathlib.Path(conf_minio_tutorial_prefix).joinpath(conf_user_directory+param_user_number).joinpath(conf_vp_output_prefix).joinpath(relative_path)
+        remote_vp_path = get_vp_storage_path(relative_path)
         exists = False
         try:
             _ = minioClient.stat_object(
