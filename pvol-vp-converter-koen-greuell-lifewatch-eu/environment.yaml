@@ -5,8 +5,8 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
+  - minio
   - h5py
   - pandas
-  - minio
   - papermill
   - ipykernel
