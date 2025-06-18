@@ -23,6 +23,7 @@ arg_parser.add_argument('--odim_pvol_paths', action='store', type=str, required=
 
 arg_parser.add_argument('--param_clean_pvol_output', action='store', type=str, required=True, dest='param_clean_pvol_output')
 arg_parser.add_argument('--param_clean_vp_output', action='store', type=str, required=True, dest='param_clean_vp_output')
+arg_parser.add_argument('--param_public_minio_data', action='store', type=int, required=True, dest='param_public_minio_data')
 arg_parser.add_argument('--param_upload_results', action='store', type=str, required=True, dest='param_upload_results')
 arg_parser.add_argument('--param_user_number', action='store', type=str, required=True, dest='param_user_number')
 
@@ -35,10 +36,9 @@ odim_pvol_paths = json.loads(args.odim_pvol_paths)
 
 param_clean_pvol_output = args.param_clean_pvol_output.replace('"','')
 param_clean_vp_output = args.param_clean_vp_output.replace('"','')
+param_public_minio_data = args.param_public_minio_data
 param_upload_results = args.param_upload_results.replace('"','')
 param_user_number = args.param_user_number.replace('"','')
-
-conf_public_minio_data = 1
 
 conf_minio_public_root_prefix = 'vl-vol2bird'
 
@@ -59,7 +59,6 @@ conf_minio_public_bucket_name = 'naa-vre-public'
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 
 
-conf_public_minio_data = 1
 conf_minio_public_root_prefix = 'vl-vol2bird'
 conf_minio_tutorial_prefix = 'ravl-tutorial'
 conf_vp_output_prefix = 'vp'
@@ -190,7 +189,7 @@ def vol2bird(
     return [in_file, out_file]
 
 def get_vp_storage_path(relative_path: str = "") -> str:
-    if conf_public_minio_data:
+    if param_public_minio_data:
         return pathlib.Path(conf_minio_public_root_prefix).joinpath(conf_minio_tutorial_prefix).joinpath(conf_vp_output_prefix).joinpath(relative_path)
     else:
         return pathlib.Path(conf_minio_tutorial_prefix).joinpath(conf_user_directory+param_user_number).joinpath(conf_vp_output_prefix).joinpath(relative_path)
@@ -229,7 +228,7 @@ if str2bool(param_upload_results):
         exists = False
         try:
             _ = minioClient.stat_object(
-                bucket=conf_minio_public_bucket_name if conf_public_minio_data else conf_minio_user_bucket_name,
+                bucket=conf_minio_public_bucket_name if param_public_minio_data else conf_minio_user_bucket_name,
                 prefix=remote_vp_path.as_posix(),
             )
             exists = True
@@ -240,7 +239,7 @@ if str2bool(param_upload_results):
             with open(vp_path, mode="rb") as file_data:
                 file_stat = os.stat(vp_path)
                 minioClient.put_object(
-                    bucket_name=conf_minio_public_bucket_name if conf_public_minio_data else conf_minio_user_bucket_name,
+                    bucket_name=conf_minio_public_bucket_name if param_public_minio_data else conf_minio_user_bucket_name,
                     object_name=remote_vp_path.as_posix(),
                     data=file_data,
                     length=file_stat.st_size,
