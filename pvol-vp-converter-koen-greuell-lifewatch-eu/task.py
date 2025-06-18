@@ -38,33 +38,36 @@ param_clean_vp_output = args.param_clean_vp_output.replace('"','')
 param_upload_results = args.param_upload_results.replace('"','')
 param_user_number = args.param_user_number.replace('"','')
 
+conf_public_minio_data = 1
+
+conf_minio_public_root_prefix = 'vl-vol2bird'
+
 conf_minio_tutorial_prefix = 'ravl-tutorial'
 
-conf_public_data = 1
-
-conf_minio_shared_data_directory = 'shared_data'
+conf_vp_output_prefix = 'vp'
 
 conf_user_directory = 'user'
-
-conf_vp_output_prefix = 'vp'
 
 conf_local_radar_db = '/tmp/data/conf/OPERA_RADARS_DB.json'
 
 conf_local_vp = '/tmp/data/vp'
 
 conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
+
+conf_minio_public_bucket_name = 'naa-vre-public'
 
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 
 
+conf_public_minio_data = 1
+conf_minio_public_root_prefix = 'vl-vol2bird'
 conf_minio_tutorial_prefix = 'ravl-tutorial'
-conf_public_data = 1
-conf_minio_shared_data_directory = 'shared_data'
-conf_user_directory = 'user'
 conf_vp_output_prefix = 'vp'
+conf_user_directory = 'user'
 conf_local_radar_db = '/tmp/data/conf/OPERA_RADARS_DB.json'
 conf_local_vp = '/tmp/data/vp'
 conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
+conf_minio_public_bucket_name = 'naa-vre-public'
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 
 
@@ -187,11 +190,10 @@ def vol2bird(
     return [in_file, out_file]
 
 def get_vp_storage_path(relative_path: str = "") -> str:
-    return pathlib.Path(
-        conf_minio_tutorial_prefix).joinpath(
-        conf_minio_shared_data_directory if conf_public_data else conf_user_directory+param_user_number).joinpath(
-        conf_vp_output_prefix).joinpath(
-        relative_path)
+    if conf_public_minio_data:
+        return pathlib.Path(conf_minio_public_root_prefix).joinpath(conf_minio_tutorial_prefix).joinpath(conf_vp_output_prefix).joinpath(relative_path)
+    else:
+        return pathlib.Path(conf_minio_tutorial_prefix).joinpath(conf_user_directory+param_user_number).joinpath(conf_vp_output_prefix).joinpath(relative_path)
 
 vertical_profile_paths = []
 radar_db = load_radar_db(conf_local_radar_db)
@@ -227,7 +229,7 @@ if str2bool(param_upload_results):
         exists = False
         try:
             _ = minioClient.stat_object(
-                bucket=conf_minio_user_bucket_name,
+                bucket=conf_minio_public_bucket_name if conf_public_minio_data else conf_minio_user_bucket_name,
                 prefix=remote_vp_path.as_posix(),
             )
             exists = True
@@ -238,7 +240,7 @@ if str2bool(param_upload_results):
             with open(vp_path, mode="rb") as file_data:
                 file_stat = os.stat(vp_path)
                 minioClient.put_object(
-                    bucket_name=conf_minio_user_bucket_name,
+                    bucket_name=conf_minio_public_bucket_name if conf_public_minio_data else conf_minio_user_bucket_name,
                     object_name=remote_vp_path.as_posix(),
                     data=file_data,
                     length=file_stat.st_size,
