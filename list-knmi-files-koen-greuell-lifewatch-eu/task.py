@@ -15,6 +15,7 @@ arg_parser.add_argument('--init_complete', action='store', type=str, required=Tr
 
 arg_parser.add_argument('--param_end_date', action='store', type=str, required=True, dest='param_end_date')
 arg_parser.add_argument('--param_interval_in_minutes', action='store', type=int, required=True, dest='param_interval_in_minutes')
+arg_parser.add_argument('--param_maximum_KNMI_files', action='store', type=int, required=True, dest='param_maximum_KNMI_files')
 arg_parser.add_argument('--param_radar', action='store', type=str, required=True, dest='param_radar')
 arg_parser.add_argument('--param_start_date', action='store', type=str, required=True, dest='param_start_date')
 
@@ -27,6 +28,7 @@ init_complete = args.init_complete.replace('"','')
 
 param_end_date = args.param_end_date.replace('"','')
 param_interval_in_minutes = args.param_interval_in_minutes
+param_maximum_KNMI_files = args.param_maximum_KNMI_files
 param_radar = args.param_radar.replace('"','')
 param_start_date = args.param_start_date.replace('"','')
 
@@ -44,6 +46,12 @@ we eval init_complete first before
 we test if it contains "Yes"
 """
 
+def validate_number_of_KNMI_files():
+    if len(dataset_files) > param_maximum_KNMI_files:
+        raise ValueError(f"{len(dataset_files)} KNMI files were found to download, but {param_maximum_KNMI_files=}."
+                         f"\n The data was retrieved with the following parameters:"
+                         f"\n {param_start_date=} \n {param_end_date=} \n {param_interval_in_minutes=}"
+                         f"\n Increase {param_maximum_KNMI_files=}, decrease the time range, or increase the interval.")
 
 init_complete = init_complete.replace("'", "")
 init_complete = init_complete.replace('"', "")
@@ -92,6 +100,8 @@ for dataset_file in dataset_files:
         filtered_list.append(dataset_file)
 
 dataset_files = filtered_list
+
+validate_number_of_KNMI_files()
 print(f"Found {len(dataset_files)} files")
 print(dataset_files)
 
