@@ -14,7 +14,7 @@ arg_parser.add_argument('--id', action='store', type=str, required=True, dest='i
 arg_parser.add_argument('--init_complete', action='store', type=str, required=True, dest='init_complete')
 
 arg_parser.add_argument('--param_end_date', action='store', type=str, required=True, dest='param_end_date')
-arg_parser.add_argument('--param_interval', action='store', type=int, required=True, dest='param_interval')
+arg_parser.add_argument('--param_interval_in_minutes', action='store', type=int, required=True, dest='param_interval_in_minutes')
 arg_parser.add_argument('--param_radar', action='store', type=str, required=True, dest='param_radar')
 arg_parser.add_argument('--param_start_date', action='store', type=str, required=True, dest='param_start_date')
 
@@ -26,7 +26,7 @@ id = args.id
 init_complete = args.init_complete.replace('"','')
 
 param_end_date = args.param_end_date.replace('"','')
-param_interval = args.param_interval
+param_interval_in_minutes = args.param_interval_in_minutes
 param_radar = args.param_radar.replace('"','')
 param_start_date = args.param_start_date.replace('"','')
 
@@ -85,7 +85,7 @@ while True:
         params.update({"nextPageToken": nextPageToken})
 
 filtered_list = []
-interval_list = list(range(0, 60, param_interval))
+interval_list = list(range(0, 60, param_interval_in_minutes))
 for dataset_file in dataset_files:
     minute = int(dataset_file[0].split("_")[-1].split(".")[0][-2:])
     if minute in interval_list:
