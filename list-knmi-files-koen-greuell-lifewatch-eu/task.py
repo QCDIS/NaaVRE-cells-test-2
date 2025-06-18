@@ -46,13 +46,17 @@ we eval init_complete first before
 we test if it contains "Yes"
 """
 
+def validate_KNMI_response():
+    if dset_files is None:
+        raise TypeError(f"No {files} received from KNMI. \n KNMI api response: {list_files}")
+        
 def validate_number_of_KNMI_files():
     if len(dataset_files) > param_maximum_KNMI_files:
         raise ValueError(f"{len(dataset_files)} KNMI files were found to download, but {param_maximum_KNMI_files=}."
                          f"\n The data was retrieved with the following parameters:"
                          f"\n {param_start_date=} \n {param_end_date=} \n {param_interval_in_minutes=}"
                          f"\n Increase {param_maximum_KNMI_files=}, decrease the time range, or increase the interval.")
-
+        
 init_complete = init_complete.replace("'", "")
 init_complete = init_complete.replace('"', "")
 if init_complete == "Yes":
@@ -83,7 +87,11 @@ while True:
         params=params,
     )
     list_files = list_files_response.json()
-    dset_files = list_files.get("files")
+    files = "files"
+    dset_files = list_files.get(files)
+    
+    validate_KNMI_response()
+        
     dset_files = [list(dset_file.values()) for dset_file in dset_files]
     dataset_files += dset_files
     nextPageToken = list_files.get("nextPageToken")
@@ -102,6 +110,7 @@ for dataset_file in dataset_files:
 dataset_files = filtered_list
 
 validate_number_of_KNMI_files()
+
 print(f"Found {len(dataset_files)} files")
 print(dataset_files)
 
