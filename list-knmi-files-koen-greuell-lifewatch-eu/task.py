@@ -46,9 +46,9 @@ we eval init_complete first before
 we test if it contains "Yes"
 """
 
-def validate_KNMI_response():
-    if dset_files is None:
-        raise TypeError(f"No {files} received from KNMI. \n KNMI api response: {list_files}")
+def validate_api_errors():
+    if api_response.status_code >= 400:
+        raise ValueError(f"API {api_response.url} returned an error status code: {api_response.status_code}. {api_response.json()=}")
         
 def validate_number_of_KNMI_files():
     if len(dataset_files) > param_maximum_KNMI_files:
@@ -81,20 +81,19 @@ params = {
 }
 dataset_files = []
 while True:
-    list_files_response = requests.get(
+    api_response = requests.get(
         url=api_url,
         headers={"Authorization": secret_key_knmi_api},
         params=params,
     )
-    list_files = list_files_response.json()
-    files = "files"
-    dset_files = list_files.get(files)
+    validate_api_errors()
     
-    validate_KNMI_response()
+    api_reponse_json = api_response.json()    
+    dset_files = api_reponse_json.get("files")
         
     dset_files = [list(dset_file.values()) for dset_file in dset_files]
     dataset_files += dset_files
-    nextPageToken = list_files.get("nextPageToken")
+    nextPageToken = api_reponse_json.get("nextPageToken")
     if not nextPageToken:
         break
     else:
