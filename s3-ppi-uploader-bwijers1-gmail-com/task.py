@@ -14,7 +14,6 @@ arg_parser.add_argument('--id', action='store', type=str, required=True, dest='i
 
 arg_parser.add_argument('--local_ppi_paths', action='store', type=str, required=True, dest='local_ppi_paths')
 
-arg_parser.add_argument('--param_jupyterhub_user', action='store', type=str, required=True, dest='param_jupyterhub_user')
 
 args = arg_parser.parse_args()
 print(args)
@@ -23,14 +22,16 @@ id = args.id
 
 local_ppi_paths = json.loads(args.local_ppi_paths)
 
-param_jupyterhub_user = args.param_jupyterhub_user.replace('"','')
 
 conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
+
+conf_minio_tutorial_prefix = 'ravl-tutorial'
 
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 
 
 conf_minio_endpoint = 'scruffy.lab.uvalight.net:9000'
+conf_minio_tutorial_prefix = 'ravl-tutorial'
 conf_minio_user_bucket_name = 'naa-vre-user-data'
 
 
@@ -44,7 +45,7 @@ minioClient = Minio(
 for path in local_ppi_paths:
     print(path)
     obj_key = pathlib.Path(*pathlib.Path(path).parts[3:])
-    obj_name = f"{param_jupyterhub_user}/{obj_key}"
+    obj_name = f"{conf_minio_tutorial_prefix}/{obj_key}"
     print(obj_name)
     minioClient.fput_object(bucket_name = conf_minio_user_bucket_name,
                             object_name = obj_name,
