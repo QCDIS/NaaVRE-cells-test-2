@@ -100,6 +100,7 @@ conf_local_ppi<-"/home/jovyan/workshop_data/vl-vol2bird/ravl-tutorial/ppi"
 print("Running the cell")
 conf_local_pvol<-"/home/jovyan/workshop_data/vl-vol2bird/ravl-tutorial/pvol"
 conf_local_ppi<-"/home/jovyan/workshop_data/vl-vol2bird/ravl-tutorial/ppi"
+
 library('bioRad')
 library("stringr")
 library("ggplot2")
@@ -146,3 +147,8 @@ for (pvol_path in pvol_paths) {
   dev.off()
   ppi_paths <- append(ppi_paths, impath)
 }
+# capturing outputs
+print('Serialization of ppi_paths')
+file <- file(paste0('/tmp/ppi_paths_', id, '.json'))
+writeLines(toJSON(ppi_paths, auto_unbox=TRUE), file)
+close(file)
