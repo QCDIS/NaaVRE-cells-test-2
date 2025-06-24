@@ -18,6 +18,10 @@ if (!requireNamespace("stringr", quietly = TRUE)) {
 	install.packages("stringr", repos="http://cran.us.r-project.org")
 }
 library(stringr)
+if (!requireNamespace("tools", quietly = TRUE)) {
+	install.packages("tools", repos="http://cran.us.r-project.org")
+}
+library(tools)
 
 
 print('option_list')
@@ -94,12 +98,10 @@ pvol_paths = var_serialization(opt$pvol_paths)
 print("---------------------------------------------------------------------------------")
 
 
-conf_local_pvol<-"/home/jovyan/workshop_data/vl-vol2bird/ravl-tutorial/pvol"
-conf_local_ppi<-"/home/jovyan/workshop_data/vl-vol2bird/ravl-tutorial/ppi"
+conf_local_ppi="/tmp/data/ppi"
 
 print("Running the cell")
-conf_local_pvol<-"/home/jovyan/workshop_data/vl-vol2bird/ravl-tutorial/pvol"
-conf_local_ppi<-"/home/jovyan/workshop_data/vl-vol2bird/ravl-tutorial/ppi"
+conf_local_ppi="/tmp/data/ppi"
 
 library('bioRad')
 library("stringr")
