@@ -5,8 +5,8 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - r-rosm
   - r-ggplot2
+  - r-rosm
   - r-stringr
   - papermill
   - ipykernel
