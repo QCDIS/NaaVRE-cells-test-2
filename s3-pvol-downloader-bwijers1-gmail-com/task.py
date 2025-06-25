@@ -112,7 +112,13 @@ ped_until_datetimestr = (
 )
 ped_until_timestamp = pd.to_datetime(ped_until_datetimestr)
 ped_prefix_objs = minioClient.list_objects(
-    bucket_name=conf_minio_user_bucket_name, prefix=ped_prefix, recursive=True
+    bucket_name=(
+        conf_minio_public_bucket_name
+        if param_public_minio_data
+        else conf_minio_user_bucket_name
+    ),
+    prefix=ped_prefix,
+    recursive=True,
 )
 ped_prefix_objs = list(ped_prefix_objs)
 for obj in ped_prefix_objs:
