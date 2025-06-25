@@ -114,6 +114,10 @@ date_prefix_list = [
 unique_date_prefix_list = list(set(date_prefix_list))
 unique_date_prefix_list.sort()
 middle_prefixes = unique_date_prefix_list[1:-1]
+middle_prefixes = [
+    f"{get_pvol_storage_path()}/NL/{param_radar}/{middle_prefix}"
+    for middle_prefix in middle_prefixes
+]
 print(f"Parsing {len(middle_prefixes)} middle prefixes.")
 for middle_prefix in middle_prefixes:
     print(f"Downloading {middle_prefix}")
