@@ -132,7 +132,14 @@ for obj in ped_prefix_objs:
 pvol_paths = []
 for obj in download_objs:
     obj_path = pathlib.Path(obj._object_name)
-    uname, dtype, country, radar, year, month, day, filename = obj_path.parts
+    if param_public_minio_data:
+        lab, workshop, dtype, country, radar, year, month, day, filename = (
+            obj_path.parts
+        )
+    else:
+        workshop, uname, dtype, country, radar, year, month, day, filename = (
+            obj_path.parts
+        )
     local_pvol_path = (
         f"{conf_local_odim}/{country}/{radar}/{year}/{month}/{day}/{filename}"
     )
