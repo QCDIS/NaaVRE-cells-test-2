@@ -104,7 +104,8 @@ psd_prefix_objs = minioClient.list_objects(
     start_after=psd_start_after_prefix,
     recursive=True,
 )
-download_objs += list(psd_prefix_objs)
+psd_prefix_objs = list(psd_prefix_objs)
+download_objs += psd_prefix_objs
 
 print(f"Determining middle prefixes...")
 drange = pd.date_range(start=psd, end=ped, freq="5 min")
