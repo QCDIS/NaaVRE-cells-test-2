@@ -87,6 +87,7 @@ minioClient = Minio(
 download_objs = []
 
 psd_prefix = f"{get_pvol_storage_path()}/NL/{param_radar}/{psd.year}/{psd.month:02}/{psd.day:02}"
+print(f"{psd_prefix=}")
 psd_start_after_prefix = f"{psd_prefix}/NL{param_radar}_pvol_{psd.year}{psd.month:02}{psd.day:02}T{psd.hour:02}{psd.minute:02}"
 psd_prefix_objs = minioClient.list_objects(
     bucket_name=conf_minio_user_bucket_name,
@@ -97,9 +98,10 @@ psd_prefix_objs = minioClient.list_objects(
 download_objs += list(psd_prefix_objs)
 
 ped_prefix = f"{get_pvol_storage_path()}/NL/{param_radar}/{ped.year}/{ped.month:02}/{ped.day:02}"
+print(f"{ped_prefix=}")
 ped_until_prefix = f"{ped_prefix}/NL{param_radar}_pvol_{ped.year}{ped.month:02}{ped.day:02}T{ped.hour:02}{ped.minute:02}"
 ped_until_datetimestr = (
-    f"{ped.year}{ped.month:02}{ped.day:02}T{ped.hour:02}{ped.minute:02}"
+    f"{ped.year}{ped.month:02}{ped.day:02}T{ped.hVO1YHOZJBuF9yD3BqYbXi9MxZjxc7A5m9IL4gIF6our:02}{ped.minute:02}"
 )
 ped_until_timestamp = pd.to_datetime(ped_until_datetimestr)
 ped_prefix_objs = minioClient.list_objects(
