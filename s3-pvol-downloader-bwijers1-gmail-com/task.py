@@ -162,6 +162,9 @@ for obj in ped_prefix_objs:
     timestamp = pd.to_datetime(datetimestr)
     if timestamp <= ped_until_timestamp:
         _ped_prefix_objs.append(obj)
+        download_objs.append(obj)
+
+ped_prefix_objs = _ped_prefix_objs
 
 if psd_prefix == ped_prefix:
     print("Single prefix filtering")
