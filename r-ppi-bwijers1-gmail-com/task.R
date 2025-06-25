@@ -98,9 +98,11 @@ pvol_paths = var_serialization(opt$pvol_paths)
 print("---------------------------------------------------------------------------------")
 
 
+conf_local_odim="/tmp/data/odim"
 conf_local_ppi="/tmp/data/ppi"
 
 print("Running the cell")
+conf_local_odim="/tmp/data/odim"
 conf_local_ppi="/tmp/data/ppi"
 
 library('bioRad')
@@ -134,7 +136,7 @@ for (pvol_path in pvol_paths) {
     str_replace("pvol", paste("ppi", param_param, elev, sep = "_"))
   print(imname)
   impath_dir <- pvol_path %>%
-    str_replace(conf_local_pvol, conf_local_ppi) %>%
+    str_replace(conf_local_odim, conf_local_ppi) %>%
     str_replace(basename(pvol_path), "")
   impath_dir <- paste(impath_dir, param_param, elev, sep = "/")
   dir.create(file.path(impath_dir), recursive = TRUE, showWarnings = FALSE)
