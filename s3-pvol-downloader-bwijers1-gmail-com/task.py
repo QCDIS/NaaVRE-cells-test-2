@@ -153,21 +153,34 @@ ped_prefix_objs = minioClient.list_objects(
 )
 print(f"Filtering last prefix objects on timestamps")
 ped_prefix_objs = list(ped_prefix_objs)
+_ped_prefix_objs = []
 for obj in ped_prefix_objs:
     fpath = pathlib.Path(obj._object_name)
     fname = fpath.name
     corad, dtype, datetimestr, radcode_suffix = fname.split("_")
     timestamp = pd.to_datetime(datetimestr)
     if timestamp <= ped_until_timestamp:
-        download_objs.append(obj)
+        _ped_prefix_objs.append(obj)
 
-print("Removing duplicate objects, if any")
-nobjs_pre_filter = len(download_objs)
-download_objs = list(set(download_objs))
-nobjs_post_filter = len(download_objs)
-print(
-    f"Removed {nobjs_pre_filter-nobjs_post_filter} duplicate objects from download list"
-)
+if psd_prefix == ped_prefix:
+    print("Single prefix filtering")
+    psd_object_names = [
+        psd_prefix_obj._object_name for psd_prefix_obj in psd_prefix_objs
+    ]
+    ped_object_names = [
+        ped_prefix_obj._object_name for ped_prefix_obj in ped_prefix_objs
+    ]
+    intersect_object_names = [
+        obj_name
+        for obj_name in psd_object_names
+        if obj_name in ped_object_names
+    ]
+    download_objs = []
+    for psd_prefix_obj in psd_prefix_objs:
+        if psd_prefix_obj._object_name in intersect_object_names:
+            download_objs.append(psd_prefix_obj)
+
+
 local_pvol_paths = []
 for obj in download_objs:
     obj_path = pathlib.Path(obj._object_name)
