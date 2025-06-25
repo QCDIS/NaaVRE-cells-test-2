@@ -89,9 +89,11 @@ minioClient = Minio(
 
 download_objs = []
 
+
 psd_prefix = f"{get_pvol_storage_path()}/NL/{param_radar}/{psd.year}/{psd.month:02}/{psd.day:02}"
-print(f"{psd_prefix=}")
+print(f"Parsing first prefix: {psd_prefix}")
 psd_start_after_prefix = f"{psd_prefix}/NL{param_radar}_pvol_{psd.year}{psd.month:02}{psd.day:02}T{psd.hour:02}{psd.minute:02}"
+print(f"Building an start after prefix: {psd_start_after_prefix}")
 psd_prefix_objs = minioClient.list_objects(
     bucket_name=(
         conf_minio_public_bucket_name
@@ -104,13 +106,38 @@ psd_prefix_objs = minioClient.list_objects(
 )
 download_objs += list(psd_prefix_objs)
 
+print(f"Determining middle prefixes...")
+drange = pd.date_range(start=psd, end=ped, freq="5 min")
+date_prefix_list = [
+    f"{dstamp.year}/{dstamp.month:02}/{dstamp.day:02}" for dstamp in drange
+]
+unique_date_prefix_list = list(set(date_prefix_list))
+unique_date_prefix_list.sort()
+middle_prefixes = unique_date_prefix_list[1:-1]
+print(f"Parsing {len(middle_prefixes)} middle prefixes.")
+for middle_prefix in middle_prefixes:
+    print(f"Downloading {middle_prefix}")
+    middle_prefix_objs = minioClient.list_objects(
+        bucket_name=(
+            conf_minio_public_bucket_name
+            if param_public_minio_data
+            else conf_minio_user_bucket_name
+        ),
+        prefix=middle_prefix,
+        recursive=True,
+    )
+    download_objs += list(middle_prefix_objs)
+
+
 ped_prefix = f"{get_pvol_storage_path()}/NL/{param_radar}/{ped.year}/{ped.month:02}/{ped.day:02}"
-print(f"{ped_prefix=}")
+
 ped_until_prefix = f"{ped_prefix}/NL{param_radar}_pvol_{ped.year}{ped.month:02}{ped.day:02}T{ped.hour:02}{ped.minute:02}"
+print(f"Parsing last prefix:{ped_prefix}")
 ped_until_datetimestr = (
     f"{ped.year}{ped.month:02}{ped.day:02}T{ped.hour:02}{ped.minute:02}"
 )
 ped_until_timestamp = pd.to_datetime(ped_until_datetimestr)
+print(f"Building an end timestamp for object filtering: {ped_until_timestamp}")
 ped_prefix_objs = minioClient.list_objects(
     bucket_name=(
         conf_minio_public_bucket_name
@@ -120,6 +147,7 @@ ped_prefix_objs = minioClient.list_objects(
     prefix=ped_prefix,
     recursive=True,
 )
+print(f"Filtering last prefix objects on timestamps")
 ped_prefix_objs = list(ped_prefix_objs)
 for obj in ped_prefix_objs:
     fpath = pathlib.Path(obj._object_name)
@@ -129,6 +157,7 @@ for obj in ped_prefix_objs:
     if timestamp <= ped_until_timestamp:
         download_objs.append(obj)
 
+print(f"Downloading {len(download_objs)} PVOL files")
 pvol_paths = []
 for obj in download_objs:
     obj_path = pathlib.Path(obj._object_name)
