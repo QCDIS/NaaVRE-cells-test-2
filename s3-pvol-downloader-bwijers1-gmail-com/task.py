@@ -161,6 +161,22 @@ for obj in ped_prefix_objs:
     if timestamp <= ped_until_timestamp:
         download_objs.append(obj)
 
+if psd_prefix == ped_prefix:
+    print(
+        f"Start and end prefixes are identical, filtering within a single prefix"
+    )
+    download_objs = []
+    for psd_obj in psd_prefix_objs:
+        print(f"Evaluating: {psd_obj._object_name}")
+        if any(
+            [
+                psd_obj._object_name == ped_obj._object_name
+                for ped_obj in ped_prefix_objs
+            ]
+        ):
+            print(f"{psd_obj._object_name} is found in both filters, adding")
+            download_objs.append(psd_obj)
+
 print(f"Downloading {len(download_objs)} PVOL files")
 local_pvol_paths = []
 for obj in download_objs:
