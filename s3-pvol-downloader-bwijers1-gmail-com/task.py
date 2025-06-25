@@ -167,14 +167,17 @@ if psd_prefix == ped_prefix:
     psd_object_names = [
         psd_prefix_obj._object_name for psd_prefix_obj in psd_prefix_objs
     ]
+    print(f"{psd_object_names=}")
     ped_object_names = [
         ped_prefix_obj._object_name for ped_prefix_obj in ped_prefix_objs
     ]
+    print(f"{ped_object_names=}")
     intersect_object_names = [
         obj_name
         for obj_name in psd_object_names
         if obj_name in ped_object_names
     ]
+    print(f"{intersect_object_names=}")
     download_objs = []
     for psd_prefix_obj in psd_prefix_objs:
         if psd_prefix_obj._object_name in intersect_object_names:
