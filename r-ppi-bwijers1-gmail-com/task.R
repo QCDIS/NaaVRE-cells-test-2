@@ -28,9 +28,9 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
+make_option(c("--local_pvol_paths"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_elevation"), action="store", default=NA, type="numeric", help="my description"), 
-make_option(c("--param_param"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--pvol_paths"), action="store", default=NA, type="character", help="my description")
+make_option(c("--param_param"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -72,6 +72,17 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
+print("Retrieving local_pvol_paths")
+var = opt$local_pvol_paths
+print(var)
+var_len = length(var)
+print(paste("Variable local_pvol_paths has length", var_len))
+
+print("------------------------Running var_serialization for local_pvol_paths-----------------------")
+print(opt$local_pvol_paths)
+local_pvol_paths = var_serialization(opt$local_pvol_paths)
+print("---------------------------------------------------------------------------------")
+
 print("Retrieving param_elevation")
 var = opt$param_elevation
 print(var)
@@ -86,17 +97,6 @@ var_len = length(var)
 print(paste("Variable param_param has length", var_len))
 
 param_param <- gsub("\"", "", opt$param_param)
-print("Retrieving pvol_paths")
-var = opt$pvol_paths
-print(var)
-var_len = length(var)
-print(paste("Variable pvol_paths has length", var_len))
-
-print("------------------------Running var_serialization for pvol_paths-----------------------")
-print(opt$pvol_paths)
-pvol_paths = var_serialization(opt$pvol_paths)
-print("---------------------------------------------------------------------------------")
-
 
 conf_local_odim="/tmp/data/odim"
 conf_local_ppi="/tmp/data/ppi"
@@ -120,8 +120,8 @@ title_from_pvol <- function(pvol) {
   return(title_str)
 }
 basemap <- rosm::osm.types()[1]
-ppi_paths <- list()
-for (pvol_path in pvol_paths) {
+local_ppi_paths <- list()
+for (pvol_path in local_pvol_paths) {
   my_pvol <- read_pvolfile(pvol_path, param = c("DBZH", "VRADH"))
   my_scan <- get_scan(
     x = my_pvol,
@@ -149,10 +149,10 @@ for (pvol_path in pvol_paths) {
     theme(plot.title = element_text(size = 40, face = "bold", hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
   print(plt)
   dev.off()
-  ppi_paths <- append(ppi_paths, impath)
+  local_ppi_paths <- append(local_ppi_paths, impath)
 }
 # capturing outputs
-print('Serialization of ppi_paths')
-file <- file(paste0('/tmp/ppi_paths_', id, '.json'))
-writeLines(toJSON(ppi_paths, auto_unbox=TRUE), file)
+print('Serialization of local_ppi_paths')
+file <- file(paste0('/tmp/local_ppi_paths_', id, '.json'))
+writeLines(toJSON(local_ppi_paths, auto_unbox=TRUE), file)
 close(file)
