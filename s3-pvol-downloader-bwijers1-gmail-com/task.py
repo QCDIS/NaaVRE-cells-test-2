@@ -162,7 +162,7 @@ for obj in ped_prefix_objs:
         download_objs.append(obj)
 
 print(f"Downloading {len(download_objs)} PVOL files")
-pvol_paths = []
+local_pvol_paths = []
 for obj in download_objs:
     obj_path = pathlib.Path(obj._object_name)
     if param_public_minio_data:
@@ -182,8 +182,8 @@ for obj in download_objs:
         object_name=obj._object_name,
         file_path=local_pvol_path,
     )
-    pvol_paths.append(local_pvol_path)
+    local_pvol_paths.append(local_pvol_path)
 
-file_pvol_paths = open("/tmp/pvol_paths_" + id + ".json", "w")
-file_pvol_paths.write(json.dumps(pvol_paths))
-file_pvol_paths.close()
+file_local_pvol_paths = open("/tmp/local_pvol_paths_" + id + ".json", "w")
+file_local_pvol_paths.write(json.dumps(local_pvol_paths))
+file_local_pvol_paths.close()
