@@ -105,6 +105,7 @@ psd_prefix_objs = minioClient.list_objects(
     recursive=True,
 )
 psd_prefix_objs = list(psd_prefix_objs)
+print(f"{psd_prefix_objs=}")
 download_objs += psd_prefix_objs
 
 print(f"Determining middle prefixes...")
@@ -154,6 +155,7 @@ ped_prefix_objs = minioClient.list_objects(
 )
 print(f"Filtering last prefix objects on timestamps")
 ped_prefix_objs = list(ped_prefix_objs)
+print(f"{ped_prefix_objs=}")
 _ped_prefix_objs = []
 for obj in ped_prefix_objs:
     fpath = pathlib.Path(obj._object_name)
