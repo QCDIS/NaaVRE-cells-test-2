@@ -39,7 +39,7 @@ param_s3_server = args.param_s3_server.replace('"','')
 
 
 
-minio_client = Minio(param_s3_server, access_key=secret_s3_access_key, secret_key=secret_s3_secret_key, region = "nl", secure=True)
+minio_client = Minio(param_s3_server, access_key=secret_s3_access_key, secret_key=secret_s3_secret_key, region = "nl-uvalight", secure=True)
 
 minio_base_path = 'app_acolite_stan'
 dtSat.upload_satellite_to_minio(client = minio_client,
