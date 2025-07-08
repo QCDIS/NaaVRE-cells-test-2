@@ -105,7 +105,7 @@ odimcodes <- getRad::weather_radars() |>
     dplyr::pull(`odimcode`)
 odimcodes <- as.list(odimcodes)
 # capturing outputs
-print('Serialization of odim_codes')
-file <- file(paste0('/tmp/odim_codes_', id, '.json'))
-writeLines(toJSON(odim_codes, auto_unbox=TRUE), file)
+print('Serialization of odimcodes')
+file <- file(paste0('/tmp/odimcodes_', id, '.json'))
+writeLines(toJSON(odimcodes, auto_unbox=TRUE), file)
 close(file)
