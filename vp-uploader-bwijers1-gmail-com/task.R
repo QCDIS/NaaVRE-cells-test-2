@@ -14,6 +14,10 @@ if (!requireNamespace("getRad", quietly = TRUE)) {
 	install.packages("getRad", repos="http://cran.us.r-project.org")
 }
 library(getRad)
+if (!requireNamespace("jsonlite", quietly = TRUE)) {
+	install.packages("jsonlite", repos="http://cran.us.r-project.org")
+}
+library(jsonlite)
 if (!requireNamespace("purrr", quietly = TRUE)) {
 	install.packages("purrr", repos="http://cran.us.r-project.org")
 }
@@ -84,15 +88,14 @@ print(var)
 var_len = length(var)
 print(paste("Variable vp_paths has length", var_len))
 
-print("------------------------Running var_serialization for vp_paths-----------------------")
-print(opt$vp_paths)
-vp_paths = var_serialization(opt$vp_paths)
-print("---------------------------------------------------------------------------------")
-
+vp_paths <- gsub("\"", "", opt$vp_paths)
 
 
 print("Running the cell")
+print("dput")
+library("jsonlite")
 print(dput(vp_paths))
+print("for loop")
 for (vp_path in vp_paths){
     print(vp_path)
     print(file.exists(vp_path))
