@@ -87,11 +87,11 @@ print(paste("Variable odim_code has length", var_len))
 odim_code <- gsub("\"", "", opt$odim_code)
 
 conf_local_vp_dir<-"/tmp/data/vp"
-conf_de_time_interval<-"5 mins"
+conf_de_time_interval<-"120 mins"
 
 print("Running the cell")
 conf_local_vp_dir<-"/tmp/data/vp"
-conf_de_time_interval<-"5 mins"
+conf_de_time_interval<-"120 mins"
 
 library("getRad")
 library("tidyr")
@@ -145,7 +145,7 @@ odimcode |>
     ~ calculate_vp(calculate_param(getRad::get_pvol(..1, ..2), RHOHV = urhohv), vpfile = ..3)
   ) ) 
 
-vp_paths <- odimcode$vpfile
+vp_paths <- as.list(odimcode$vpfile)
 # capturing outputs
 print('Serialization of vp_paths')
 file <- file(paste0('/tmp/vp_paths_', id, '.json'))
