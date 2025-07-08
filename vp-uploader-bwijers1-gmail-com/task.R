@@ -94,9 +94,16 @@ vp_paths <- gsub("\"", "", opt$vp_paths)
 print("Running the cell")
 print("dput")
 library("jsonlite")
-print(dput(vp_paths))
+dput(vp_paths)
+
+a<-gsub('\\\\','"',vp_paths)
+print("dput a")
+dput(a)
+aa<-c(jsonlite::fromJSON(a))
+print("aa")
+dput(aa)
 print("for loop")
-for (vp_path in vp_paths){
+for (vp_path in aa){
     print(vp_path)
     print(file.exists(vp_path))
 }
