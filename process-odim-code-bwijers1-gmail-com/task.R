@@ -87,11 +87,11 @@ print(paste("Variable odimcode has length", var_len))
 odimcode <- gsub("\"", "", opt$odimcode)
 
 conf_local_vp_dir<-"/tmp/data/vp"
-conf_de_time_interval<-"120 mins"
+conf_de_time_interval<-"360 mins"
 
 print("Running the cell")
 conf_local_vp_dir<-"/tmp/data/vp"
-conf_de_time_interval<-"120 mins"
+conf_de_time_interval<-"360 mins"
 
 print(odimcode)
 print(dput(odimcode))
@@ -148,7 +148,7 @@ res<-expand_grid(odim=unlist(odimclean), times = seq(as.POSIXct(Sys.Date() - 1),
     ~ calculate_vp(calculate_param(getRad::get_pvol(..1, ..2), RHOHV = urhohv), vpfile = ..3)
   ) ) 
 
-vp_paths <- as.list(res$vpfile)
+vp_paths <- as.list(res$file)
 # capturing outputs
 print('Serialization of vp_paths')
 file <- file(paste0('/tmp/vp_paths_', id, '.json'))
