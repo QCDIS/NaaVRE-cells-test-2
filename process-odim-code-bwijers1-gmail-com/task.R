@@ -87,11 +87,11 @@ print(paste("Variable odimcode has length", var_len))
 odimcode <- gsub("\"", "", opt$odimcode)
 
 conf_local_vp_dir<-"/tmp/data/vp"
-conf_de_time_interval<-"360 mins"
+conf_de_time_interval<-"720 mins"
 
 print("Running the cell")
 conf_local_vp_dir<-"/tmp/data/vp"
-conf_de_time_interval<-"360 mins"
+conf_de_time_interval<-"720 mins"
 
 print(odimcode)
 print(dput(odimcode))
