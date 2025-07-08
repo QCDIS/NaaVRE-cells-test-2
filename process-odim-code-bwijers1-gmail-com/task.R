@@ -95,12 +95,12 @@ conf_de_time_interval<-"120 mins"
 
 print(odimcode)
 print(dput(odimcode))
-
+odimclean<-sub(']','',sub('[','',odimcode))
 library("getRad")
 library("tidyr")
 library("dplyr")
 library("bioRad")
-
+stopifnot(length(odimclean)==1)
 format_v2b_version <- function(vol2bird_version) {
   v2b_version_formatted <- gsub(".", "-", vol2bird_version, fix = TRUE)
   v2b_version_parts <- stringr:::str_split(v2b_version_formatted, pattern = "-")
@@ -135,11 +135,11 @@ dir.create(file.path(conf_local_vp_dir), showWarnings = FALSE)
 v2bversion <- format_v2b_version(vol2birdR::vol2bird_version())
 
 wmocode <- getRad::weather_radars() |>
-  filter(odimcode == odimcode[[1]]) |>
+  filter(odimcode == odimclean) |>
   pull(wmocode)
 
 
-expand_grid(odim=unlist(odimcode), times = seq(as.POSIXct(Sys.Date() - 1), as.POSIXct(Sys.Date()), conf_de_time_interval)) |>
+expand_grid(odim=unlist(odimclean), times = seq(as.POSIXct(Sys.Date() - 1), as.POSIXct(Sys.Date()), conf_de_time_interval)) |>
   expand_grid(wmocode = wmocode) |>
   expand_grid(v2bversion = v2bversion) |>
   mutate(file = file.path(conf_local_vp_dir, generate_vp_file_name(odim, times, wmocode, v2bversion)),
