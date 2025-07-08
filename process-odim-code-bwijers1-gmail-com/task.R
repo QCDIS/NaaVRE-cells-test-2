@@ -86,9 +86,11 @@ print(paste("Variable odim_code has length", var_len))
 
 odim_code <- gsub("\"", "", opt$odim_code)
 
+conf_local_vp_dir<-"/tmp/data/vp"
 conf_de_time_interval<-"5 mins"
 
 print("Running the cell")
+conf_local_vp_dir<-"/tmp/data/vp"
 conf_de_time_interval<-"5 mins"
 
 library("getRad")
@@ -125,6 +127,8 @@ generate_vp_file_name <- function(odimcode, times, wmocode, v2bversion) {
   return(filename)
 }
 
+dir.create(file.path(conf_local_vp_dir), showWarnings = FALSE)
+
 v2bversion <- format_v2b_version(vol2birdR::vol2bird_version())
 
 wmocode <- getRad::weather_radars() |>
@@ -135,8 +139,15 @@ odimcode |>
   expand_grid(times = seq(as.POSIXct(Sys.Date() - 1), as.POSIXct(Sys.Date()), conf_de_time_interval)) |>
   expand_grid(wmocode = wmocode) |>
   expand_grid(v2bversion = v2bversion) |>
-  mutate(file = generate_vp_file_name(odimcode, times, wmocode, v2bversion)) |>
-  mutate(vp = purrr::pmap(
+  mutate(file = file.path(conf_local_vp_dir, generate_vp_file_name(odimcode, times, wmocode, v2bversion)),
+         vp = purrr::pmap(
     list(odimcode, times, file),
     ~ calculate_vp(calculate_param(getRad::get_pvol(..1, ..2), RHOHV = urhohv), vpfile = ..3)
-  ))
+  ) ) 
+
+vp_paths <- odimcode$vpfile
+# capturing outputs
+print('Serialization of vp_paths')
+file <- file(paste0('/tmp/vp_paths_', id, '.json'))
+writeLines(toJSON(vp_paths, auto_unbox=TRUE), file)
+close(file)
