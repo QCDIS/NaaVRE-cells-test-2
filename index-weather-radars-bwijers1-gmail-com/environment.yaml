@@ -6,8 +6,8 @@ dependencies:
   - python>=3.8
   - nbconvert
   - r-dplyr
-  - r-purrr
   - r-tidyr
-  - r-getRad
+  - r-stringr
+  - r-purrr
   - papermill
   - ipykernel
