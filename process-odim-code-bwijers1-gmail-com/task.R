@@ -139,11 +139,14 @@ dir.create(file.path(conf_local_vp_dir), showWarnings = FALSE)
 v2bversion <- format_v2b_version(vol2birdR::vol2bird_version())
 
 wmocode <- getRad::weather_radars() |>
-  filter(odimcode == odimclean) |>
+  filter(odimcode == odimclean, status==1) |>
   pull(wmocode)
 
 t<-seq(as.POSIXct(Sys.Date() - 1), as.POSIXct(Sys.Date()), conf_de_time_interval)
 print(t)
+print("wmo")
+print(wmocode)
+
 res<-expand_grid(odim=unlist(odimclean), times = t) |>
   expand_grid(wmocode = wmocode) |>
   expand_grid(v2bversion = v2bversion) |>
