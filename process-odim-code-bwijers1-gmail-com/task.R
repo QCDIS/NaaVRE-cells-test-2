@@ -93,6 +93,9 @@ print("Running the cell")
 conf_local_vp_dir<-"/tmp/data/vp"
 conf_de_time_interval<-"120 mins"
 
+print(odimcode)
+print(dput(odimcode))
+
 library("getRad")
 library("tidyr")
 library("dplyr")
@@ -135,8 +138,8 @@ wmocode <- getRad::weather_radars() |>
   filter(odimcode == odimcode[[1]]) |>
   pull(wmocode)
 
-print(odimcode)
-expand_grid(odim=unl, times = seq(as.POSIXct(Sys.Date() - 1), as.POSIXct(Sys.Date()), conf_de_time_interval)) |>
+
+expand_grid(odim=unlist(odimcode), times = seq(as.POSIXct(Sys.Date() - 1), as.POSIXct(Sys.Date()), conf_de_time_interval)) |>
   expand_grid(wmocode = wmocode) |>
   expand_grid(v2bversion = v2bversion) |>
   mutate(file = file.path(conf_local_vp_dir, generate_vp_file_name(odim, times, wmocode, v2bversion)),
