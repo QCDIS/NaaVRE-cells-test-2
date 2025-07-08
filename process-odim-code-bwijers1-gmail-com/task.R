@@ -2,6 +2,10 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
+if (!requireNamespace("bioRad", quietly = TRUE)) {
+	install.packages("bioRad", repos="http://cran.us.r-project.org")
+}
+library(bioRad)
 if (!requireNamespace("dplyr", quietly = TRUE)) {
 	install.packages("dplyr", repos="http://cran.us.r-project.org")
 }
@@ -14,10 +18,18 @@ if (!requireNamespace("purrr", quietly = TRUE)) {
 	install.packages("purrr", repos="http://cran.us.r-project.org")
 }
 library(purrr)
+if (!requireNamespace("stringr", quietly = TRUE)) {
+	install.packages("stringr", repos="http://cran.us.r-project.org")
+}
+library(stringr)
 if (!requireNamespace("tidyr", quietly = TRUE)) {
 	install.packages("tidyr", repos="http://cran.us.r-project.org")
 }
 library(tidyr)
+if (!requireNamespace("vol2birdR", quietly = TRUE)) {
+	install.packages("vol2birdR", repos="http://cran.us.r-project.org")
+}
+library(vol2birdR)
 
 
 print('option_list')
@@ -74,39 +86,57 @@ print(paste("Variable odim_code has length", var_len))
 
 odim_code <- gsub("\"", "", opt$odim_code)
 
+conf_de_time_interval<-"5 mins"
 
 print("Running the cell")
+conf_de_time_interval<-"5 mins"
 
 library("getRad")
 library("tidyr")
+library("dplyr")
+library("bioRad")
 
-conf_de_max_days <- 3
-conf_de_time_interval <- "5 mins"
+format_v2b_version <- function(vol2bird_version) {
+  v2b_version_formatted <- gsub(".", "-", vol2bird_version, fix = TRUE)
+  v2b_version_parts <- stringr:::str_split(v2b_version_formatted, pattern = "-")
+  v2b_major_version_parts <- unlist(v2b_version_parts)[1:3]
+  v2b_major_version_formatted <- paste(
+    c(
+      "v",
+      paste(
+        v2b_major_version_parts,
+        collapse = "-"
+      ),
+      ".h5"
+    ),
+    collapse = ""
+  )
+  return(v2b_major_version_formatted)
+}
 
-conf_aloft_endpoint = ""
-secret_aloft_access_key <- ""
-secret_aloft_secret_key <- ""
+generate_vp_file_name <- function(odimcode, times, wmocode, v2bversion) {
+  datatype <- "vp"
+  formatted_time <- format(times, format = "%Y%m%dT%H%M", tz = "UTC", usetz = FALSE)
+  filename <- paste(
+    odimcode, datatype, formatted_time, wmocode, v2bversion,
+    sep = "_"
+  )
+  print(filename)
+  return(filename)
+}
 
-expand_grid(
-    times = seq(
-        as.POSIXct(
-            Sys.Date() - conf_de_max_days
-        ), as.POSIXct(Sys.Date()), "5 mins"
-    )
-)
+v2bversion <- format_v2b_version(vol2birdR::vol2bird_version())
 
+wmocode <- getRad::weather_radars() |>
+  filter(odimcode == odimcode[[1]]) |>
+  pull(wmocode)
 
-
-head(20) |>
-    mutate(
-        vp = purrr::map2(
-            odimcode, times, ~ calculate_vp(
-                calculate_param(
-                    getRad::get_pvol(
-                        .x, .y
-                    ),
-                    RHOHV = urhohv
-                )
-            )
-        )
-    )
+odimcode |>
+  expand_grid(times = seq(as.POSIXct(Sys.Date() - 1), as.POSIXct(Sys.Date()), conf_de_time_interval)) |>
+  expand_grid(wmocode = wmocode) |>
+  expand_grid(v2bversion = v2bversion) |>
+  mutate(file = generate_vp_file_name(odimcode, times, wmocode, v2bversion)) |>
+  mutate(vp = purrr::pmap(
+    list(odimcode, times, file),
+    ~ calculate_vp(calculate_param(getRad::get_pvol(..1, ..2), RHOHV = urhohv), vpfile = ..3)
+  ))
