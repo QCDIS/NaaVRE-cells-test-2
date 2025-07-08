@@ -6,6 +6,7 @@ dependencies:
   - python>=3.8
   - nbconvert
   - r-dplyr
+  - r-jsonlite
   - r-tidyr
   - r-stringr
   - r-purrr
