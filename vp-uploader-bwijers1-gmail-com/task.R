@@ -92,7 +92,8 @@ print("-------------------------------------------------------------------------
 
 
 print("Running the cell")
-
+print(dput(vp_paths))
 for (vp_path in vp_paths){
     print(vp_path)
+    print(file.exists(vp_path))
 }
