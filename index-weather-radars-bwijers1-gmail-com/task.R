@@ -14,6 +14,10 @@ if (!requireNamespace("getRad", quietly = TRUE)) {
 	install.packages("getRad", repos="http://cran.us.r-project.org")
 }
 library(getRad)
+if (!requireNamespace("jsonlite", quietly = TRUE)) {
+	install.packages("jsonlite", repos="http://cran.us.r-project.org")
+}
+library(jsonlite)
 if (!requireNamespace("purrr", quietly = TRUE)) {
 	install.packages("purrr", repos="http://cran.us.r-project.org")
 }
