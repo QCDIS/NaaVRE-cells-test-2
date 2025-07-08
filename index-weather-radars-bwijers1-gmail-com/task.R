@@ -2,6 +2,10 @@ setwd('/app')
 library(optparse)
 library(jsonlite)
 
+if (!requireNamespace("bioRad", quietly = TRUE)) {
+	install.packages("bioRad", repos="http://cran.us.r-project.org")
+}
+library(bioRad)
 if (!requireNamespace("dplyr", quietly = TRUE)) {
 	install.packages("dplyr", repos="http://cran.us.r-project.org")
 }
@@ -14,17 +18,24 @@ if (!requireNamespace("purrr", quietly = TRUE)) {
 	install.packages("purrr", repos="http://cran.us.r-project.org")
 }
 library(purrr)
+if (!requireNamespace("stringr", quietly = TRUE)) {
+	install.packages("stringr", repos="http://cran.us.r-project.org")
+}
+library(stringr)
 if (!requireNamespace("tidyr", quietly = TRUE)) {
 	install.packages("tidyr", repos="http://cran.us.r-project.org")
 }
 library(tidyr)
+if (!requireNamespace("vol2birdR", quietly = TRUE)) {
+	install.packages("vol2birdR", repos="http://cran.us.r-project.org")
+}
+library(vol2birdR)
 
 
 print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--odimcode"), action="store", default=NA, type="character", help="my description"), 
 make_option(c("--param_country"), action="store", default=NA, type="character", help="my description")
 )
 
@@ -67,13 +78,6 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving odimcode")
-var = opt$odimcode
-print(var)
-var_len = length(var)
-print(paste("Variable odimcode has length", var_len))
-
-odimcode <- gsub("\"", "", opt$odimcode)
 print("Retrieving param_country")
 var = opt$param_country
 print(var)
@@ -91,14 +95,14 @@ print("Running the cell")
 
 library("getRad")
 library("tidyr")
+library("dplyr")
 
 
-odim_codes <- getRad::weather_radars() |>
+odimcodes <- getRad::weather_radars() |>
     dplyr::filter(
-        country == param_country, status == 1
-    ) |>
-    dplyr::select(odimcode)
-odim_codes = list(odim_codes)
+        country == param_country, status == 1) |>
+        dplyr::pull(`odimcode`)
+odimcodes = as.list(odimcodes)
 # capturing outputs
 print('Serialization of odim_codes')
 file <- file(paste0('/tmp/odim_codes_', id, '.json'))
