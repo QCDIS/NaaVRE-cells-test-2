@@ -36,7 +36,7 @@ print('option_list')
 option_list = list(
 
 make_option(c("--id"), action="store", default=NA, type="character", help="my description"), 
-make_option(c("--odim_code"), action="store", default=NA, type="character", help="my description")
+make_option(c("--odimcode"), action="store", default=NA, type="character", help="my description")
 )
 
 
@@ -78,13 +78,13 @@ var_len = length(var)
 print(paste("Variable id has length", var_len))
 
 id <- gsub("\"", "", opt$id)
-print("Retrieving odim_code")
-var = opt$odim_code
+print("Retrieving odimcode")
+var = opt$odimcode
 print(var)
 var_len = length(var)
-print(paste("Variable odim_code has length", var_len))
+print(paste("Variable odimcode has length", var_len))
 
-odim_code <- gsub("\"", "", opt$odim_code)
+odimcode <- gsub("\"", "", opt$odimcode)
 
 conf_local_vp_dir<-"/tmp/data/vp"
 conf_de_time_interval<-"120 mins"
