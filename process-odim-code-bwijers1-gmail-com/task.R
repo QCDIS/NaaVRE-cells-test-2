@@ -139,16 +139,16 @@ wmocode <- getRad::weather_radars() |>
   pull(wmocode)
 
 
-expand_grid(odim=unlist(odimclean), times = seq(as.POSIXct(Sys.Date() - 1), as.POSIXct(Sys.Date()), conf_de_time_interval)) |>
+res<-expand_grid(odim=unlist(odimclean), times = seq(as.POSIXct(Sys.Date() - 1), as.POSIXct(Sys.Date()), conf_de_time_interval)) |>
   expand_grid(wmocode = wmocode) |>
   expand_grid(v2bversion = v2bversion) |>
   mutate(file = file.path(conf_local_vp_dir, generate_vp_file_name(odim, times, wmocode, v2bversion)),
          vp = purrr::pmap(
-    list(odimcode, times, file),
+    list(odim, times, file),
     ~ calculate_vp(calculate_param(getRad::get_pvol(..1, ..2), RHOHV = urhohv), vpfile = ..3)
   ) ) 
 
-vp_paths <- as.list(odimcode$vpfile)
+vp_paths <- as.list(res$vpfile)
 # capturing outputs
 print('Serialization of vp_paths')
 file <- file(paste0('/tmp/vp_paths_', id, '.json'))
