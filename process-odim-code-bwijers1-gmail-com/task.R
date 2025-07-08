@@ -95,7 +95,7 @@ conf_de_time_interval<-"120 mins"
 
 print(odimcode)
 print(dput(odimcode))
-odimclean<-sub(']','',sub('[','',odimcode))
+odimclean<-sub('\\]','',sub('\\[','',odimcode))
 library("getRad")
 library("tidyr")
 library("dplyr")
