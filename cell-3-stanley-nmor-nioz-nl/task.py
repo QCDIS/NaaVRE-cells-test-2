@@ -54,7 +54,8 @@ inputfilenames = dtAcolite.create_acolite_input(app_configuration = app_configur
 outfilepaths   = dtAcolite.create_acolite_output(app_configuration=app_configuration, filenames=inputfilenames)
 dtAcolite.unzip_inputfiles(app_configuration=app_configuration)
 
-settings = {'limit': [52.5,4.7,53.50,5.4], 
+limit_inc_north_sea = [52.5,4.4,53.50,5.4] # include the north sea 
+settings = {'limit': limit_inc_north_sea, 
             'inputfile': '', 
             'output': '', 
             "cirrus_correction": True,
