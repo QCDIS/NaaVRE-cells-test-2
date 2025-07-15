@@ -30,7 +30,8 @@ start_date = f"{year}-01-01"
 end_date   = f"{year}-12-31"
 data_collection = "SENTINEL-2"
 product_type = "S2MSI1C"
-aoi = "POLYGON((4.6 53.6, 7.2 53.6, 7.2 52.8, 4.6 52.8, 4.6 53.6))'"
+
+aoi = "POLYGON((4.4 53.6, 7.2 53.6, 7.2 52.8, 4.4 52.8, 4.4 53.6))'"  # include the north sea 
 collection = "sentinel"
 
 app_configuration = dtAcolite.configure_acolite_directory(base_dir = "/tmp/data", year = year, collection = collection)
