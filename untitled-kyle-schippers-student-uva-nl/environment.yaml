@@ -5,5 +5,8 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
+  - matplotlib
+  - requests
+  - xarray
   - papermill
   - ipykernel
