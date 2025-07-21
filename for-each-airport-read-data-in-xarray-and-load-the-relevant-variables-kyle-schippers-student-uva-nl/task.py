@@ -52,7 +52,7 @@ print(urlDl)
 response = requests.get(urlDl)
 response.raise_for_status()
 with io.BytesIO(response.content) as buf:
-    with xr.open_dataset(buf) as ds:
+    with xr.open_dataset(buf, engine="h5netcdf") as ds:
         varlist = []
         for varname, da in ds.data_vars.items():
             if 'standard_name' not in da.attrs:
