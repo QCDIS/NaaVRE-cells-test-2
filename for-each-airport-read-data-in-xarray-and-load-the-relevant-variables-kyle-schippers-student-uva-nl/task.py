@@ -1,6 +1,7 @@
-import io
 import json
+import matplotlib.pyplot as plt
 import requests
+import tempfile
 import xarray as xr
 
 import argparse
@@ -34,36 +35,55 @@ param_end = args.param_end.replace('"','')
 param_start = args.param_start.replace('"','')
 
 
-url="https://services.iagos-data.fr/prod/v2.0/l3/search?codes="+airports+"&from="+param_start+"&to="+param_end+"&level=2&parameters="+parameters
-print(url)
-response=requests.get(url)
-data = json.loads(response.text)
-datasets = {}
-for dataset in data:
-    datasets[dataset['title']] = dataset
 
-dataset=datasets['IAGOS Daily median profiles at FRA, Frankfurt, Germany airport (FRA)']
-url = None
-for _url_info in dataset['urls']:
-    if _url_info['type'].upper() == 'LANDING_PAGE':
-        url = _url_info['url']
-urlDl="https://services.iagos-data.fr/prod/v2.0/l3/loadNetcdfFile?fileId=" + url.replace("#", "%23")
+url = (
+    "https://services.iagos-data.fr/prod/v2.0/l3/search?codes="
+    + airports
+    + "&from="
+    + param_start
+    + "&to="
+    + param_end
+    + "&level=2&parameters="
+    + parameters
+)
+print(url)
+
+response = requests.get(url)
+data = json.loads(response.text)
+datasets = {dataset['title']: dataset for dataset in data}
+
+dataset = datasets['IAGOS Daily median profiles at FRA, Frankfurt, Germany airport (FRA)']
+
+file_url = next(
+    _url_info['url']
+    for _url_info in dataset['urls']
+    if _url_info['type'].upper() == 'LANDING_PAGE'
+)
+
+urlDl = "https://services.iagos-data.fr/prod/v2.0/l3/loadNetcdfFile?fileId=" + file_url.replace("#", "%23")
 print(urlDl)
+
 response = requests.get(urlDl)
 response.raise_for_status()
-with io.BytesIO(response.content) as buf:
-    with xr.open_dataset(buf, engine="h5netcdf") as ds:
+
+with tempfile.NamedTemporaryFile(suffix=".nc") as tmp:
+    tmp.write(response.content)
+    tmp.flush()
+
+    with xr.open_dataset(tmp.name, engine="netcdf4") as ds:
         varlist = []
         for varname, da in ds.data_vars.items():
             if 'standard_name' not in da.attrs:
                 continue
-            std_name = da.attrs['standard_name']
-            if std_name in variables:
+            if da.attrs['standard_name'] in variables:
                 varlist.append(varname)
         ds = ds[varlist].load()
+
 for var in ds.data_vars:
-    varData = ds.get(var)[0]
+    varData = ds.get(var)[0]  # Level 0 (surface)
     print(varData)
     varPlot = varData.sel(time=slice(param_start, param_end))
     varPlot.plot()
+    plt.title(f"{var} at FRA")
+    plt.show()
 
