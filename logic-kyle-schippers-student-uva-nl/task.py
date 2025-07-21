@@ -1,5 +1,7 @@
+import io
 import json
 import requests
+import xarray as xr
 
 import argparse
 import json
@@ -10,40 +12,58 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
+arg_parser.add_argument('--airports', action='store', type=str, required=True, dest='airports')
+
+arg_parser.add_argument('--parameters', action='store', type=str, required=True, dest='parameters')
+
+arg_parser.add_argument('--variables', action='store', type=str, required=True, dest='variables')
+
+arg_parser.add_argument('--param_end', action='store', type=str, required=True, dest='param_end')
+arg_parser.add_argument('--param_start', action='store', type=str, required=True, dest='param_start')
 
 args = arg_parser.parse_args()
 print(args)
 
 id = args.id
 
+airports = args.airports.replace('"','')
+parameters = json.loads(args.parameters)
+variables = json.loads(args.variables)
+
+param_end = args.param_end.replace('"','')
+param_start = args.param_start.replace('"','')
 
 
-
-mapping_CF_IAGOS = {'mole_fraction_of_carbon_monoxide_in_air' : ['CO'],
-                   'mole_fraction_of_carbon_dioxide_in_air' : ['CO2']}
-
-param_bbox = "0,0,50,90" #bbox="0,0,50,90"
-parameters=[]
-for x in mapping_CF_IAGOS:
-    for y in mapping_CF_IAGOS[x]:
-        parameters.append(y)
-parameters=",".join(parameters)
-param_start = "2021-08-01" #start="2021-08-01"
-param_end = "2021-10-20" #end="2021-10-20"
-indexPage=0
-sizePage=20
-url="https://services.iagos-data.fr/prod/v2.0/airports/public?active=true&bbox="+param_bbox+"&from="+param_start+"&to="+param_end+"&cursor="+str(indexPage)+"&size="+str(sizePage)
+url="https://services.iagos-data.fr/prod/v2.0/l3/search?codes="+airports+"&from="+param_start+"&to="+param_end+"&level=2&parameters="+parameters
+print(url)
 response=requests.get(url)
 data = json.loads(response.text)
-airports = []
+datasets = {}
 for dataset in data:
-    airports.append(dataset['iata_code'])
-airports=",".join(airports)
-print(airports)
+    datasets[dataset['title']] = dataset
 
-file_parameters = open("/tmp/parameters_" + id + ".json", "w")
-file_parameters.write(json.dumps(parameters))
-file_parameters.close()
-file_airports = open("/tmp/airports_" + id + ".json", "w")
-file_airports.write(json.dumps(airports))
-file_airports.close()
+dataset=datasets['IAGOS Daily median profiles at FRA, Frankfurt, Germany airport (FRA)']
+url = None
+for _url_info in dataset['urls']:
+    if _url_info['type'].upper() == 'LANDING_PAGE':
+        url = _url_info['url']
+urlDl="https://services.iagos-data.fr/prod/v2.0/l3/loadNetcdfFile?fileId=" + url.replace("#", "%23")
+print(urlDl)
+response = requests.get(urlDl)
+response.raise_for_status()
+with io.BytesIO(response.content) as buf:
+    with xr.open_dataset(buf) as ds:
+        varlist = []
+        for varname, da in ds.data_vars.items():
+            if 'standard_name' not in da.attrs:
+                continue
+            std_name = da.attrs['standard_name']
+            if std_name in variables:
+                varlist.append(varname)
+        ds = ds[varlist].load()
+for var in ds.data_vars:
+    varData = ds.get(var)[0]
+    print(varData)
+    varPlot = varData.sel(time=slice(param_start, param_end))
+    varPlot.plot()
+
