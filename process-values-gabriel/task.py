@@ -22,7 +22,7 @@ names = json.loads(args.names)
 
 greetings = []
 for name in names:
-    greetings.append(f'Hi, {name}!')
+    greetings.append(f'Hello, {name}!')
 
 file_greetings = open("/tmp/greetings_" + id + ".json", "w")
 file_greetings.write(json.dumps(greetings))
